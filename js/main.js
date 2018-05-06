@@ -7,10 +7,10 @@ let dialog_indicator;
 let keyboard = {};
 let talkers = [];
 let stage_spots = [
-  {x: 150, y: 126, facing: 1, guest: null},
-  {x: 150, y: 363, facing: 1,  guest: null},
-  {x: app.screen.width-150, y: 126, facing: -1,  guest: null},
-  {x: app.screen.width-150, y: 363, facing: -1,  guest: null}
+  {x: 150, y: 126, facing: 1, guest: null, zIndex: 0},
+  {x: 150, y: 363, facing: 1,  guest: null, zIndex: 1},
+  {x: app.screen.width-150, y: 126, facing: -1,  guest: null, zIndex: 2},
+  {x: app.screen.width-150, y: 363, facing: -1,  guest: null, zIndex: 3}
 ];
 let gameplay = {};
 let currentMsg;
@@ -70,11 +70,11 @@ function setup() {
     randomFromArr(talkers).enter();
   }
   
-  randomFromArr(activeTalkers()).talk();
+  next();
 }
 
 function next() {
-  if (Math.random() < 0.7) {
+  if (Math.random() < 0.6) {
     randomFromArr(activeTalkers()).talk();
   }
   else {
@@ -86,8 +86,16 @@ function next() {
     else {      
       randomFromArr(activeTalkers()).leave();
     }
-    new doForABit(gameplay, function(){}, 40, next)
+    new doForABit(gameplay, function(){}, 45, next)
   }
+}
+
+function updateZOrder() {
+  app.stage.children.sort(function(a,b) {
+    a.zIndex = a.zIndex || -1;
+    b.zIndex = b.zIndex || -1;
+    return a.zIndex - b.zIndex;
+  });
 }
 
 function addUpdate(obj, func) {
@@ -105,10 +113,8 @@ function addUpdate(obj, func) {
 function doForABit(obj, func, duration, callback) {
   this.stopAt = elapsed + duration;
   this.alreadyCalled = false;
-  console.log(elapsed, duration, this.stopAt);
   this.func2 =  () => {
     if (elapsed < this.stopAt) {
-    console.log("yea");
       func(obj);
     }
     else {
@@ -198,14 +204,15 @@ Talker.prototype.enter = function() {
   this.spr.alpha = 0.3;
   this.randomPos();
   this.spr.x -= this.stage_spot.facing*30;
+  this.spr.zIndex = this.stage_spot.zIndex;
   new doForABit(this, function(o) {
     o.spr.alpha += 0.08;
     o.spr.x += 3 * o.stage_spot.facing;
   }, 13);
   app.stage.addChild(this.spr);
+  updateZOrder();
 };
 Talker.prototype.leave = function() {
-  console.log(this);
   this.active = false;
   this.talking = false;
   this.stage_spot.guest = null;
