@@ -1,4 +1,4 @@
-let app = new PIXI.Application({width: 640, height: 480, backgroundColor: 0xf5f5f5});
+let app = new PIXI.Application({width: 720, height: 480, backgroundColor: 0xf5f5f5});
 
 let gameState = playing;
 let objectsToUpdate = [];
@@ -13,6 +13,7 @@ let stage_spots = [
   {x: app.screen.width-150, y: 363, facing: -1,  guest: null}
 ];
 let gameplay = {};
+let currentMsg;
 
 document.body.appendChild(app.view);
 
@@ -46,7 +47,12 @@ function setup() {
   background.alpha = 0.85;
   background.width = app.screen.width;
   background.height = app.screen.height;
+  background.interactive = true;
+  background.on("pointerdown", function() {
+    currentMsg.clicked();
+  });
   app.stage.addChild(background);
+  
   
   dialog_indicator = app.stage.addChild(new PIXI.Sprite.fromImage("assets/sprites/misc/dialog_indicator.png"));
   dialog_indicator.scale.set(2.2);
@@ -241,6 +247,7 @@ function shutEveryone() {
 
 function Message(owner, text) {
   let str_max = 340;
+  currentMsg = this;
   if (text.length > str_max) {
     text = text.substring(0, str_max) + "[...]";
   }
@@ -296,10 +303,7 @@ function Message(owner, text) {
   this.spr.position.set(this.x,this.y);
   this.textSpr.position.set(this.x+30,this.y+25);
   
-  
-  this.spr.interactive = true;
-  this.spr.buttonMode = true;
-  this.spr.on('pointerdown', () => {
+  this.clicked = () => {
     if (this.state === 0) {
       this.shownSoFar = this.text;
       this.textSpr.text = this.shownSoFar;
@@ -313,7 +317,7 @@ function Message(owner, text) {
       next();
     }
     this.state += 1;
-  });
+  };
   
   this.textSpr.text = "";
   

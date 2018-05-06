@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ヴァルキュリアちゃん</title>
   <style>
     * {
@@ -13,8 +14,21 @@
       background-color: #191919;
     }
     canvas {
-      width: 85vw;
+      margin-top: 10vh;
+      width: 95vw;
+      height: 80vh;
     }
+    @media screen and (min-width: 1400px) {
+      canvas {
+        width: 80vw;
+      }
+    }
+    @media screen and (max-width: 800px) and (min-height: 700px) {
+      canvas {
+        height: auto;
+      }
+    }
+
   </style>
 </head>
 <body>
