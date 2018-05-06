@@ -1,0 +1,35 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":0, "y":454, "w":221, "h":224},
+		"spriteSourceSize": {"x":0,"y":20,"w":221,"h":244},
+		"sourceSize": {"w":221,"h":244}
+	},
+	"02.png": {
+		"frame": {"x":0, "y":227, "w":255, "h":225},
+		"spriteSourceSize": {"x":0,"y":19,"w":255,"h":244},
+		"sourceSize": {"w":255,"h":244}
+	},
+	"03.png": {
+		"frame": {"x":0, "y":0, "w":255, "h":225},
+		"spriteSourceSize": {"x":0,"y":19,"w":255,"h":244},
+		"sourceSize": {"w":255,"h":244}
+	},
+	"04.png": {
+		"frame": {"x":257, "y":0, "w":247, "h":228},
+		"spriteSourceSize": {"x":0,"y":16,"w":247,"h":244},
+		"sourceSize": {"w":247,"h":244}
+	},
+	"05.png": {
+		"frame": {"x":257, "y":230, "w":243, "h":244},
+		"spriteSourceSize": {"x":0,"y":0,"w":243,"h":244},
+		"sourceSize": {"w":243,"h":244}
+	}
+
+},
+"meta": {
+	"image": "gusurg.png",
+	"size": {"w": 506, "h": 680},
+	"scale": "1"
+}
+}

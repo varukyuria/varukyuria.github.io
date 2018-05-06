@@ -1,0 +1,25 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":0, "y":0, "w":254, "h":224},
+		"spriteSourceSize": {"x":0,"y":0,"w":254,"h":224},
+		"sourceSize": {"w":254,"h":224}
+	},
+	"02.png": {
+		"frame": {"x":0, "y":226, "w":198, "h":218},
+		"spriteSourceSize": {"x":0,"y":6,"w":198,"h":224},
+		"sourceSize": {"w":198,"h":224}
+	},
+	"03.png": {
+		"frame": {"x":200, "y":226, "w":198, "h":218},
+		"spriteSourceSize": {"x":0,"y":6,"w":198,"h":224},
+		"sourceSize": {"w":198,"h":224}
+	}
+
+},
+"meta": {
+	"image": "gloria.png",
+	"size": {"w": 400, "h": 446},
+	"scale": "1"
+}
+}

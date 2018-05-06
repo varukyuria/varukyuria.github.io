@@ -1,0 +1,25 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":0, "y":0, "w":232, "h":220},
+		"spriteSourceSize": {"x":0,"y":8,"w":232,"h":228},
+		"sourceSize": {"w":232,"h":228}
+	},
+	"02.png": {
+		"frame": {"x":0, "y":222, "w":198, "h":221},
+		"spriteSourceSize": {"x":0,"y":7,"w":198,"h":228},
+		"sourceSize": {"w":198,"h":228}
+	},
+	"03.png": {
+		"frame": {"x":234, "y":0, "w":197, "h":228},
+		"spriteSourceSize": {"x":0,"y":0,"w":197,"h":228},
+		"sourceSize": {"w":197,"h":228}
+	}
+
+},
+"meta": {
+	"image": "amy.png",
+	"size": {"w": 433, "h": 445},
+	"scale": "1"
+}
+}

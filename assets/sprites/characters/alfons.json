@@ -1,0 +1,25 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":253, "y":222, "w":214, "h":220},
+		"spriteSourceSize": {"x":0,"y":36,"w":256,"h":256},
+		"sourceSize": {"w":256,"h":256}
+	},
+	"02.png": {
+		"frame": {"x":0, "y":0, "w":256, "h":220},
+		"spriteSourceSize": {"x":0,"y":36,"w":256,"h":256},
+		"sourceSize": {"w":256,"h":256}
+	},
+	"03.png": {
+		"frame": {"x":0, "y":222, "w":251, "h":231},
+		"spriteSourceSize": {"x":0,"y":25,"w":256,"h":256},
+		"sourceSize": {"w":256,"h":256}
+	}
+
+},
+"meta": {
+	"image": "alfons.png",
+	"size": {"w": 469, "h": 455},
+	"scale": "1"
+}
+}

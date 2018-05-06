@@ -1,0 +1,25 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":0, "y":217, "w":198, "h":215},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":215},
+		"sourceSize": {"w":198,"h":215}
+	},
+	"02.png": {
+		"frame": {"x":0, "y":0, "w":198, "h":215},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":215},
+		"sourceSize": {"w":198,"h":215}
+	},
+	"03.png": {
+		"frame": {"x":200, "y":0, "w":198, "h":215},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":215},
+		"sourceSize": {"w":198,"h":215}
+	}
+
+},
+"meta": {
+	"image": "varrot.png",
+	"size": {"w": 400, "h": 434},
+	"scale": "1"
+}
+}

@@ -1,0 +1,25 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":257, "y":0, "w":217, "h":233},
+		"spriteSourceSize": {"x":0,"y":12,"w":217,"h":245},
+		"sourceSize": {"w":217,"h":245}
+	},
+	"02.png": {
+		"frame": {"x":0, "y":0, "w":255, "h":245},
+		"spriteSourceSize": {"x":0,"y":0,"w":255,"h":245},
+		"sourceSize": {"w":255,"h":245}
+	},
+	"03.png": {
+		"frame": {"x":0, "y":247, "w":249, "h":228},
+		"spriteSourceSize": {"x":0,"y":17,"w":249,"h":245},
+		"sourceSize": {"w":249,"h":245}
+	}
+
+},
+"meta": {
+	"image": "leila.png",
+	"size": {"w": 476, "h": 477},
+	"scale": "1"
+}
+}

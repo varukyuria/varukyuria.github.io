@@ -1,0 +1,30 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":200, "y":0, "w":198, "h":215},
+		"spriteSourceSize": {"x":0,"y":9,"w":198,"h":224},
+		"sourceSize": {"w":198,"h":224}
+	},
+	"02.png": {
+		"frame": {"x":200, "y":217, "w":198, "h":215},
+		"spriteSourceSize": {"x":0,"y":9,"w":198,"h":224},
+		"sourceSize": {"w":198,"h":224}
+	},
+	"03.png": {
+		"frame": {"x":0, "y":0, "w":198, "h":224},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":224},
+		"sourceSize": {"w":198,"h":224}
+	},
+	"04.png": {
+		"frame": {"x":0, "y":226, "w":198, "h":215},
+		"spriteSourceSize": {"x":0,"y":9,"w":198,"h":224},
+		"sourceSize": {"w":198,"h":224}
+	}
+
+},
+"meta": {
+	"image": "alicia.png",
+	"size": {"w": 400, "h": 443},
+	"scale": "1"
+}
+}

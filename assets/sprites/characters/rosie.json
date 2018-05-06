@@ -1,0 +1,25 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":0, "y":0, "w":228, "h":224},
+		"spriteSourceSize": {"x":0,"y":8,"w":228,"h":232},
+		"sourceSize": {"w":228,"h":232}
+	},
+	"02.png": {
+		"frame": {"x":200, "y":226, "w":198, "h":232},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":232},
+		"sourceSize": {"w":198,"h":232}
+	},
+	"03.png": {
+		"frame": {"x":0, "y":226, "w":198, "h":232},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":232},
+		"sourceSize": {"w":198,"h":232}
+	}
+
+},
+"meta": {
+	"image": "rosie.png",
+	"size": {"w": 400, "h": 460},
+	"scale": "1"
+}
+}

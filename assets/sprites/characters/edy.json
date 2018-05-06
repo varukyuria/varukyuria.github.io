@@ -1,0 +1,30 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":236, "y":0, "w":213, "h":215},
+		"spriteSourceSize": {"x":0,"y":9,"w":213,"h":224},
+		"sourceSize": {"w":213,"h":224}
+	},
+	"02.png": {
+		"frame": {"x":236, "y":217, "w":213, "h":215},
+		"spriteSourceSize": {"x":0,"y":9,"w":213,"h":224},
+		"sourceSize": {"w":213,"h":224}
+	},
+	"03.png": {
+		"frame": {"x":0, "y":0, "w":234, "h":224},
+		"spriteSourceSize": {"x":0,"y":0,"w":234,"h":224},
+		"sourceSize": {"w":234,"h":224}
+	},
+	"04.png": {
+		"frame": {"x":0, "y":226, "w":234, "h":224},
+		"spriteSourceSize": {"x":0,"y":0,"w":234,"h":224},
+		"sourceSize": {"w":234,"h":224}
+	}
+
+},
+"meta": {
+	"image": "edy.png",
+	"size": {"w": 451, "h": 452},
+	"scale": "1"
+}
+}

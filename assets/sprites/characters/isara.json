@@ -1,0 +1,30 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":200, "y":0, "w":198, "h":206},
+		"spriteSourceSize": {"x":0,"y":1,"w":198,"h":207},
+		"sourceSize": {"w":198,"h":207}
+	},
+	"02.png": {
+		"frame": {"x":200, "y":208, "w":198, "h":206},
+		"spriteSourceSize": {"x":0,"y":1,"w":198,"h":207},
+		"sourceSize": {"w":198,"h":207}
+	},
+	"03.png": {
+		"frame": {"x":0, "y":0, "w":198, "h":206},
+		"spriteSourceSize": {"x":0,"y":1,"w":198,"h":207},
+		"sourceSize": {"w":198,"h":207}
+	},
+	"04.png": {
+		"frame": {"x":0, "y":208, "w":198, "h":207},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":207},
+		"sourceSize": {"w":198,"h":207}
+	}
+
+},
+"meta": {
+	"image": "isara.png",
+	"size": {"w": 400, "h": 417},
+	"scale": "1"
+}
+}

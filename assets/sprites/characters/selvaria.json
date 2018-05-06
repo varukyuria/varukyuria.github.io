@@ -1,0 +1,30 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":0, "y":212, "w":198, "h":208},
+		"spriteSourceSize": {"x":0,"y":2,"w":198,"h":210},
+		"sourceSize": {"w":198,"h":210}
+	},
+	"02.png": {
+		"frame": {"x":200, "y":212, "w":198, "h":208},
+		"spriteSourceSize": {"x":0,"y":2,"w":198,"h":210},
+		"sourceSize": {"w":198,"h":210}
+	},
+	"03.png": {
+		"frame": {"x":0, "y":0, "w":198, "h":210},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":210},
+		"sourceSize": {"w":198,"h":210}
+	},
+	"04.png": {
+		"frame": {"x":200, "y":0, "w":198, "h":210},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":210},
+		"sourceSize": {"w":198,"h":210}
+	}
+
+},
+"meta": {
+	"image": "selvaria.png",
+	"size": {"w": 400, "h": 422},
+	"scale": "1"
+}
+}

@@ -1,0 +1,30 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":0, "y":216, "w":200, "h":214},
+		"spriteSourceSize": {"x":0,"y":4,"w":200,"h":218},
+		"sourceSize": {"w":200,"h":218}
+	},
+	"02.png": {
+		"frame": {"x":0, "y":0, "w":200, "h":214},
+		"spriteSourceSize": {"x":0,"y":4,"w":200,"h":218},
+		"sourceSize": {"w":200,"h":218}
+	},
+	"03.png": {
+		"frame": {"x":202, "y":220, "w":198, "h":218},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":218},
+		"sourceSize": {"w":198,"h":218}
+	},
+	"04.png": {
+		"frame": {"x":202, "y":0, "w":198, "h":218},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":218},
+		"sourceSize": {"w":198,"h":218}
+	}
+
+},
+"meta": {
+	"image": "welkin.png",
+	"size": {"w": 402, "h": 440},
+	"scale": "1"
+}
+}

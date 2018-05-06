@@ -1,0 +1,30 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":258, "y":0, "w":198, "h":215},
+		"spriteSourceSize": {"x":0,"y":12,"w":198,"h":227},
+		"sourceSize": {"w":198,"h":227}
+	},
+	"02.png": {
+		"frame": {"x":256, "y":229, "w":209, "h":221},
+		"spriteSourceSize": {"x":0,"y":6,"w":209,"h":227},
+		"sourceSize": {"w":209,"h":227}
+	},
+	"03.png": {
+		"frame": {"x":0, "y":229, "w":254, "h":224},
+		"spriteSourceSize": {"x":0,"y":3,"w":254,"h":227},
+		"sourceSize": {"w":254,"h":227}
+	},
+	"04.png": {
+		"frame": {"x":0, "y":0, "w":256, "h":227},
+		"spriteSourceSize": {"x":0,"y":0,"w":256,"h":227},
+		"sourceSize": {"w":256,"h":227}
+	}
+
+},
+"meta": {
+	"image": "annika.png",
+	"size": {"w": 467, "h": 455},
+	"scale": "1"
+}
+}

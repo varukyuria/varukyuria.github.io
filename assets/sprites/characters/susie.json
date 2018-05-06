@@ -1,0 +1,25 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":200, "y":210, "w":198, "h":206},
+		"spriteSourceSize": {"x":0,"y":2,"w":198,"h":208},
+		"sourceSize": {"w":198,"h":208}
+	},
+	"02.png": {
+		"frame": {"x":0, "y":210, "w":198, "h":206},
+		"spriteSourceSize": {"x":0,"y":2,"w":198,"h":208},
+		"sourceSize": {"w":198,"h":208}
+	},
+	"03.png": {
+		"frame": {"x":0, "y":0, "w":221, "h":208},
+		"spriteSourceSize": {"x":0,"y":0,"w":221,"h":208},
+		"sourceSize": {"w":221,"h":208}
+	}
+
+},
+"meta": {
+	"image": "susie.png",
+	"size": {"w": 400, "h": 418},
+	"scale": "1"
+}
+}

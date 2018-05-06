@@ -1,0 +1,30 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":0, "y":222, "w":198, "h":219},
+		"spriteSourceSize": {"x":0,"y":1,"w":198,"h":220},
+		"sourceSize": {"w":198,"h":220}
+	},
+	"02.png": {
+		"frame": {"x":200, "y":0, "w":198, "h":219},
+		"spriteSourceSize": {"x":0,"y":1,"w":198,"h":220},
+		"sourceSize": {"w":198,"h":220}
+	},
+	"03.png": {
+		"frame": {"x":200, "y":221, "w":198, "h":220},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":220},
+		"sourceSize": {"w":198,"h":220}
+	},
+	"04.png": {
+		"frame": {"x":0, "y":0, "w":198, "h":220},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":220},
+		"sourceSize": {"w":198,"h":220}
+	}
+
+},
+"meta": {
+	"image": "clarissa.png",
+	"size": {"w": 400, "h": 443},
+	"scale": "1"
+}
+}
