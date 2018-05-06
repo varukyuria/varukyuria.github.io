@@ -1,4 +1,7 @@
 *.jshintrc
+*.psd
+
+assets/music/raw/*
 
 
 # Windows image file caches

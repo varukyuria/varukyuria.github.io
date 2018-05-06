@@ -1,11 +1,17 @@
 let app = new PIXI.Application({width: 720, height: 480, backgroundColor: 0xf5f5f5});
 
-let gameState = playing;
+let background;
 let objectsToUpdate = [];
 let elapsed = 0;
 let dialog_indicator;
+let sound_button;
 let keyboard = {};
 let talkers = [];
+let music;
+let music_queued;
+let music_normal_volume = 0.5;
+let sound_is_on = true;
+let music_paths = ['A Moment of Relief.mp3', 'Chronicles of the Gallian War.mp3', 'Conferral of Honors.mp3', 'Daily Life of the 7th Platoon.mp3', 'Defensive Fight.mp3', 'Everyday Training.mp3', 'Fierce Combat.mp3', 'Final Decisive Battle.mp3', 'Gallant Fight.mp3', 'Hard Fight.mp3', 'No Matter The Distance (Game Opening).mp3', 'No Matter The Distance.mp3', 'Offensive and Defensive Battle.mp3', 'Quiet Chat.mp3', "Randgriz Archduke's Family.mp3", 'Randgriz City.mp3', 'Resistance.mp3', 'Succeeded Wish (Piano).mp3', 'Succeeded Wish (ROJI).mp3', 'Those Who Succeeded.mp3', 'Title Main Theme.mp3', 'Urgent Instructions.mp3', 'Varukyuria Intro.mp3', "Zaka's Theme.mp3"];
 let stage_spots = [
   {x: 150, y: 126, facing: 1, guest: null, zIndex: 0},
   {x: 150, y: 363, facing: 1,  guest: null, zIndex: 1},
@@ -14,11 +20,17 @@ let stage_spots = [
 ];
 let gameplay = {};
 let currentMsg;
+let next_ticker;
+let bkg_rare_paths = [];
+let bkg_rarer_paths = [];
+let haltNext = false;
 
 document.body.appendChild(app.view);
 
+// PIXI LOADER
+(() => {
 PIXI.loader
-  .add("assets/fonts/LCD_Solid.ttf")
+  .add("assets/sprites/misc/sound_button.json")
   .add("assets/sprites/characters/alfons.json")
   .add("assets/sprites/characters/alicia.json")
   .add("assets/sprites/characters/amy.json")
@@ -40,16 +52,33 @@ PIXI.loader
   .add("assets/sprites/characters/varrot.json")
   .add("assets/sprites/characters/welkin.json")
   .load(setup);
+})();
 
 function setup() {
+  playRandomTrack();
   
-  let background = new PIXI.Sprite.fromImage("assets/sprites/bkg/bkg" + randomIntStr(0,8,3) + ".jpg");
-  background.alpha = 0.85;
+  sound_button = new ButtonToggle(app.screen.width - 90, app.screen.height -  80, "assets/sprites/misc/sound_button.json", () => {
+    if (sound_button.pressed) {
+      sound_is_on = false;
+      music.volume = 0;
+    }
+    else {
+      music.volume = music_normal_volume;
+      sound_is_on = true;
+    }
+  });
+  sound_button.spr.scale.set(3);
+  
+  genBkgPaths();
+  background = new PIXI.Sprite.fromImage(randomBkg());
+  background.alpha = 0.75;
   background.width = app.screen.width;
   background.height = app.screen.height;
   background.interactive = true;
   background.on("pointerdown", function() {
-    currentMsg.clicked();
+    if (currentMsg) {
+      currentMsg.clicked();
+    }
   });
   app.stage.addChild(background);
   
@@ -64,18 +93,18 @@ function setup() {
   dialog_indicator.alpha = 0;
     
   initTalkers();
-  
-  // enter anywhere from 1 to 4 people
-  for (let i=0; i<randomInt(1,4); i++) {
-    randomFromArr(talkers).enter();
-  }
-  
+  enterTalkers();
+
+  next_ticker = new PIXI.ticker.Ticker();
   next();
 }
 
 function next() {
-  if (Math.random() < 0.6) {
-    randomFromArr(activeTalkers()).talk();
+  if (haltNext) {return;}
+  if (Math.random() < 0.52) {
+    if (activeTalkers().length>0) {
+      randomFromArr(activeTalkers()).talk();
+    }
   }
   else {
     // enter new character
@@ -83,19 +112,107 @@ function next() {
       randomFromArr(inactiveTalkers()).enter();
     }
     // someone leave NOW
-    else {      
-      randomFromArr(activeTalkers()).leave();
+    else {
+      if (Math.random() < 0.6 || elapsed < 40) {
+        randomFromArr(activeTalkers()).leave();
+      }
+      else {
+        changeBkg();
+      }
     }
-    new doForABit(gameplay, function(){}, 45, next)
+    doUntil(()=>{}, 45, next);
   }
 }
 
-function updateZOrder() {
-  app.stage.children.sort(function(a,b) {
-    a.zIndex = a.zIndex || -1;
-    b.zIndex = b.zIndex || -1;
-    return a.zIndex - b.zIndex;
+function playRandomTrack() {
+  if (music) {music.stop();}
+  music = PIXI.sound.Sound.from("assets/music/" + randomFromArr(music_paths));
+  music.loop = true;
+  music.play();
+  if (sound_is_on) {
+    music.volume = music_normal_volume;
+  }
+  else {
+    music.volume = 0;
+  }
+}
+
+function changeBkg() {
+  haltNext = true;
+  // all gradually black
+  let tickers = [];
+  let rect = new PIXI.Graphics();
+  rect.beginFill(0x000000, 1);
+  rect.alpha = 0;
+  rect.drawRect(0, 0, app.screen.width, app.screen.height);
+  rect.endFill();
+  rect.zIndex = 99;
+  app.stage.addChild(rect);
+  updateZIndex();
+  
+  let ticker = new PIXI.ticker.Ticker();
+  let changingMusic = Math.random() < 0.7;
+  ticker.add(deltaTime => {
+    rect.alpha += 0.028;
+    if (rect.alpha >= 0.99) {
+      ticker.destroy();
+      background.texture = PIXI.Texture.fromImage(randomBkg());
+      let actives = activeTalkers();
+      for (let i=0; i<actives.length; i++) {
+        actives[i].leave();
+      }
+      if (changingMusic) {
+        music.stop();
+        playRandomTrack();
+      }
+      let count = 0;
+      ticker = new PIXI.ticker.Ticker();
+      ticker.add(() => {
+        count++;
+        if (count > 60) {
+          rect.alpha -= 0.012;
+        }
+        if (rect.alpha < 0.01) {
+          rect.destroy();
+          ticker.destroy();
+          enterTalkers();
+          doUntil(null, 20, ()=> {
+            haltNext = false;
+            next();
+          });
+        }
+      });
+      ticker.start();
+    }
   });
+  ticker.start();
+  
+}
+function genBkgPaths() {
+  if (bkg_rare_paths.length === 0) {
+    for (let i=9; i<=55; i++) {
+      bkg_rare_paths.push("assets/backgrounds/rare/bkg" + getIntStr(i,3) + ".jpg");
+    }
+    shuffle(bkg_rare_paths);
+  }
+  if (bkg_rarer_paths.length === 0) {
+    for (let i=0; i<=24; i++) {
+      bkg_rarer_paths.push("assets/backgrounds/rarer/bkg" + getIntStr(i,3) + ".jpg");
+    }
+    shuffle(bkg_rarer_paths);
+  }
+}
+function randomBkg() {
+  if (Math.random() < 0.52 || elapsed < 10) {
+    return "assets/backgrounds/bkg" + randomIntStr(0,8,3) + ".jpg";
+  }
+  else {
+    genBkgPaths();
+    if (Math.random() < 0.65) {
+      return bkg_rare_paths.pop();
+    }
+    return bkg_rarer_paths.pop();
+  }
 }
 
 function addUpdate(obj, func) {
@@ -110,47 +227,20 @@ function addUpdate(obj, func) {
   }
 }
 
-function doForABit(obj, func, duration, callback) {
-  this.stopAt = elapsed + duration;
-  this.alreadyCalled = false;
-  this.func2 =  () => {
-    if (elapsed < this.stopAt) {
-      func(obj);
+function doUntil(func, duration, callback) {
+  let count = 0;
+  let t = new PIXI.ticker.Ticker();
+  t.add((deltaTime) => {
+    count++;
+    if (!duration || count < duration) {
+      if (func) {func(deltaTime);}
     }
     else {
-      if (!this.alreadyCalled) {
-        if (callback) {
-          callback(obj);
-        }
-      }
-      this.alreadyCalled = true;
+      t.destroy();
+      if (callback) {callback();}
     }
-  };
-  addUpdate(obj, this.func2);
-}
-
-function initTalkers() {
-  // [sidenote] available boards: a g c jp v vr tv k o an sci his i toy p ck ic lit mu fa gd biz fit s4s
-  talkers.push(new Talker("Alfons", ["vr", "jp", "k", "sci", "s4s"], "assets/sprites/characters/alfons.json"));
-  talkers.push(new Talker("Alicia", ["c", "ck", "s4s"], "assets/sprites/characters/alicia.json"));
-  talkers.push(new Talker("Amy", [""], "assets/sprites/characters/amy.json"));
-  talkers.push(new Talker("Annika", ["fit"], "assets/sprites/characters/annika.json"));
-  talkers.push(new Talker("Clarissa", ["fit", "mu"], "assets/sprites/characters/clarissa.json"));
-  talkers.push(new Talker("Cossette", ["gd", "ic", "i"], "assets/sprites/characters/cossette.json"));
-  talkers.push(new Talker("Edy", ["jp"], "assets/sprites/characters/edy.json"));
-  talkers.push(new Talker("Gloria", [""], "assets/sprites/characters/gloria.json"));
-  talkers.push(new Talker("Gusurg", ["jp", "a", "toy"], "assets/sprites/characters/gusurg.json"));
-  talkers.push(new Talker("Imca", ["k"], "assets/sprites/characters/imca.json"));
-  talkers.push(new Talker("Isara", ["o", "sci"], "assets/sprites/characters/isara.json"));
-  talkers.push(new Talker("Kurt", ["biz", "ck"], "assets/sprites/characters/kurt.json"));
-  talkers.push(new Talker("Leila", ["fit", "k", "fa"], "assets/sprites/characters/leila.json"));
-  talkers.push(new Talker("Riela", ["", "s4s"], "assets/sprites/characters/riela.json"));
-  talkers.push(new Talker("Rosie", ["mu"], "assets/sprites/characters/rosie.json"));
-  talkers.push(new Talker("Selvaria", ["k"], "assets/sprites/characters/selvaria.json"));
-  talkers.push(new Talker("Susie", ["c", "a"], "assets/sprites/characters/susie.json"));
-  talkers.push(new Talker("Valerie", ["his", "sci"], "assets/sprites/characters/valerie.json"));
-  talkers.push(new Talker("Varrot", ["fit"], "assets/sprites/characters/varrot.json"));
-  talkers.push(new Talker("Welkin", ["an", "his"], "assets/sprites/characters/welkin.json"));
+  });
+  t.start();
 }
 
 function Talker(name, fav_boards, sprite_path) {
@@ -195,32 +285,34 @@ function Talker(name, fav_boards, sprite_path) {
 }
 Talker.prototype.talk = function() {
   this.randomFace();
-  shutEveryone()
+  shutEveryone();
   this.talking = true;
   new Message(this, DATACHAN.selectRandom(randomFromArr(this.fav_boards)));
 };
 Talker.prototype.enter = function() {
   this.active = true;
-  this.spr.alpha = 0.3;
+  this.spr.alpha = 0.1;
   this.randomPos();
   this.spr.x -= this.stage_spot.facing*30;
   this.spr.zIndex = this.stage_spot.zIndex;
-  new doForABit(this, function(o) {
-    o.spr.alpha += 0.08;
-    o.spr.x += 3 * o.stage_spot.facing;
-  }, 13);
+  
+  doUntil((deltaTime)=>{
+    this.spr.alpha += 0.045;
+    this.spr.x += 3 * this.stage_spot.facing;
+  }, 13, () => this.spr.alpha = this.alpha_min);
   app.stage.addChild(this.spr);
-  updateZOrder();
+  updateZIndex();
 };
 Talker.prototype.leave = function() {
   this.active = false;
   this.talking = false;
   this.stage_spot.guest = null;
-  new doForABit(this, function(o) {
-    o.spr.alpha -= 0.04;
-    o.spr.x -= 3 * o.stage_spot.facing;
-  }, 30, function(o) {
-    app.stage.removeChild(o.spr);
+  doUntil((deltaTime) => {
+    this.spr.alpha -= 0.04;
+    this.spr.x -= 3 * this.stage_spot.facing;
+  }, 30, () => {
+    app.stage.removeChild(this.spr);
+    this.spr.alpha = this.alpha_min;
   });
 };
 Talker.prototype.randomPos = function() {
@@ -240,11 +332,40 @@ Talker.prototype.randomFace = function() {
   this.spr.gotoAndStop(randomInt(0, this.spr.totalFrames));
 };
 
+function initTalkers() {
+  // [sidenote] available boards: a g c jp v vr tv k o an sci his i toy p ck ic lit mu fa gd biz fit s4s
+  talkers.push(new Talker("Alfons", ["vr", "jp", "k", "sci", "s4s"], "assets/sprites/characters/alfons.json"));
+  talkers.push(new Talker("Alicia", ["c", "ck", "s4s"], "assets/sprites/characters/alicia.json"));
+  talkers.push(new Talker("Amy", [""], "assets/sprites/characters/amy.json"));
+  talkers.push(new Talker("Annika", ["fit"], "assets/sprites/characters/annika.json"));
+  talkers.push(new Talker("Clarissa", ["fit", "mu"], "assets/sprites/characters/clarissa.json"));
+  talkers.push(new Talker("Cossette", ["gd", "ic", "i"], "assets/sprites/characters/cossette.json"));
+  talkers.push(new Talker("Edy", ["jp"], "assets/sprites/characters/edy.json"));
+  talkers.push(new Talker("Gloria", [""], "assets/sprites/characters/gloria.json"));
+  talkers.push(new Talker("Gusurg", ["jp", "a", "toy"], "assets/sprites/characters/gusurg.json"));
+  talkers.push(new Talker("Imca", ["k"], "assets/sprites/characters/imca.json"));
+  talkers.push(new Talker("Isara", ["o", "sci"], "assets/sprites/characters/isara.json"));
+  talkers.push(new Talker("Kurt", ["biz", "ck"], "assets/sprites/characters/kurt.json"));
+  talkers.push(new Talker("Leila", ["fit", "k", "fa"], "assets/sprites/characters/leila.json"));
+  talkers.push(new Talker("Riela", ["", "s4s"], "assets/sprites/characters/riela.json"));
+  talkers.push(new Talker("Rosie", ["mu"], "assets/sprites/characters/rosie.json"));
+  talkers.push(new Talker("Selvaria", ["k"], "assets/sprites/characters/selvaria.json"));
+  talkers.push(new Talker("Susie", ["c", "a"], "assets/sprites/characters/susie.json"));
+  talkers.push(new Talker("Valerie", ["his", "sci"], "assets/sprites/characters/valerie.json"));
+  talkers.push(new Talker("Varrot", ["fit"], "assets/sprites/characters/varrot.json"));
+  talkers.push(new Talker("Welkin", ["an", "his"], "assets/sprites/characters/welkin.json"));
+}
 function activeTalkers() {
   return talkers.filter(t => t.active);
 }
 function inactiveTalkers() {
   return talkers.filter(t => !t.active);
+}
+function enterTalkers() {
+  // enter anywhere from 1 to 4 people
+  for (let i=0; i<randomInt(1,4); i++) {
+    randomFromArr(talkers).enter();
+  }
 }
 function shutEveryone() {
   for (let i=0; i<talkers.length; i++) {
@@ -345,7 +466,6 @@ function Message(owner, text) {
     }
   });
 }
-
 function showDialogIndicator(spr) {
   dialog_indicator.alpha = 1;
   app.stage.removeChild(dialog_indicator);
@@ -361,6 +481,13 @@ function animatedSpriteFrom(path) {
   let t = PIXI.loader.resources[path].textures;
   return new PIXI.extras.AnimatedSprite(Object.values(t).sort());
 }
+function updateZIndex() {
+  app.stage.children.sort(function(a,b) {
+    a.zIndex = a.zIndex || -1;
+    b.zIndex = b.zIndex || -1;
+    return a.zIndex - b.zIndex;
+  });
+}
 
 function playing(delta) {
   elapsed += 1;
@@ -373,4 +500,25 @@ function playing(delta) {
   }
 }
 
-app.ticker.add(gameState);
+function ButtonToggle(x, y, path, action) {
+  this.spr = animatedSpriteFrom(path);
+  this.spr.zIndex = 90;
+  this.spr.position.set(x, y);
+  app.stage.addChild(this.spr);
+  this.pressed = false;
+  this.spr.interactive = true;
+  this.spr.buttonMode = true;
+  this.spr.on('pointerdown', () => {
+    if (this.pressed) {
+      this.spr.gotoAndStop(0);
+      this.pressed = false;
+    }
+    else {
+      this.spr.gotoAndStop(1);
+      this.pressed = true;
+    }
+    action();
+  });
+}
+
+app.ticker.add(playing);

@@ -10,6 +10,14 @@ function randomIntStr(a, b, trailing) {
 	return val;
 }
 
+function getIntStr(x, trailing) {
+	let val = x.toString();
+	for (let i = val.length ; i<trailing; i++) {
+		val = "0" + val;
+	}
+	return val;
+}
+
 function randomFromArr(arr) {
   return arr[randomInt(0, arr.length-1)];
 }
@@ -24,4 +32,10 @@ function indexOf(obj, arr) {
       return i;
     }
   }
+}
+
+function shuffle(arr) {
+  return arr.sort((a,b) => {
+    return 0.499 - Math.random();
+  });
 }
