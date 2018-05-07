@@ -1,0 +1,20 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":0, "y":0, "w":217, "h":215},
+		"spriteSourceSize": {"x":0,"y":38,"w":217,"h":253},
+		"sourceSize": {"w":217,"h":253}
+	},
+	"02.png": {
+		"frame": {"x":219, "y":0, "w":207, "h":253},
+		"spriteSourceSize": {"x":0,"y":0,"w":207,"h":253},
+		"sourceSize": {"w":207,"h":253}
+	}
+
+},
+"meta": {
+	"image": "largo.png",
+	"size": {"w": 428, "h": 255},
+	"scale": "1"
+}
+}

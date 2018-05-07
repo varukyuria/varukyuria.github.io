@@ -1,0 +1,25 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":0, "y":222, "w":202, "h":220},
+		"spriteSourceSize": {"x":0,"y":0,"w":202,"h":220},
+		"sourceSize": {"w":202,"h":220}
+	},
+	"02.png": {
+		"frame": {"x":0, "y":0, "w":202, "h":220},
+		"spriteSourceSize": {"x":0,"y":0,"w":202,"h":220},
+		"sourceSize": {"w":202,"h":220}
+	},
+	"03.png": {
+		"frame": {"x":204, "y":0, "w":202, "h":220},
+		"spriteSourceSize": {"x":0,"y":0,"w":202,"h":220},
+		"sourceSize": {"w":202,"h":220}
+	}
+
+},
+"meta": {
+	"image": "maximilian.png",
+	"size": {"w": 408, "h": 444},
+	"scale": "1"
+}
+}

@@ -1,0 +1,30 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":0, "y":209, "w":198, "h":207},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":207},
+		"sourceSize": {"w":198,"h":207}
+	},
+	"02.png": {
+		"frame": {"x":200, "y":0, "w":198, "h":207},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":207},
+		"sourceSize": {"w":198,"h":207}
+	},
+	"03.png": {
+		"frame": {"x":200, "y":209, "w":198, "h":207},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":207},
+		"sourceSize": {"w":198,"h":207}
+	},
+	"04.png": {
+		"frame": {"x":0, "y":0, "w":198, "h":207},
+		"spriteSourceSize": {"x":0,"y":0,"w":198,"h":207},
+		"sourceSize": {"w":198,"h":207}
+	}
+
+},
+"meta": {
+	"image": "marina.png",
+	"size": {"w": 400, "h": 418},
+	"scale": "1"
+}
+}

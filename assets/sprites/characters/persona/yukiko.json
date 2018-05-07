@@ -1,0 +1,40 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":176, "y":0, "w":170, "h":211},
+		"spriteSourceSize": {"x":0,"y":0,"w":170,"h":211},
+		"sourceSize": {"w":170,"h":211}
+	},
+	"02.png": {
+		"frame": {"x":0, "y":213, "w":170, "h":211},
+		"spriteSourceSize": {"x":0,"y":0,"w":170,"h":211},
+		"sourceSize": {"w":170,"h":211}
+	},
+	"03.png": {
+		"frame": {"x":172, "y":213, "w":170, "h":211},
+		"spriteSourceSize": {"x":0,"y":0,"w":170,"h":211},
+		"sourceSize": {"w":170,"h":211}
+	},
+	"04.png": {
+		"frame": {"x":344, "y":213, "w":170, "h":211},
+		"spriteSourceSize": {"x":0,"y":0,"w":170,"h":211},
+		"sourceSize": {"w":170,"h":211}
+	},
+	"05.png": {
+		"frame": {"x":348, "y":0, "w":170, "h":211},
+		"spriteSourceSize": {"x":0,"y":0,"w":170,"h":211},
+		"sourceSize": {"w":170,"h":211}
+	},
+	"06.png": {
+		"frame": {"x":0, "y":0, "w":174, "h":211},
+		"spriteSourceSize": {"x":0,"y":0,"w":174,"h":211},
+		"sourceSize": {"w":174,"h":211}
+	}
+
+},
+"meta": {
+	"image": "yukiko.png",
+	"size": {"w": 520, "h": 426},
+	"scale": "1"
+}
+}

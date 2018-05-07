@@ -55,6 +55,16 @@ PIXI.loader
   .add("assets/sprites/characters/valerie.json")
   .add("assets/sprites/characters/varrot.json")
   .add("assets/sprites/characters/welkin.json")
+  .add("assets/sprites/characters/jann.json")
+  .add("assets/sprites/characters/maximilian.json")
+  .add("assets/sprites/characters/marina.json")
+  .add("assets/sprites/characters/largo.json")
+  // PERSONA
+  .add("assets/sprites/characters/persona/chie.json")
+  .add("assets/sprites/characters/persona/rise.json")
+  .add("assets/sprites/characters/persona/adachi.json")
+  .add("assets/sprites/characters/persona/yosuke.json")
+  .add("assets/sprites/characters/persona/yukiko.json")
   .load(setup);
 })();
 
@@ -129,7 +139,7 @@ function next() {
         changeBkg();
       }
     }
-    doUntil(()=>{}, 45, next);
+    doUntil(null, 45, next);
   }
 }
 
@@ -369,17 +379,30 @@ Talker.prototype.genMsg = function() {
     if (Math.random() < 0.4) {
       let selected_talkers = activeTalkers().filter(x => x.name != this.name);
       if (selected_talkers.length > 0) {
+        let randomreact = true;
         let selected_talker = randomFromArr(selected_talkers);
         
         result += selected_talker.name + " ";
         // queue EMOTES
-        if (isInArr(this.name, selected_talker.likes) && isInArr(selected_talker.name, this.likes)) {
-          for (let i=0; i<5; i++) {
+        for (let i=0; i<5; i++) {
+          // love
+          if (isInArr(this.name, selected_talker.likes)) {
             new Emote(selected_talker, 1, true);
+            randomreact = false;
+          }
+          if (isInArr(selected_talker.name, this.likes)) {
             new Emote(this, 1, true);
           }
+          // hate
+          if (isInArr(this.name, selected_talker.dislikes)) {
+            new Emote(selected_talker, 14, true, PIXI.BLEND_MODES.MULTIPLY);
+            randomreact = false;
+          }
+          if (isInArr(selected_talker.name, this.dislikes)) {
+            new Emote(this, 14, true, PIXI.BLEND_MODES.MULTIPLY);
+          }
         }
-        else {
+        if (randomreact) {
           new Emote(selected_talker);
         }
         // -- queue EMOTES
@@ -412,6 +435,7 @@ Talker.prototype.talk = function() {
 };
 Talker.prototype.enter = function() {
   if (!this.randomPos()) {return;}
+  this.randomFace();
   this.active = true;
   this.spr.alpha = 0.1;
   this.spr.x -= this.stage_spot.facing*30;
@@ -456,7 +480,7 @@ Talker.prototype.randomFace = function() {
 function initTalkers() {
   // [sidenote] available boards: a g c jp v vr tv k o an sci his i toy p ck ic lit mu fa gd biz fit s4s
   talkers.push(new Talker(
-    "Alfons", ["vr", "jp", "k", "sci", "s4s"], "assets/sprites/characters/alfons.json",
+    "Alfons", ["vr", "jp", "sci", "s4s"], "assets/sprites/characters/alfons.json",
     [], [], ["Leila"], []
   ));
   talkers.push(new Talker("Alicia", ["c", "ck", "s4s"], "assets/sprites/characters/alicia.json",
@@ -475,7 +499,7 @@ function initTalkers() {
     [], [], [], []
   ));
   talkers.push(new Talker("Edy", ["jp"], "assets/sprites/characters/edy.json",
-    ["やりましたわ", "はっけんしたわ"], ["wa", "わ"], ["Alicia"], []
+    ["やりましたわ", "はっけんしたわ"], ["wa", "わ"], ["Alicia"], ["Rosie"]
   ));
   talkers.push(new Talker("Gloria", [""], "assets/sprites/characters/gloria.json",
     [], [], [], []
@@ -495,14 +519,14 @@ function initTalkers() {
   talkers.push(new Talker("Leila", ["fit", "k", "fa"], "assets/sprites/characters/leila.json",
     [], [], [], ["Alfons"]
   ));
-  talkers.push(new Talker("Riela", ["", "s4s"], "assets/sprites/characters/riela.json",
+  talkers.push(new Talker("Riela", ["c", "s4s"], "assets/sprites/characters/riela.json",
     ["そこね", "クルト、わたしも！"], [], ["Kurt", "Imca"], []
   ));
   talkers.push(new Talker("Rosie", ["mu"], "assets/sprites/characters/rosie.json",
-    [], [], ["Isara"], ["Isara"]
+    [], [], ["Isara", "Largo"], ["Isara"]
   ));
   talkers.push(new Talker("Selvaria", ["k"], "assets/sprites/characters/selvaria.json",
-    [], [], [], ["Welkin"]
+    [], [], ["Maximilian"], ["Welkin"]
   ));
   talkers.push(new Talker("Susie", ["c", "a"], "assets/sprites/characters/susie.json",
     [], [], [], []
@@ -514,7 +538,35 @@ function initTalkers() {
     ["あら！", "では"], [], ["Welkin"], []
   ));
   talkers.push(new Talker("Welkin", ["an", "his"], "assets/sprites/characters/welkin.json",
-    ["よし行くそう！", "すげきする！", "はっけんした"], [], ["Alicia", "Isara"], ["Selvaria"]
+    ["よし行くそう！", "すげきする！", "はっけんした"], [], ["Alicia", "Isara"], ["Selvaria", "Maximilian"]
+  ));
+  talkers.push(new Talker("Jann", ["c", "u"], "assets/sprites/characters/jann.json",
+    ["わたしはがんばっちゃん", "hey, soldier ♪", "", ""], [], ["Largo"], []
+  ));
+  talkers.push(new Talker("Maximilian", ["his", ""], "assets/sprites/characters/maximilian.json",
+    ["セルベリア"], [], [], ["Welkin", "Alicia"]
+  ));
+  talkers.push(new Talker("Marina", ["c", "k"], "assets/sprites/characters/marina.json",
+    [], [], [], []
+  ));
+  talkers.push(new Talker("Largo", [], "assets/sprites/characters/largo.json",
+    [], [], ["Rosie"], []
+  ));
+  // PESOA
+  talkers.push(new Talker("Chie", [], "assets/sprites/characters/persona/chie.json",
+    [], [], [], []
+  ));
+  talkers.push(new Talker("Rise", [], "assets/sprites/characters/persona/rise.json",
+    [], [], [], []
+  ));
+  talkers.push(new Talker("Adachi", [], "assets/sprites/characters/persona/adachi.json",
+    [], [], [], []
+  ));
+  talkers.push(new Talker("Yosuke", [], "assets/sprites/characters/persona/yosuke.json",
+    [], [], [], []
+  ));
+  talkers.push(new Talker("Yukiko", [], "assets/sprites/characters/persona/yukiko.json",
+    [], [], [], []
   ));
 }
 function activeTalkers() {
@@ -526,6 +578,8 @@ function inactiveTalkers() {
 function enterTalkers() {
   for (let i=0; i<randomInt(1,4); i++) {
 //    randomFromArr(talkers.filter(x => x.name == "Alicia" || x.name == "Welkin")).enter();
+//    randomFromArr(talkers.filter(x => x.name == "Selvaria" || x.name == "Maximilian")).enter();
+//    randomFromArr(talkers.filter(x => x.name == "Chie" || x.name == "Largo")).enter();
     randomFromArr(talkers).enter();
   }
 }
@@ -645,7 +699,8 @@ function hideDialogIndicator() {
   dialog_indicator.x = -200;
 }
 
-function Emote(owner, number, strong) {
+function Emote(owner, number, strong, blendmode) {
+  blendmode = blendmode || PIXI.BLEND_MODES.ADD;
   this.randomrot = randomInt(0,30);
   this.spr = animatedSpriteFrom("assets/sprites/misc/emotes.json");
   this.spr.anchor.set(0.5, 0.5);
@@ -661,7 +716,7 @@ function Emote(owner, number, strong) {
   this.spr.x = owner.spr.x + randomInt(-x_range, x_range);
   this.spr.y = owner.spr.y - 30;
   if (strong) {
-    this.spr.blendMode = PIXI.BLEND_MODES.ADD;
+    this.spr.blendMode = blendmode;
   }
   Emote.queue.push(this);
   
