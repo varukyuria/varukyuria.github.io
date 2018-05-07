@@ -232,6 +232,7 @@ function changeBkg() {
       for (let i=0; i<actives.length; i++) {
         actives[i].leave();
       }
+      elapsed = 0;
       music.stop();
       playRandomTrack();
       let count = 0;
@@ -411,9 +412,9 @@ Talker.prototype.talk = function() {
   new Message(this, this.genMsg());
 };
 Talker.prototype.enter = function() {
+  if (!this.randomPos()) {return;}
   this.active = true;
   this.spr.alpha = 0.1;
-  this.randomPos();
   this.spr.x -= this.stage_spot.facing*30;
   this.spr.zIndex = this.stage_spot.zIndex;
   
@@ -448,6 +449,7 @@ Talker.prototype.randomPos = function() {
     this.spr.y = this.stage_spot.y + randomInt(-50, 50);
     this.spr.scale.x = this.stage_spot.facing;
   }
+  return freespots.length > 0;
 };
 Talker.prototype.randomFace = function() {
   this.spr.gotoAndStop(randomInt(0, this.spr.totalFrames));
