@@ -30,9 +30,11 @@ let haltNext = false;
 
 document.body.appendChild(app.view);
 
+
 // PIXI LOADER
+let loader = new PIXI.loaders.Loader();
 (() => {
-PIXI.loader
+loader
   .add("assets/sprites/misc/sound_button.json")
   .add("assets/sprites/misc/emotes.json")
   .add("assets/sprites/characters/alfons.json")
@@ -68,12 +70,47 @@ PIXI.loader
   .load(setup);
 })();
 
+loader.text = "";
+loader.text_spr;
+showLoader();
+function showLoader() {
+  let style = new PIXI.TextStyle({
+    fontFamily: 'Arial, sans-serif',
+    fontSize: 55,
+//    fontStyle: 'italic',
+//    fontWeight: 'bold',
+//    fill: ['#7c7c7c', '#9fc4ff'], // gradient
+    fill: '#ffffff', // gradient
+    stroke: '#626262',
+    letterSpacing: 1,
+    strokeThickness: 5,
+//    dropShadow: true,
+    dropShadowColor: '#767676',
+    dropShadowBlur: 0,
+    dropShadowAngle: Math.PI * 0.5,
+    dropShadowDistance: 1,
+  });
+
+  loader.text_spr = new PIXI.Text(loader.text_spr, style);
+  loader.text_spr.anchor.set(0.5,0.5);
+  loader.text_spr.x = app.screen.width/2;
+  loader.text_spr.y = app.screen.height/2;
+  loader.text_spr.zIndex = 200;
+  loader.text_spr.alpha = 1;
+  app.stage.addChild(loader.text_spr);
+  updateZIndex();
+}
+loader.on("progress", (loader, res) => {
+  loader.text_spr.text = Math.round(loader.progress*100)/100 + "%";
+});
+
 function ikuso () {
   if (currentMsg) {
     currentMsg.clicked();
   }
 }
 function setup() {
+  loader.text_spr.destroy();
   initSongs();
   playRandomTrack();
   
@@ -743,9 +780,6 @@ function Emote(owner, number, strong, blendmode) {
         this.spr.x += this.vx;
         this.spr.y += this.vy;
         this.spr.rotation = Math.sin((this.randomrot+elapsed)/35)*0.1;
-//        if (count > 350) {
-//          this.spr.alpha -= 0.02;
-//        }
       }, -1);
     });
   };
@@ -785,7 +819,7 @@ Emote.removeAll = function() {
   }
 };
 function animatedSpriteFrom(path) {
-  let t = PIXI.loader.resources[path].textures;
+  let t = loader.resources[path].textures;
   return new PIXI.extras.AnimatedSprite(Object.values(t).sort());
 }
 function updateZIndex() {
