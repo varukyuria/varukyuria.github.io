@@ -58,7 +58,13 @@ PIXI.loader
   .load(setup);
 })();
 
+function ikuso () {
+  if (currentMsg) {
+    currentMsg.clicked();
+  }
+}
 function setup() {
+//  document.body.onclick = ikuso;
   initSongs();
   playRandomTrack();
   
@@ -82,11 +88,7 @@ function setup() {
   background.width = app.screen.width;
   background.height = app.screen.height;
   background.interactive = true;
-  background.on("pointerdown", function() {
-    if (currentMsg) {
-      currentMsg.clicked();
-    }
-  });
+  background.on("pointerdown", ikuso);
   app.stage.addChild(background);
   
   
