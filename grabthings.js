@@ -1,5 +1,5 @@
 var main_window;
-var boards = ["http://boards.4chan.org/a/", "http://boards.4chan.org/g/", "http://boards.4chan.org/c/", "http://boards.4chan.org/jp/", "http://boards.4chan.org/v/", "http://boards.4chan.org/vr/", "http://boards.4chan.org/tv/", "http://boards.4chan.org/k/", "http://boards.4chan.org/o/", "http://boards.4chan.org/an/", "http://boards.4chan.org/sci/", "http://boards.4chan.org/his/", "http://boards.4chan.org/i/", "http://boards.4chan.org/toy/", "http://boards.4chan.org/p/", "http://boards.4chan.org/ck/", "http://boards.4chan.org/ic/", "http://boards.4chan.org/lit/", "http://boards.4chan.org/mu/", "http://boards.4chan.org/fa/", "http://boards.4chan.org/gd/", "http://boards.4chan.org/biz/", "http://boards.4chan.org/fit/", "http://boards.4chan.org/s4s/"];
+var boards = ["http://boards.4chan.org/a/", "http://boards.4chan.org/g/", "http://boards.4chan.org/c/", "http://boards.4chan.org/jp/", "http://boards.4chan.org/v/", "http://boards.4chan.org/vr/", "http://boards.4chan.org/tv/", "http://boards.4chan.org/k/", "http://boards.4chan.org/o/", "http://boards.4chan.org/an/", "http://boards.4chan.org/sci/", "http://boards.4chan.org/his/", "http://boards.4chan.org/i/", "http://boards.4chan.org/toy/", "http://boards.4chan.org/p/", "http://boards.4chan.org/ck/", "http://boards.4chan.org/ic/", "http://boards.4chan.org/lit/", "http://boards.4chan.org/mu/", "http://boards.4chan.org/fa/", "http://boards.4chan.org/gd/", "http://boards.4chan.org/biz/", "http://boards.4chan.org/fit/", "http://boards.4chan.org/s4s/", "http://boards.4chan.org/u/"];
 var textarea;
 var catalog = 1;
 
@@ -7,13 +7,13 @@ function DOEET(win) {
   win = win || window;
   let result = "";
 
-  function genJson(text, board, date) {
-    date = date || (new Date()).toLocaleString();
+  function genJson(text, board) {
     board = board || /4chan\.org\/(.*)\//.exec(win.location)[1];
     text = text.replace(/\[Embed\]/gi, "");
+    text = text.replace(/https?.*\s/gi, "");
     text = text.trim();
 
-    let msg = {text: text,board: board, date: date};
+    let msg = {text: text,board: board};
     if (msg.text === "") {
       return;
     }
@@ -44,6 +44,10 @@ function DOEET(win) {
 }
 
 function init() {
+  if (window.location.protocol == "https:") {
+    alert("IT DONT WORK ON HTTPS");
+    return;
+  }
   main_window = window.open(window.location);
   setTimeout(function() {
     main_window.document.body.innerHTML = "";
