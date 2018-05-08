@@ -1,0 +1,40 @@
+{
+"frames": {
+	"000.png": {
+		"frame": {"x":232, "y":0, "w":230, "h":232},
+		"spriteSourceSize": {"x":4,"y":6,"w":234,"h":238},
+		"sourceSize": {"w":234,"h":238}
+	},
+	"001.png": {
+		"frame": {"x":464, "y":0, "w":230, "h":232},
+		"spriteSourceSize": {"x":4,"y":6,"w":234,"h":238},
+		"sourceSize": {"w":234,"h":238}
+	},
+	"002.png": {
+		"frame": {"x":232, "y":234, "w":230, "h":232},
+		"spriteSourceSize": {"x":4,"y":6,"w":234,"h":238},
+		"sourceSize": {"w":234,"h":238}
+	},
+	"003.png": {
+		"frame": {"x":464, "y":234, "w":230, "h":232},
+		"spriteSourceSize": {"x":4,"y":6,"w":234,"h":238},
+		"sourceSize": {"w":234,"h":238}
+	},
+	"004.png": {
+		"frame": {"x":0, "y":234, "w":230, "h":232},
+		"spriteSourceSize": {"x":4,"y":6,"w":234,"h":238},
+		"sourceSize": {"w":234,"h":238}
+	},
+	"005.png": {
+		"frame": {"x":0, "y":0, "w":230, "h":232},
+		"spriteSourceSize": {"x":4,"y":6,"w":234,"h":238},
+		"sourceSize": {"w":234,"h":238}
+	}
+
+},
+"meta": {
+	"image": "labrys.png",
+	"size": {"w": 696, "h": 468},
+	"scale": "1"
+}
+}

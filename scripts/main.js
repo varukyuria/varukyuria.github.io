@@ -13,7 +13,7 @@ let music_song;
 let music_normal_volume = 0.5;
 let sound_is_on = true;
 let emotes_queue = [];
-let music_paths = ['A Moment of Relief.mp3', 'Chronicles of the Gallian War.mp3', 'Conferral of Honors.mp3', 'Daily Life of the 7th Platoon.mp3', 'Defensive Fight.mp3', 'Everyday Training.mp3', 'Fierce Combat.mp3', 'Final Decisive Battle.mp3', 'Gallant Fight.mp3', 'Hard Fight.mp3', 'No Matter The Distance (Game Opening).mp3', 'No Matter The Distance.mp3', 'Offensive and Defensive Battle.mp3', 'Quiet Chat.mp3', "Randgriz Archduke's Family.mp3", 'Randgriz City.mp3', 'Resistance.mp3', 'Succeeded Wish (Piano).mp3', 'Succeeded Wish (ROJI).mp3', 'Those Who Succeeded.mp3', 'Title Main Theme.mp3', 'Urgent Instructions.mp3', 'Varukyuria Intro.mp3', "Zaka's Theme.mp3"];
+let music_paths = ['A Moment of Relief.mp3', 'Chronicles of the Gallian War.mp3', 'Daily Life of the 7th Platoon.mp3', 'Defensive Fight.mp3', 'Everyday Training.mp3', 'Fierce Combat.mp3', 'Final Decisive Battle.mp3', 'Gallant Fight.mp3', 'Hard Fight.mp3', 'No Matter The Distance (Game Opening).mp3', 'No Matter The Distance.mp3', 'Offensive and Defensive Battle.mp3', 'Quiet Chat.mp3', "Randgriz Archduke's Family.mp3", 'Randgriz City.mp3', 'Resistance.mp3', 'Succeeded Wish (Piano).mp3', 'Succeeded Wish (ROJI).mp3', 'Those Who Succeeded.mp3', 'Title Main Theme.mp3', 'Urgent Instructions.mp3', 'Varukyuria Intro.mp3', "Zaka's Theme.mp3"];
 let songs = [];
 let stage_spots = [
   {x: 150, y: 126, facing: 1, guest: null, zIndex: 0},
@@ -67,11 +67,12 @@ loader
   .add("assets/sprites/characters/persona/adachi.json")
   .add("assets/sprites/characters/persona/yosuke.json")
   .add("assets/sprites/characters/persona/yukiko.json")
+  .add("assets/sprites/characters/persona/yuna.json")
   .load(setup);
 })();
 
 loader.text = "";
-loader.text_spr;
+loader.text_spr = null;
 showLoader();
 function showLoader() {
   let style = new PIXI.TextStyle({
@@ -518,19 +519,19 @@ function initTalkers() {
   // [sidenote] available boards: a g c jp v vr tv k o an sci his i toy p ck ic lit mu fa gd biz fit s4s
   talkers.push(new Talker(
     "Alfons", ["vr", "jp", "sci", "s4s"], "assets/sprites/characters/alfons.json",
-    [], [], ["Leila"], []
+    [], [], ["Leila", "Annika"], []
   ));
   talkers.push(new Talker("Alicia", ["c", "ck", "s4s"], "assets/sprites/characters/alicia.json",
-    ["NE WERUKIN", "ね。。ウェルキン", "SOKKOO", "ATTATTEE", "行動かいします"], [], ["Welkin", "Isara"], []
+    ["ん！", "こうどうかいしします", "NE WERUKIN", "ね。。ウェルキン", "そこ！！！", "あたって！！！", "SOKOO", "ATATTEE", "行動かいします", "わたしのばんね"], [], ["Welkin", "Isara", "Selvaria"], ["Clarissa", "Gloria", "Maximilian"]
   ));
   talkers.push(new Talker("Amy", [""], "assets/sprites/characters/amy.json",
-    [], [], [], []
+    [], [], ["Leila", "Annika"], []
   ));
   talkers.push(new Talker("Annika", ["fit"], "assets/sprites/characters/annika.json",
-    [], [], [], []
+    [], [], ["Leila", "Alfons", "Amy", "Imca"], []
   ));
   talkers.push(new Talker("Clarissa", ["fit", "mu"], "assets/sprites/characters/clarissa.json",
-    [], [], [], []
+    [], [], ["Valerie"], []
   ));
   talkers.push(new Talker("Cossette", ["gd", "ic", "i"], "assets/sprites/characters/cossette.json",
     [], [], [], []
@@ -545,37 +546,37 @@ function initTalkers() {
     [], [], ["Kurt"], []
   ));
   talkers.push(new Talker("Imca", ["k"], "assets/sprites/characters/imca.json",
-    ["はっけん", "ない。"], [], ["Riela"], []
+    ["てき", "ない。"], [], ["Riela", "Kurt", "Annika", "Labrys"], []
   ));
   talkers.push(new Talker("Isara", ["o", "sci"], "assets/sprites/characters/isara.json",
-    [], [], ["Welkin"], []
+    [], [], ["Welkin", "Alicia", "Yuna"], ["Yosuke"]
   ));
   talkers.push(new Talker("Kurt", ["biz", "ck"], "assets/sprites/characters/kurt.json",
-    [], [], ["Riela", "Gusurg"], []
+    ["リエラ。。いま助ける！", "しゅつげきする", "こうどうかいしする"], [], ["Riela", "Gusurg", "Imca"], []
   ));
   talkers.push(new Talker("Leila", ["fit", "k", "fa"], "assets/sprites/characters/leila.json",
-    [], [], [], ["Alfons"]
+    [], [], ["Alfons", "Amy", "Annika"], []
   ));
   talkers.push(new Talker("Riela", ["c", "s4s"], "assets/sprites/characters/riela.json",
-    ["そこね", "クルト、わたしも！"], [], ["Kurt", "Imca"], []
+    ["はっけんしたわ", "そこね", "クルト、わたしも！", "こうどうかいし", "わたしのつがいね", "そこね", "あたって！", "やった！"], [], ["Kurt", "Imca", "Valerie", "Alicia"], []
   ));
   talkers.push(new Talker("Rosie", ["mu"], "assets/sprites/characters/rosie.json",
     [], [], ["Isara", "Largo"], ["Isara"]
   ));
   talkers.push(new Talker("Selvaria", ["k"], "assets/sprites/characters/selvaria.json",
-    [], [], ["Maximilian"], ["Welkin"]
+    [], [], ["Maximilian", "Alicia"], ["Welkin"]
   ));
   talkers.push(new Talker("Susie", ["c", "a"], "assets/sprites/characters/susie.json",
     [], [], [], []
   ));
   talkers.push(new Talker("Valerie", ["his", "sci"], "assets/sprites/characters/valerie.json",
-    [], [], [], []
+    ["行くわよ！"], [], ["Riela", "Clarissa"], []
   ));
   talkers.push(new Talker("Varrot", ["fit"], "assets/sprites/characters/varrot.json",
-    ["あら！", "では"], [], ["Welkin"], []
+    ["あら！", "では"], [], ["Welkin", "Largo"], []
   ));
   talkers.push(new Talker("Welkin", ["an", "his"], "assets/sprites/characters/welkin.json",
-    ["よし行くそう！", "すげきする！", "はっけんした"], [], ["Alicia", "Isara"], ["Selvaria", "Maximilian"]
+    ["よし行くそう！", "しゅつげきする！", "はっけんした"], [], ["Alicia", "Isara"], ["Selvaria", "Maximilian"]
   ));
   talkers.push(new Talker("Jann", ["c", "u"], "assets/sprites/characters/jann.json",
     ["わたしはがんばっちゃん", "hey, soldier ♪", "", ""], [], ["Largo"], []
@@ -586,24 +587,30 @@ function initTalkers() {
   talkers.push(new Talker("Marina", ["c", "k"], "assets/sprites/characters/marina.json",
     [], [], [], []
   ));
-  talkers.push(new Talker("Largo", [], "assets/sprites/characters/largo.json",
-    [], [], ["Rosie"], []
+  talkers.push(new Talker("Largo", ["tv"], "assets/sprites/characters/largo.json",
+    [], [], ["Rosie", "Varrot"], []
   ));
   // PESOA
-  talkers.push(new Talker("Chie", [], "assets/sprites/characters/persona/chie.json",
+  talkers.push(new Talker("Chie", ["u", "fit"], "assets/sprites/characters/persona/chie.json",
+    [], [], ["Yukiko"], []
+  ));
+  talkers.push(new Talker("Rise", ["mu", "fa"], "assets/sprites/characters/persona/rise.json",
     [], [], [], []
   ));
-  talkers.push(new Talker("Rise", [], "assets/sprites/characters/persona/rise.json",
-    [], [], [], []
+  talkers.push(new Talker("Adachi", ["biz", "toy"], "assets/sprites/characters/persona/adachi.json",
+    [], [], [], ["Yuna"]
   ));
-  talkers.push(new Talker("Adachi", [], "assets/sprites/characters/persona/adachi.json",
-    [], [], [], []
+  talkers.push(new Talker("Yosuke", ["fa", "mu", "v"], "assets/sprites/characters/persona/yosuke.json",
+    [], [], ["Yuna"], []
   ));
-  talkers.push(new Talker("Yosuke", [], "assets/sprites/characters/persona/yosuke.json",
-    [], [], [], []
+  talkers.push(new Talker("Yukiko", ["p"], "assets/sprites/characters/persona/yukiko.json",
+    [], [], ["Yuna"], []
   ));
-  talkers.push(new Talker("Yukiko", [], "assets/sprites/characters/persona/yukiko.json",
-    [], [], [], []
+  talkers.push(new Talker("Yuna", ["a", "c"], "assets/sprites/characters/persona/yuna.json",
+    [], [], ["Yukiko", "Chie", "Riela", "Edy"], ["Adachi"]
+  ));
+  talkers.push(new Talker("Labrys", ["g"], "assets/sprites/characters/persona/yuna.json",
+    [], [], ["Yosuke", "Alfons", "Imca"], ["Edy"]
   ));
 }
 function activeTalkers() {
@@ -616,7 +623,7 @@ function enterTalkers() {
   for (let i=0; i<randomInt(1,4); i++) {
 //    randomFromArr(talkers.filter(x => x.name == "Alicia" || x.name == "Welkin")).enter();
 //    randomFromArr(talkers.filter(x => x.name == "Selvaria" || x.name == "Maximilian")).enter();
-//    randomFromArr(talkers.filter(x => x.name == "Chie" || x.name == "Largo")).enter();
+    randomFromArr(talkers.filter(x => x.name == "Yuna" || x.name == "Yukiko")).enter();
     randomFromArr(talkers).enter();
   }
 }
