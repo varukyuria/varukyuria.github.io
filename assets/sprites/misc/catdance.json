@@ -1,0 +1,80 @@
+{
+"frames": {
+	"000.png": {
+		"frame": {"x":0, "y":28, "w":32, "h":28},
+		"spriteSourceSize": {"x":2,"y":8,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	},
+	"001.png": {
+		"frame": {"x":0, "y":87, "w":32, "h":27},
+		"spriteSourceSize": {"x":2,"y":9,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	},
+	"002.png": {
+		"frame": {"x":0, "y":28, "w":32, "h":28},
+		"spriteSourceSize": {"x":2,"y":8,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	},
+	"003.png": {
+		"frame": {"x":0, "y":58, "w":32, "h":27},
+		"spriteSourceSize": {"x":2,"y":9,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	},
+	"004.png": {
+		"frame": {"x":34, "y":96, "w":28, "h":28},
+		"spriteSourceSize": {"x":4,"y":8,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	},
+	"005.png": {
+		"frame": {"x":34, "y":62, "w":30, "h":32},
+		"spriteSourceSize": {"x":3,"y":4,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	},
+	"006.png": {
+		"frame": {"x":34, "y":96, "w":28, "h":28},
+		"spriteSourceSize": {"x":4,"y":8,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	},
+	"007.png": {
+		"frame": {"x":34, "y":28, "w":30, "h":32},
+		"spriteSourceSize": {"x":3,"y":4,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	},
+	"008.png": {
+		"frame": {"x":96, "y":32, "w":28, "h":29},
+		"spriteSourceSize": {"x":4,"y":7,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	},
+	"009.png": {
+		"frame": {"x":0, "y":0, "w":36, "h":26},
+		"spriteSourceSize": {"x":0,"y":0,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	},
+	"010.png": {
+		"frame": {"x":66, "y":64, "w":28, "h":30},
+		"spriteSourceSize": {"x":4,"y":6,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	},
+	"011.png": {
+		"frame": {"x":96, "y":0, "w":28, "h":30},
+		"spriteSourceSize": {"x":4,"y":2,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	},
+	"012.png": {
+		"frame": {"x":66, "y":0, "w":28, "h":30},
+		"spriteSourceSize": {"x":4,"y":6,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	},
+	"013.png": {
+		"frame": {"x":66, "y":32, "w":28, "h":30},
+		"spriteSourceSize": {"x":4,"y":6,"w":36,"h":36},
+		"sourceSize": {"w":36,"h":36}
+	}
+
+},
+"meta": {
+	"image": "catdance.png",
+	"size": {"w": 126, "h": 126},
+	"scale": "1"
+}
+}

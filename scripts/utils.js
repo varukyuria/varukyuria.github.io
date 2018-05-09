@@ -10,6 +10,10 @@ function randomIntStr(a, b, trailing) {
 	return val;
 }
 
+function randomFloat(a, b) {
+  return a + Math.random()*(b-a);
+}
+
 function getIntStr(x, trailing) {
 	let val = x.toString();
 	for (let i = val.length ; i<trailing; i++) {
@@ -24,6 +28,13 @@ function randomFromArr(arr) {
 
 function isInArr(obj, arr) {
   return (arr.filter(x => x === obj)).length>0
+}
+
+function pushIfNotIn(obj, arr) {
+  if (!isInArr(obj, arr)) {
+    arr.push(obj);
+  }
+  return arr;
 }
 
 function indexOf(obj, arr) {

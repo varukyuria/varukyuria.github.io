@@ -452,7 +452,7 @@ DATACHAN.posts = [
   "board": "g"
 },
 {
-  "text": "Gottem, haha xD!!",
+  "text": "Gottem, haha !!",
   "board": "g"
 },
 {
@@ -6584,10 +6584,6 @@ DATACHAN.posts = [
   "board": "fit"
 },
 {
-  "text": "xD",
-  "board": "fit"
-},
-{
   "text": "homegym thread?\njust finishe setting up mine",
   "board": "fit"
 },
@@ -7832,7 +7828,7 @@ DATACHAN.posts = [
   "board": "g"
 },
 {
-  "text": ">VPN XD",
+  "text": ">VPN",
   "board": "g"
 },{
   "text": "cheeky tongues out thread",
@@ -12895,7 +12891,7 @@ DATACHAN.posts = [
   "board": "mu"
 },
 {
-  "text": "ANTIDEPRESSIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOON",
+  "text": "ANTIDEPRESSIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOON",
   "board": "mu"
 },
 {
@@ -13860,7 +13856,7 @@ DATACHAN.posts = [
   "board": "fit"
 },
 {
-  "text": ">le incel club XD\n\ndrink bleach faggot",
+  "text": ">le incel club \n\ndrink bleach faggot",
   "board": "fit"
 },
 {
