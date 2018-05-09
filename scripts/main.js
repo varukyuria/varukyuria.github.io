@@ -1,10 +1,14 @@
 // TODO
-// add sounds
-// move strong emotes towards taget *
+// add sounds - persona dancin , chronicles 3, chronicles 1
+// moar musics
+// labrys theme when labrys
+// sousei no aquarion
+// resize screen / rotate phone *
 // figure out stage_spot error
 // transparencily fadeout sprites bottoms
+// irene koller special scene, "on the gallian front"
 
-let app = new PIXI.Application({width: 720, height: 480, backgroundColor: 0xf5f5f5});
+let app = new PIXI.Application({width: 720, height: 540, backgroundColor: 0xf5f5f5});
 
 let background;
 let objectsToUpdate = [];
@@ -19,13 +23,13 @@ let music_normal_volume = 0.5;
 let sound_is_on = true;
 let next_ticker;
 let emotes_queue = [];
-let music_paths = ['A Moment of Relief.mp3', 'Chronicles of the Gallian War.mp3', 'Daily Life of the 7th Platoon.mp3', 'Defensive Fight.mp3', 'Everyday Training.mp3', 'Fierce Combat.mp3', 'Final Decisive Battle.mp3', 'Gallant Fight.mp3', 'Hard Fight.mp3', 'No Matter The Distance (Game Opening).mp3', 'No Matter The Distance.mp3', 'Offensive and Defensive Battle.mp3', 'Quiet Chat.mp3', "Randgriz Archduke's Family.mp3", 'Randgriz City.mp3', 'Resistance.mp3', 'Succeeded Wish (Piano).mp3', 'Succeeded Wish (ROJI).mp3', 'Those Who Succeeded.mp3', 'Title Main Theme.mp3', 'Urgent Instructions.mp3', 'Varukyuria Intro.mp3', "Zaka's Theme.mp3"];
+let music_paths = ['A Moment of Relief.mp3', 'Chronicles of the Gallian War.mp3', 'Daily Life of the 7th Platoon.mp3', 'Defensive Fight.mp3', 'Everyday Training.mp3', 'Fierce Combat.mp3', 'Final Decisive Battle.mp3', 'Gallant Fight.mp3', 'Hard Fight.mp3', 'No Matter The Distance (Game Opening).mp3', 'No Matter The Distance.mp3', 'Offensive and Defensive Battle.mp3', 'Quiet Chat.mp3', "Randgriz Archduke's Family.mp3", 'Randgriz City.mp3', 'Resistance.mp3', 'Succeeded Wish (Piano).mp3', 'Succeeded Wish (ROJI).mp3', 'Those Who Succeeded.mp3', 'Title Main Theme.mp3', 'Urgent Instructions.mp3', 'Varukyuria Intro.mp3', "Zaka's Theme.mp3", "K-ON! - Pinch Daisuki.mp3"];
 let songs = [];
 let stage_spots = [
-  {x: 150, y: 126, facing: 1, guest: null, zIndex: 0},
-  {x: 150, y: 363, facing: 1,  guest: null, zIndex: 1},
-  {x: app.screen.width-150, y: 126, facing: -1,  guest: null, zIndex: 2},
-  {x: app.screen.width-190, y: 363, facing: -1,  guest: null, zIndex: 3}
+  {x: 140, y: 126, facing: 1, guest: null, zIndex: 0},
+  {x: 140, y: 363, facing: 1,  guest: null, zIndex: 1},
+  {x: app.screen.width-140, y: 126, facing: -1,  guest: null, zIndex: 2},
+  {x: app.screen.width-190, y: app.screen.height-117, facing: -1,  guest: null, zIndex: 3}
 ];
 let gameplay = {};
 let currentMsg;
@@ -606,6 +610,7 @@ loader
 .add("assets/sprites/characters/persona/yukiko.json")
 .add("assets/sprites/characters/persona/yuna.json")
 .add("assets/sprites/characters/persona/labrys.json")
+.add("assets/sprites/characters/persona/teddie.json")
 .load(setup);
 })();
 
@@ -677,6 +682,7 @@ function ikuso () {
   }
 }
 function setup() {
+  
   loader.text_spr.destroy();
   LoadingSphere.removeAll();
   initSongs();
@@ -1105,6 +1111,9 @@ function initTalkers() {
   Talker.talkers.push(new Talker("Labrys", ["g"], "assets/sprites/characters/persona/labrys.json",
     [], [], ["Yosuke", "Alfons", "Imca"], ["Edy"], [3,4], 1.5
   ));
+  Talker.talkers.push(new Talker("Teddie", ["a"], "assets/sprites/characters/persona/teddie.json",
+    [], [], [], [], [3,4], 6
+  ));
 }
 function activeTalkers() {
   return Talker.talkers.filter(t => t.active);
@@ -1138,7 +1147,7 @@ function Message(owner, text) {
   
   var style = new PIXI.TextStyle({
       fontFamily: 'Arial, sans-serif',
-      fontSize: 22,
+      fontSize: 26,
       fill: '#747474',
 //      letterSpacing: 3,
 //      stroke: '#dbdbdb',
@@ -1165,8 +1174,8 @@ function Message(owner, text) {
   }
   if (this.owner.stage_spot.facing === -1) {
     this.x = this.owner.spr.x - this.owner.spr.width/2 - this.spr.width + 50;
-    if (this.x < 10) {
-      this.x = 10;
+    if (this.x < 20) {
+      this.x = 20;
     }
   }
   
@@ -1669,3 +1678,25 @@ function playing(delta) {
 }
 
 app.ticker.add(playing);
+
+function updateCanvasSize() {
+  let padding = 35;
+  let a = window.innerWidth;
+  let b = window.innerHeight;
+  let h_factor = 1;
+  let w_factor = app.view.width/app.view.height * b/a;
+  if (b > a) {
+    h_factor = app.view.height/app.view.width * a/b;
+    w_factor = 1;
+  }
+  app.view.style.position = "relative";
+  app.view.style.width = (screen.width-padding)*w_factor + "px";
+  app.view.style.height = (screen.height-padding)*h_factor + "px";
+  app.view.style.width = (window.innerWidth-padding)*w_factor + "px";
+  app.view.style.height = (window.innerHeight-padding)*h_factor + "px";
+  app.view.style.top = 10 + "px";
+  app.render();
+}
+window.addEventListener("resize", updateCanvasSize, false);
+updateCanvasSize();
+

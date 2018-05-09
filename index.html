@@ -13,15 +13,29 @@
     body {
       background-color: #191919;
     }
+    .toch {
+      background-color: #000000;
+      z-index: -10;
+      position: fixed;
+      width: 100vw;
+/*      height: -50%;*/
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      height: 100vh;
+/*      width: 100%;*/
+      margin: 0% 0 0 0%;
+    }
+/*
     canvas {
       margin-top: 18vh;
       width: 75vw;
       height: 55vh;
       max-width: 800px;
     }
-    .toch {
-      
-    }
+*/
+/*
+
     @media screen and (max-width: 800px) {
       canvas {
         margin-top: 15vh;
@@ -29,24 +43,24 @@
         height: auto;
       }
       .toch {
-/*        background-color: aliceblue;*/
+      background-color: aliceblue;
         z-index: -10;
         position: fixed;
         width: 100vw;
         height: -50%;
-        
-         position: absolute;
-    top: 0%;
-    left: 0%;
-    height: 100%;
-    width: 100%;
-    margin: 0% 0 0 0%;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        height: 100%;
+        width: 100%;
+        margin: 0% 0 0 0%;
       }
     }
+*/
 
   </style>
 </head>
-<body>
+<body onload="">
   <script src="pixi/pixi.min.js"></script>
   <script src="pixi/pixi-sound.js"></script>
   <script src="scripts/utils.js"></script>
