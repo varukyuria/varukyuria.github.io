@@ -1,8 +1,9 @@
+grabthings.js
 *.jshintrc
 *.psd
 *.bat
-
-assets/music/raw/*
+*.wav
+*.py
 
 # Windows image file caches
 Thumbs.db

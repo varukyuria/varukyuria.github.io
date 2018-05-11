@@ -3872,10 +3872,6 @@ DATACHAN.posts = [
   "board": "toy"
 },
 {
-  "text": "Previous thread \n\nWhere to Buy-\nwww.bigbadtoystore.com (For items distributed by Bluefin. Others should be purchased elsewhere)\n\nWeb Exclusives-\n\nLatest Tamashii Nations News -\n\nFull List of SHF Releases -",
-  "board": "toy"
-},
-{
   "text": "Boba Fett, KH2 Riku, Kisame",
   "board": "toy"
 },
