@@ -54,3 +54,7 @@ function shuffle(arr) {
 function copyArr(arr) {
   return arr.filter(x => 1==1);
 }
+
+function objectIsEmpty(obj) {
+  return Object.keys(loader.resources["assets/music/Fierce Combat.mp3"].sound.sprites).length === 0 && obj.constructor === Object;
+}

@@ -23,6 +23,7 @@ let sound_is_on = true;
 let next_ticker;
 let emotes_queue = [];
 let music_paths = ['A Moment of Relief.mp3', 'Chronicles of the Gallian War.mp3', 'Daily Life of the 7th Platoon.mp3', 'Defensive Fight.mp3', 'Everyday Training.mp3', 'Fierce Combat.mp3', 'Final Decisive Battle.mp3', 'Gallant Fight.mp3', 'Hard Fight.mp3', 'No Matter The Distance (Game Opening).mp3', 'No Matter The Distance.mp3', 'Offensive and Defensive Battle.mp3', 'Quiet Chat.mp3', "Randgriz Archduke's Family.mp3", 'Randgriz City.mp3', 'Resistance.mp3', 'Succeeded Wish (Piano).mp3', 'Those Who Succeeded.mp3', 'Title Main Theme.mp3', 'Urgent Instructions.mp3', 'Varukyuria Intro.mp3', "Zaka's Theme.mp3", "K-ON! - Pinch Daisuki.mp3", "Akino - Sousei no Aquarion.mp3"];
+music_paths = ["K-ON! - Pinch Daisuki.mp3", "Akino - Sousei no Aquarion.mp3"];
 let songs = [];
 let stage_spots = [
   {x: 140, y: 126, facing: 1, guest: null, zIndex: 0},
@@ -559,24 +560,54 @@ let loader = new PIXI.loaders.Loader();
 (() => {
 loader
 // voices
-//.add("assets/voice/alfons.mp3")
-//.add("assets/voice/amy.mp3")
-//.add("assets/voice/annika.mp3")
-//.add("assets/voice/chie.mp3")
-//.add("assets/voice/clarissa.mp3")
-//.add("assets/voice/gloria.mp3")
-//.add("assets/voice/gusurg.mp3")
-//.add("assets/voice/imca.mp3")
-//.add("assets/voice/kurt.mp3")
-//.add("assets/voice/labrys.mp3")
-//.add("assets/voice/leila.mp3")
-//.add("assets/voice/riela.mp3")
-//.add("assets/voice/rise.mp3")
-//.add("assets/voice/teddie.mp3")
-//.add("assets/voice/valerie.mp3")
-//.add("assets/voice/yosuke.mp3")
-//.add("assets/voice/yukiko.mp3")
-//.add("assets/voice/yuna.mp3")
+.add("assets/voice/alfons.mp3")
+.add("assets/voice/amy.mp3")
+.add("assets/voice/annika.mp3")
+.add("assets/voice/chie.mp3")
+.add("assets/voice/clarissa.mp3")
+.add("assets/voice/gloria.mp3")
+.add("assets/voice/gusurg.mp3")
+.add("assets/voice/imca.mp3")
+.add("assets/voice/kurt.mp3")
+.add("assets/voice/labrys.mp3")
+.add("assets/voice/leila.mp3")
+.add("assets/voice/riela.mp3")
+.add("assets/voice/rise.mp3")
+.add("assets/voice/teddie.mp3")
+.add("assets/voice/valerie.mp3")
+.add("assets/voice/yosuke.mp3")
+.add("assets/voice/yukiko.mp3")
+.add("assets/voice/yuna.mp3")
+// music
+.add("assets/music/A Moment of Relief.mp3")
+.add("assets/music/Akino - Sousei no Aquarion.mp3")
+.add("assets/music/Chronicles of the Gallian War.mp3")
+.add("assets/music/Daily Life of the 7th Platoon.mp3")
+.add("assets/music/Defensive Fight.mp3")
+.add("assets/music/Everyday Training.mp3")
+.add("assets/music/Fierce Combat.mp3")
+.add("assets/music/Final Decisive Battle.mp3")
+.add("assets/music/Gallant Fight.mp3")
+.add("assets/music/Hard Fight.mp3")
+.add("assets/music/K-ON! - Pinch Daisuki.mp3")
+.add("assets/music/No Matter The Distance (Game Opening).mp3")
+.add("assets/music/No Matter The Distance.mp3")
+.add("assets/music/Offensive and Defensive Battle.mp3")
+.add("assets/music/Quiet Chat.mp3")
+.add("assets/music/Randgriz Archduke's Family.mp3")
+.add("assets/music/Randgriz City.mp3")
+.add("assets/music/Resistance.mp3")
+.add("assets/music/Succeeded Wish (Piano).mp3")
+.add("assets/music/Those Who Succeeded.mp3")
+.add("assets/music/Title Main Theme.mp3")
+.add("assets/music/Urgent Instructions.mp3")
+.add("assets/music/Varukyuria Intro.mp3")
+.add("assets/music/Zaka's Theme.mp3")
+// music special
+.add("assets/music/special/characters/Spirited Girl (Labrys).mp3")
+.add("assets/music/special/characters/Succeeded Wish (ROJI).mp3")
+.add("assets/music/special/characters/Your Affection (Yosuke).mp3")
+.add("assets/music/special/bkg/JUNESU.mp3")
 // backgrounds
 .add("assets/backgrounds/bkg000.jpg")
 .add("assets/backgrounds/bkg001.jpg")
@@ -587,6 +618,97 @@ loader
 .add("assets/backgrounds/bkg006.jpg")
 .add("assets/backgrounds/bkg007.jpg")
 .add("assets/backgrounds/bkg008.jpg")
+// backgrounds rare
+.add("assets/backgrounds/rare/bkg000.jpg")
+.add("assets/backgrounds/rare/bkg001.jpg")
+.add("assets/backgrounds/rare/bkg002.jpg")
+.add("assets/backgrounds/rare/bkg003.jpg")
+.add("assets/backgrounds/rare/bkg004.jpg")
+.add("assets/backgrounds/rare/bkg005.jpg")
+.add("assets/backgrounds/rare/bkg006.jpg")
+.add("assets/backgrounds/rare/bkg007.jpg")
+.add("assets/backgrounds/rare/bkg008.jpg")
+.add("assets/backgrounds/rare/bkg009.jpg")
+.add("assets/backgrounds/rare/bkg010.jpg")
+.add("assets/backgrounds/rare/bkg011.jpg")
+.add("assets/backgrounds/rare/bkg012.jpg")
+.add("assets/backgrounds/rare/bkg013.jpg")
+.add("assets/backgrounds/rare/bkg014.jpg")
+.add("assets/backgrounds/rare/bkg015.jpg")
+.add("assets/backgrounds/rare/bkg016.jpg")
+.add("assets/backgrounds/rare/bkg017.jpg")
+.add("assets/backgrounds/rare/bkg018.jpg")
+.add("assets/backgrounds/rare/bkg019.jpg")
+.add("assets/backgrounds/rare/bkg020.jpg")
+.add("assets/backgrounds/rare/bkg021.jpg")
+.add("assets/backgrounds/rare/bkg022.jpg")
+.add("assets/backgrounds/rare/bkg023.jpg")
+.add("assets/backgrounds/rare/bkg024.jpg")
+.add("assets/backgrounds/rare/bkg025.jpg")
+.add("assets/backgrounds/rare/bkg026.jpg")
+.add("assets/backgrounds/rare/bkg027.jpg")
+.add("assets/backgrounds/rare/bkg028.jpg")
+.add("assets/backgrounds/rare/bkg029.jpg")
+.add("assets/backgrounds/rare/bkg030.jpg")
+.add("assets/backgrounds/rare/bkg031.jpg")
+.add("assets/backgrounds/rare/bkg032.jpg")
+.add("assets/backgrounds/rare/bkg033.jpg")
+.add("assets/backgrounds/rare/bkg034.jpg")
+.add("assets/backgrounds/rare/bkg035.jpg")
+.add("assets/backgrounds/rare/bkg036.jpg")
+.add("assets/backgrounds/rare/bkg037.jpg")
+.add("assets/backgrounds/rare/bkg038.jpg")
+.add("assets/backgrounds/rare/bkg039.jpg")
+.add("assets/backgrounds/rare/bkg040.jpg")
+.add("assets/backgrounds/rare/bkg041.jpg")
+.add("assets/backgrounds/rare/bkg042.jpg")
+.add("assets/backgrounds/rare/bkg043.jpg")
+.add("assets/backgrounds/rare/bkg044.jpg")
+.add("assets/backgrounds/rare/bkg045.jpg")
+.add("assets/backgrounds/rare/bkg046.jpg")
+.add("assets/backgrounds/rare/bkg047.jpg")
+.add("assets/backgrounds/rare/bkg048.jpg")
+.add("assets/backgrounds/rare/bkg049.jpg")
+.add("assets/backgrounds/rare/bkg050.jpg")
+.add("assets/backgrounds/rare/bkg051.jpg")
+.add("assets/backgrounds/rare/bkg052.jpg")
+.add("assets/backgrounds/rare/bkg053.jpg")
+.add("assets/backgrounds/rare/bkg054.jpg")
+.add("assets/backgrounds/rare/bkg055.jpg")
+.add("assets/backgrounds/rare/bkg056.jpg")
+.add("assets/backgrounds/rare/bkg057.jpg")
+.add("assets/backgrounds/rare/bkg058.jpg")
+.add("assets/backgrounds/rare/bkg059.jpg")
+.add("assets/backgrounds/rare/bkg060.jpg")
+.add("assets/backgrounds/rare/bkg061.jpg")
+.add("assets/backgrounds/rare/bkg062.jpg")
+.add("assets/backgrounds/rare/bkg063.jpg")
+.add("assets/backgrounds/rare/bkg064.jpg")
+.add("assets/backgrounds/rare/bkg065.jpg")
+.add("assets/backgrounds/rare/bkg066.jpg")
+.add("assets/backgrounds/rare/bkg067.jpg")
+.add("assets/backgrounds/rare/bkg068.jpg")
+.add("assets/backgrounds/rare/bkg069.jpg")
+.add("assets/backgrounds/rare/bkg070.jpg")
+.add("assets/backgrounds/rare/bkg071.jpg")
+.add("assets/backgrounds/rare/bkg072.jpg")
+.add("assets/backgrounds/rare/bkg073.jpg")
+.add("assets/backgrounds/rare/bkg074.jpg")
+.add("assets/backgrounds/rare/bkg075.jpg")
+.add("assets/backgrounds/rare/bkg076.jpg")
+.add("assets/backgrounds/rare/bkg077.jpg")
+.add("assets/backgrounds/rare/bkg078.jpg")
+.add("assets/backgrounds/rare/bkg079.jpg")
+.add("assets/backgrounds/rare/bkg080.jpg")
+.add("assets/backgrounds/rare/bkg081.jpg")
+.add("assets/backgrounds/rare/bkg082.jpg")
+.add("assets/backgrounds/rare/bkg083.jpg")
+.add("assets/backgrounds/rare/bkg084.jpg")
+.add("assets/backgrounds/rare/bkg085.jpg")
+.add("assets/backgrounds/rare/bkg086.jpg")
+.add("assets/backgrounds/rare/bkg087.jpg")
+// backgrounds special
+.add("assets/backgrounds/special/junes.jpg")
 // misc
 .add("assets/sprites/misc/sound_button.json")
 .add("assets/sprites/misc/msgbubble.png")
@@ -619,6 +741,7 @@ loader
 .add("assets/sprites/characters/maximilian.json")
 .add("assets/sprites/characters/marina.json")
 .add("assets/sprites/characters/largo.json")
+.add("assets/sprites/characters/carisa.json")
 // PERSONA
 .add("assets/sprites/characters/persona/chie.json")
 .add("assets/sprites/characters/persona/rise.json")
@@ -863,22 +986,39 @@ function changeScene() {
 }
 
 gamesound = {};
-gamesound.sounds = [];
-gamesound.Gamesound = function(path) {
-  if (path) {
+gamesound.sounds = {};
+gamesound.selectFromList = function(path, sprite) {
+  // creates one if not in gamesound.sounds
+  if (gamesound.sounds[path]) {
+    return gamesound.sounds[path];
+  }
+  else {
+    return new gamesound.Gamesound(path, sprite);
+  }
+}
+gamesound.Gamesound = function(path, sprite) {
+  this.path = path;
+  this.sprite = sprite || null;
+  if (loader.resources[path] !== undefined) {
+    this.sound = loader.resources[path].sound;
+  }
+  else {
     this.sound = PIXI.sound.Sound.from(path);
   }
-  gamesound.sounds.push(this);
+  if (sprite) {
+    this.sound.addSprites(sprite);
+  }
+  gamesound.sounds[this.path] = this;
 };
-gamesound.Gamesound.fromSprite = function(path, sprite) {
-  let ret = new gamesound.Gamesound();
-  this.sprite = sprite;
-  ret.sound = PIXI.sound.Sound.from({
-    url: path,
-    sprites: sprite
-  });
-  return ret;
-};
+//gamesound.Gamesound.fromSprite = function(path, sprite) {
+//  let ret = new gamesound.Gamesound();
+//  this.sprite = sprite;
+//  ret.sound = PIXI.sound.Sound.from({
+//    url: path,
+//    sprites: sprite
+//  });
+//  return ret;
+//};
 gamesound.Gamesound.prototype.setVolume = function(new_volume) {
   if (this.sound.paused === true) {
     this.sound.resume();
@@ -902,10 +1042,14 @@ gamesound.Gamesound.prototype.unmute = function() {
   }
 };
 gamesound.muteAll = function() {
-  gamesound.sounds.forEach(x => x.mute());
+  for (let key in gamesound.sounds) {
+    gamesound.sounds[key].mute();
+  }
 };
 gamesound.unmuteAll = function() {
-  gamesound.sounds.forEach(x => {x.unmute();});
+  for (let key in gamesound.sounds) {
+    gamesound.sounds[key].unmute();
+  }
 };
 
 function Talker(options) {
@@ -919,7 +1063,7 @@ function Talker(options) {
   this.emojifreq = options.emojifreq || 1;
   if (options.song_path) {
     this.song = new Song("assets/music/special/characters/" + options.song_path + ".mp3", options.song_path);
-    this.song_sound = new gamesound.Gamesound(this.song.path);
+    this.song_sound = gamesound.selectFromList(this.song.path);
     this.song_sound.sound.loop = true;
     this.song_sound.setVolume(music_normal_volume);
   }
@@ -1153,7 +1297,7 @@ Talker.prototype.pauseSong = function () {
   }
 };
 Talker.prototype.voiceCreate = function() {
-  this.voice = gamesound.Gamesound.fromSprite("assets/voice/" + this.name.toLowerCase() + ".mp3", this.voice_sprite);
+  this.voice = gamesound.selectFromList("assets/voice/" + this.name.toLowerCase() + ".mp3", this.voice_sprite);
 };
 Talker.prototype.voicePlayRandom = function() {
   if (this.voice) {
@@ -1847,6 +1991,27 @@ function initTalkers() {
       1
     ],
     "emojifreq": 0.9
+  }));
+  Talker.talkers.push(new Talker({
+    "name": "Carisa",
+    "fav_boards": [
+      "k",
+      "jp"
+    ],
+    "sprite_path": "assets/sprites/characters/carisa.json",
+    "custom_words": [],
+    "copulas": [],
+    "likes": [
+      "Kurt",
+      "Riela",
+    ],
+    "dislikes": [],
+    "emojitypes": [
+      3,
+      4,
+      5
+    ],
+    "emojifreq": 1.7
   }));
   // PESOA
   Talker.talkers.push(new Talker({
@@ -2587,7 +2752,7 @@ function playTrack(song) {
   music_song = song;
   music_song.already_played = true;
   music_song.songInfoScreen();
-  music = new gamesound.Gamesound(music_song.path);
+  music = gamesound.selectFromList(music_song.path);
   music.sound.loop = true;
   music.sound.play();
   music.setVolume(music_normal_volume);

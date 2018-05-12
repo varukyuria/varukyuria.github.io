@@ -1,0 +1,50 @@
+{
+"frames": {
+	"000.png": {
+		"frame": {"x":0, "y":498, "w":238, "h":247},
+		"spriteSourceSize": {"x":1,"y":2,"w":257,"h":249},
+		"sourceSize": {"w":257,"h":249}
+	},
+	"001.png": {
+		"frame": {"x":0, "y":249, "w":239, "h":247},
+		"spriteSourceSize": {"x":0,"y":2,"w":257,"h":249},
+		"sourceSize": {"w":257,"h":249}
+	},
+	"002.png": {
+		"frame": {"x":0, "y":0, "w":239, "h":247},
+		"spriteSourceSize": {"x":0,"y":2,"w":257,"h":249},
+		"sourceSize": {"w":257,"h":249}
+	},
+	"003.png": {
+		"frame": {"x":240, "y":498, "w":238, "h":247},
+		"spriteSourceSize": {"x":1,"y":2,"w":257,"h":249},
+		"sourceSize": {"w":257,"h":249}
+	},
+	"004.png": {
+		"frame": {"x":480, "y":487, "w":169, "h":249},
+		"spriteSourceSize": {"x":47,"y":0,"w":257,"h":249},
+		"sourceSize": {"w":257,"h":249}
+	},
+	"005.png": {
+		"frame": {"x":241, "y":236, "w":169, "h":249},
+		"spriteSourceSize": {"x":47,"y":0,"w":257,"h":249},
+		"sourceSize": {"w":257,"h":249}
+	},
+	"006.png": {
+		"frame": {"x":412, "y":236, "w":169, "h":249},
+		"spriteSourceSize": {"x":47,"y":0,"w":257,"h":249},
+		"sourceSize": {"w":257,"h":249}
+	},
+	"007.png": {
+		"frame": {"x":241, "y":0, "w":234, "h":234},
+		"spriteSourceSize": {"x":23,"y":15,"w":257,"h":249},
+		"sourceSize": {"w":257,"h":249}
+	}
+
+},
+"meta": {
+	"image": "carisa.png",
+	"size": {"w": 651, "h": 747},
+	"scale": "1"
+}
+}
