@@ -8,7 +8,7 @@ DATACHAN.filterByBoard = function(b) {
 
 DATACHAN.selectRandom = function(b) {
   let selected = DATACHAN.filterByBoard(b);
-  return selected[randomInt(0, selected.length-1)].text;
+  return selected[utils.randomInt(0, selected.length-1)].text;
 };
 
 DATACHAN.posts = [
@@ -6848,10 +6848,6 @@ DATACHAN.posts = [
 },
 {
   "text": "you would know because you are a gay namefig\ngayboy.",
-  "board": "s4s"
-},
-{
-  "text": "is.. is this inglish? fiahjote?",
   "board": "s4s"
 },
 {

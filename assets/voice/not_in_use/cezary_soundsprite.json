@@ -1,0 +1,10 @@
+"voice_sprite": {
+  "01": {start: 0.0, end: 1.9},
+  "02": {start: 2.0, end: 3.9},
+  "03": {start: 4.0, end: 5.9},
+  "04": {start: 6.0, end: 7.9},
+  "05": {start: 8.0, end: 11.9},
+  "06": {start: 12.0, end: 15.9},
+  "07": {start: 16.0, end: 23.9},
+  "08": {start: 24.0, end: 31.9}
+}

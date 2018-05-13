@@ -1,60 +1,61 @@
-function randomInt(a, b) {
+let utils = {};
+utils.randomInt = function(a, b) {
 	return a + Math.floor(Math.random()*(b-a+1));
-}
+};
 
-function randomIntStr(a, b, trailing) {
-	let val = randomInt(a,b).toString();
+utils.randomIntStr = function(a, b, trailing) {
+	let val = utils.randomInt(a,b).toString();
 	for (let i = val.length ; i<trailing; i++) {
 		val = "0" + val;
 	}
 	return val;
-}
+};
 
-function randomFloat(a, b) {
+utils.randomFloat = function(a, b) {
   return a + Math.random()*(b-a);
-}
+};
 
-function getIntStr(x, trailing) {
+utils.getIntStr = function(x, trailing) {
 	let val = x.toString();
 	for (let i = val.length ; i<trailing; i++) {
 		val = "0" + val;
 	}
 	return val;
-}
+};
 
-function randomFromArr(arr) {
-  return arr[randomInt(0, arr.length-1)];
-}
+utils.randomFromArr = function(arr) {
+  return arr[utils.randomInt(0, arr.length-1)];
+};
 
-function isInArr(obj, arr) {
-  return (arr.filter(x => x === obj)).length>0
-}
+utils.isInArr = function(obj, arr) {
+  return (arr.filter(x => x === obj)).length>0;
+};
 
-function pushIfNotIn(obj, arr) {
-  if (!isInArr(obj, arr)) {
+utils.pushIfNotIn = function(obj, arr) {
+  if (!utils.isInArr(obj, arr)) {
     arr.push(obj);
   }
   return arr;
-}
+};
 
-function indexOf(obj, arr) {
+utils.indexOf = function(obj, arr) {
   for (let i=0; i<arr.length; i++) {
     if (arr[i] === obj) {
       return i;
     }
   }
-}
+};
 
-function shuffle(arr) {
+utils.shuffle = function(arr) {
   return arr.sort((a,b) => {
     return 0.499 - Math.random();
   });
-}
+};
 
-function copyArr(arr) {
+utils.copyArr = function(arr) {
   return arr.filter(x => 1==1);
-}
+};
 
-function objectIsEmpty(obj) {
-  return Object.keys(loader.resources["assets/music/Fierce Combat.mp3"].sound.sprites).length === 0 && obj.constructor === Object;
-}
+utils.objectIsEmpty = function(obj) {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
+};

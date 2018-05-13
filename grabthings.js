@@ -66,7 +66,7 @@ function init() {
           scrape(boards[i]);
         }, 500 + i*1800);
       }
-    }
+    };
     interfunc();
     var inter = setInterval(interfunc, 500 + (boards.length)*1800 + 800);
   }, 800);

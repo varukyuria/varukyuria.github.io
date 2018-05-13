@@ -1,15 +1,11 @@
 // TODO
-// add sounds - persona dancin , chronicles 3, chronicles 1
 // moar musics
-// labrys theme when labrys *
-// junes theme when junes *
 // resize screen / rotate phone *
 // figure out stage_spot error
-// transparencily fadeout sprites bottoms
 // irene koller special scene, "on the gallian front"
 
 let app = new PIXI.Application({width: 720, height: 480, backgroundColor: 0xf5f5f5});
-
+let u = utils;
 let objectsToUpdate = [];
 let elapsed = 0;
 let dialog_indicator;
@@ -18,12 +14,11 @@ let keyboard = {};
 let music;
 let music_queued;
 let music_song;
-let music_normal_volume = 0.5;
+let music_normal_volume = 0.17;
 let sound_is_on = true;
 let next_ticker;
 let emotes_queue = [];
 let music_paths = ['A Moment of Relief.mp3', 'Chronicles of the Gallian War.mp3', 'Daily Life of the 7th Platoon.mp3', 'Defensive Fight.mp3', 'Everyday Training.mp3', 'Fierce Combat.mp3', 'Final Decisive Battle.mp3', 'Gallant Fight.mp3', 'Hard Fight.mp3', 'No Matter The Distance (Game Opening).mp3', 'No Matter The Distance.mp3', 'Offensive and Defensive Battle.mp3', 'Quiet Chat.mp3', "Randgriz Archduke's Family.mp3", 'Randgriz City.mp3', 'Resistance.mp3', 'Succeeded Wish (Piano).mp3', 'Those Who Succeeded.mp3', 'Title Main Theme.mp3', 'Urgent Instructions.mp3', 'Varukyuria Intro.mp3', "Zaka's Theme.mp3", "K-ON! - Pinch Daisuki.mp3", "Akino - Sousei no Aquarion.mp3"];
-music_paths = ["K-ON! - Pinch Daisuki.mp3", "Akino - Sousei no Aquarion.mp3"];
 let songs = [];
 let stage_spots = [
   {x: 140, y: 126, facing: 1, guest: null, zIndex: 0},
@@ -33,6 +28,7 @@ let stage_spots = [
 ];
 let gameplay = {};
 let currentMsg;
+let music_text;
 
 let halt_next = false;
 let emojis = [
@@ -557,58 +553,19 @@ document.body.appendChild(app.view);
 
 // PIXI LOADER
 let loader = new PIXI.loaders.Loader();
-(() => {
 loader
-// voices
-.add("assets/voice/alfons.mp3")
-.add("assets/voice/amy.mp3")
-.add("assets/voice/annika.mp3")
-.add("assets/voice/chie.mp3")
-.add("assets/voice/clarissa.mp3")
-.add("assets/voice/gloria.mp3")
-.add("assets/voice/gusurg.mp3")
-.add("assets/voice/imca.mp3")
-.add("assets/voice/kurt.mp3")
-.add("assets/voice/labrys.mp3")
-.add("assets/voice/leila.mp3")
-.add("assets/voice/riela.mp3")
-.add("assets/voice/rise.mp3")
-.add("assets/voice/teddie.mp3")
-.add("assets/voice/valerie.mp3")
-.add("assets/voice/yosuke.mp3")
-.add("assets/voice/yukiko.mp3")
-.add("assets/voice/yuna.mp3")
-// music
-.add("assets/music/A Moment of Relief.mp3")
-.add("assets/music/Akino - Sousei no Aquarion.mp3")
-.add("assets/music/Chronicles of the Gallian War.mp3")
-.add("assets/music/Daily Life of the 7th Platoon.mp3")
-.add("assets/music/Defensive Fight.mp3")
-.add("assets/music/Everyday Training.mp3")
-.add("assets/music/Fierce Combat.mp3")
-.add("assets/music/Final Decisive Battle.mp3")
-.add("assets/music/Gallant Fight.mp3")
-.add("assets/music/Hard Fight.mp3")
-.add("assets/music/K-ON! - Pinch Daisuki.mp3")
-.add("assets/music/No Matter The Distance (Game Opening).mp3")
-.add("assets/music/No Matter The Distance.mp3")
-.add("assets/music/Offensive and Defensive Battle.mp3")
-.add("assets/music/Quiet Chat.mp3")
-.add("assets/music/Randgriz Archduke's Family.mp3")
-.add("assets/music/Randgriz City.mp3")
-.add("assets/music/Resistance.mp3")
-.add("assets/music/Succeeded Wish (Piano).mp3")
-.add("assets/music/Those Who Succeeded.mp3")
-.add("assets/music/Title Main Theme.mp3")
-.add("assets/music/Urgent Instructions.mp3")
-.add("assets/music/Varukyuria Intro.mp3")
-.add("assets/music/Zaka's Theme.mp3")
-// music special
-.add("assets/music/special/characters/Spirited Girl (Labrys).mp3")
-.add("assets/music/special/characters/Succeeded Wish (ROJI).mp3")
-.add("assets/music/special/characters/Your Affection (Yosuke).mp3")
-.add("assets/music/special/bkg/JUNESU.mp3")
-// backgrounds
+.add("assets/sprites/misc/loading_sphere.png")
+.load(loadGame);
+function loadGame() {
+  showLoader();
+  loader.on("progress", (loader, res) => {
+    loader.text_spr.text = Math.round(loader.progress*100)/100 + "%";
+    for (let i=0; i<LoadingSphere.spheres.length; i++) {
+      LoadingSphere.spheres[i].update(loader.progress);
+    }
+  });
+  loader
+// assets/backgrounds/ (0.23 MB)
 .add("assets/backgrounds/bkg000.jpg")
 .add("assets/backgrounds/bkg001.jpg")
 .add("assets/backgrounds/bkg002.jpg")
@@ -618,7 +575,7 @@ loader
 .add("assets/backgrounds/bkg006.jpg")
 .add("assets/backgrounds/bkg007.jpg")
 .add("assets/backgrounds/bkg008.jpg")
-// backgrounds rare
+// assets/backgrounds/rare/ (1.98 MB)
 .add("assets/backgrounds/rare/bkg000.jpg")
 .add("assets/backgrounds/rare/bkg001.jpg")
 .add("assets/backgrounds/rare/bkg002.jpg")
@@ -693,34 +650,46 @@ loader
 .add("assets/backgrounds/rare/bkg071.jpg")
 .add("assets/backgrounds/rare/bkg072.jpg")
 .add("assets/backgrounds/rare/bkg073.jpg")
-.add("assets/backgrounds/rare/bkg074.jpg")
-.add("assets/backgrounds/rare/bkg075.jpg")
-.add("assets/backgrounds/rare/bkg076.jpg")
-.add("assets/backgrounds/rare/bkg077.jpg")
-.add("assets/backgrounds/rare/bkg078.jpg")
-.add("assets/backgrounds/rare/bkg079.jpg")
-.add("assets/backgrounds/rare/bkg080.jpg")
-.add("assets/backgrounds/rare/bkg081.jpg")
-.add("assets/backgrounds/rare/bkg082.jpg")
-.add("assets/backgrounds/rare/bkg083.jpg")
-.add("assets/backgrounds/rare/bkg084.jpg")
-.add("assets/backgrounds/rare/bkg085.jpg")
-.add("assets/backgrounds/rare/bkg086.jpg")
-.add("assets/backgrounds/rare/bkg087.jpg")
-// backgrounds special
+// assets/backgrounds/special/ (2.03 MB)
 .add("assets/backgrounds/special/junes.jpg")
-// misc
-.add("assets/sprites/misc/sound_button.json")
-.add("assets/sprites/misc/msgbubble.png")
-.add("assets/sprites/misc/emotes.json")
-.add("assets/sprites/misc/particle1.json")
-.add("assets/sprites/misc/catdance.json")
-.add("assets/sprites/misc/heart_particle.png")
-// people
+// assets/music/ (11.37 MB)
+.add("assets/music/A Moment of Relief.mp3")
+.add("assets/music/Akino - Sousei no Aquarion.mp3")
+.add("assets/music/Chronicles of the Gallian War.mp3")
+.add("assets/music/Daily Life of the 7th Platoon.mp3")
+.add("assets/music/Defensive Fight.mp3")
+.add("assets/music/Everyday Training.mp3")
+.add("assets/music/Fierce Combat.mp3")
+.add("assets/music/Final Decisive Battle.mp3")
+.add("assets/music/Gallant Fight.mp3")
+.add("assets/music/Hard Fight.mp3")
+.add("assets/music/K-ON! - Pinch Daisuki.mp3")
+.add("assets/music/No Matter The Distance (Game Opening).mp3")
+.add("assets/music/No Matter The Distance.mp3")
+.add("assets/music/Offensive and Defensive Battle.mp3")
+.add("assets/music/Quiet Chat.mp3")
+.add("assets/music/Randgriz Archduke's Family.mp3")
+.add("assets/music/Randgriz City.mp3")
+.add("assets/music/Resistance.mp3")
+.add("assets/music/Succeeded Wish (Piano).mp3")
+.add("assets/music/Those Who Succeeded.mp3")
+.add("assets/music/Title Main Theme.mp3")
+.add("assets/music/Urgent Instructions.mp3")
+.add("assets/music/Varukyuria Intro.mp3")
+.add("assets/music/Zaka's Theme.mp3")
+// assets/music/special/bkg/ (11.78 MB)
+.add("assets/music/special/bkg/JUNESU.mp3")
+// assets/music/special/characters/ (13.98 MB)
+.add("assets/music/special/characters/Spirited Girl (Labrys).mp3")
+.add("assets/music/special/characters/Succeeded Wish (ROJI).mp3")
+.add("assets/music/special/characters/Your Affection (Yosuke).mp3")
+// assets/sprites/characters/ (17.04 MB)
 .add("assets/sprites/characters/alfons.json")
 .add("assets/sprites/characters/alicia.json")
 .add("assets/sprites/characters/amy.json")
 .add("assets/sprites/characters/annika.json")
+.add("assets/sprites/characters/carisa.json")
+.add("assets/sprites/characters/chie.json")
 .add("assets/sprites/characters/clarissa.json")
 .add("assets/sprites/characters/cossette.json")
 .add("assets/sprites/characters/edy.json")
@@ -728,37 +697,75 @@ loader
 .add("assets/sprites/characters/gusurg.json")
 .add("assets/sprites/characters/imca.json")
 .add("assets/sprites/characters/isara.json")
+.add("assets/sprites/characters/jann.json")
 .add("assets/sprites/characters/kurt.json")
+.add("assets/sprites/characters/labrys.json")
+.add("assets/sprites/characters/largo.json")
 .add("assets/sprites/characters/leila.json")
+.add("assets/sprites/characters/marina.json")
+.add("assets/sprites/characters/maximilian.json")
 .add("assets/sprites/characters/riela.json")
+.add("assets/sprites/characters/rise.json")
 .add("assets/sprites/characters/rosie.json")
 .add("assets/sprites/characters/selvaria.json")
 .add("assets/sprites/characters/susie.json")
+.add("assets/sprites/characters/teddie.json")
 .add("assets/sprites/characters/valerie.json")
 .add("assets/sprites/characters/varrot.json")
 .add("assets/sprites/characters/welkin.json")
-.add("assets/sprites/characters/jann.json")
-.add("assets/sprites/characters/maximilian.json")
-.add("assets/sprites/characters/marina.json")
-.add("assets/sprites/characters/largo.json")
-.add("assets/sprites/characters/carisa.json")
-// PERSONA
-.add("assets/sprites/characters/persona/chie.json")
-.add("assets/sprites/characters/persona/rise.json")
-.add("assets/sprites/characters/persona/adachi.json")
-.add("assets/sprites/characters/persona/yosuke.json")
-.add("assets/sprites/characters/persona/yukiko.json")
-.add("assets/sprites/characters/persona/yuna.json")
-.add("assets/sprites/characters/persona/labrys.json")
-.add("assets/sprites/characters/persona/teddie.json")
-.load(setup);
-})();
+.add("assets/sprites/characters/yosuke.json")
+.add("assets/sprites/characters/yukiko.json")
+.add("assets/sprites/characters/yuna.json")
+// assets/sprites/misc/ (17.10 MB)
+.add("assets/sprites/misc/catdance.json")
+.add("assets/sprites/misc/dialog_indicator.png")
+.add("assets/sprites/misc/emotes.json")
+.add("assets/sprites/misc/heart_particle.png")
+.add("assets/sprites/misc/msgbubble.png")
+.add("assets/sprites/misc/sound_button.json")
+// assets/voice/ (22.98 MB)
+.add("assets/voice/alfons.mp3")
+.add("assets/voice/alicia.mp3")
+.add("assets/voice/amy.mp3")
+.add("assets/voice/annika.mp3")
+.add("assets/voice/carisa.mp3")
+.add("assets/voice/chie.mp3")
+.add("assets/voice/clarissa.mp3")
+.add("assets/voice/cossette.mp3")
+.add("assets/voice/edy.mp3")
+.add("assets/voice/gloria.mp3")
+.add("assets/voice/gusurg.mp3")
+.add("assets/voice/imca.mp3")
+.add("assets/voice/isara.mp3")
+.add("assets/voice/jann.mp3")
+.add("assets/voice/kurt.mp3")
+.add("assets/voice/labrys.mp3")
+.add("assets/voice/largo.mp3")
+.add("assets/voice/leila.mp3")
+.add("assets/voice/marina.mp3")
+.add("assets/voice/maximilian.mp3")
+.add("assets/voice/riela.mp3")
+.add("assets/voice/rise.mp3")
+.add("assets/voice/rosie.mp3")
+.add("assets/voice/selvaria.mp3")
+.add("assets/voice/susie.mp3")
+.add("assets/voice/teddie.mp3")
+.add("assets/voice/valerie.mp3")
+.add("assets/voice/varrot.mp3")
+.add("assets/voice/welkin.mp3")
+.add("assets/voice/yosuke.mp3")
+.add("assets/voice/yukiko.mp3")
+.add("assets/voice/yuna.mp3")
+// ------------------
+// Total size: 22.98 MB
+  .load(setup);
+}
 
 loader.text = "";
 loader.text_spr = null;
 LoadingSphere.number = 11;
 LoadingSphere.spheres = [];
-showLoader();
+
 function showLoader() {
   let style = new PIXI.TextStyle({
     fontFamily: 'Arial, sans-serif',
@@ -789,12 +796,7 @@ function showLoader() {
     LoadingSphere.spheres.push(new LoadingSphere(app.screen.width - 15 - 25 - i*((app.screen.width-15)/LoadingSphere.number), app.screen.height/2+50, 90/(i+1)));
   }
 }
-loader.on("progress", (loader, res) => {
-  loader.text_spr.text = Math.round(loader.progress*100)/100 + "%";
-  for (let i=0; i<LoadingSphere.spheres.length; i++) {
-    LoadingSphere.spheres[i].update(loader.progress);
-  }
-});
+
 function LoadingSphere(x,y,visibleAt) {
   this.spr = new PIXI.Sprite.fromImage("assets/sprites/misc/loading_sphere.png");
   this.spr.position.set(x,y);
@@ -856,8 +858,8 @@ function Background(name, path, is_rare, song) {
 }
 Background.can_change = true;
 Background.messages_required = 0;
-Background.msgs_before_changing_min = 4;
-Background.msgs_before_changing_max = 9;
+Background.msgs_before_changing_min = 8;
+Background.msgs_before_changing_max = 18;
 Background.init = function() {
   Background.messagesRequiredUpdate();
   Background.genBackgrounds();
@@ -871,7 +873,7 @@ Background.init = function() {
   addChildZ(Background.sprite);
 };
 Background.messagesRequiredUpdate = function() {
-  Background.messages_required = randomInt(Background.msgs_before_changing_min, Background.msgs_before_changing_max);
+  Background.messages_required = u.randomInt(Background.msgs_before_changing_min, Background.msgs_before_changing_max);
   return Background.messages_required;
 };
 Background.change = function(bkg) {
@@ -884,16 +886,16 @@ Background.changeRandom = function() {
   Background.change(Background.getRandom());
 };
 Background.backgrounds = [];
-Background.normal_number = 8;
-Background.rare_number = 87;
+Background.normal_number = 8;  // i.e. bkg008.jpg exists
+Background.rare_number = 73;  // i.e. bkg073.jpg exists
 Background.genBackgrounds = function() {
   // normal backgrounds
   for (let i=0; i<=Background.normal_number; i++) {
-    new Background("bkg" + getIntStr(i,3), "assets/backgrounds/bkg" + getIntStr(i,3) + ".jpg", false);
+    new Background("bkg" + u.getIntStr(i,3), "assets/backgrounds/bkg" + u.getIntStr(i,3) + ".jpg", false);
   }
   // rare backgrounds
   for (let i=0; i<=Background.rare_number; i++) {
-    new Background("bkg" + getIntStr(i,3), "assets/backgrounds/rare/bkg" + getIntStr(i,3) + ".jpg", true);
+    new Background("bkg" + u.getIntStr(i,3), "assets/backgrounds/rare/bkg" + u.getIntStr(i,3) + ".jpg", true);
   }
   // special backgrounds
   new Background("junes", "assets/backgrounds/special/junes.jpg", true, new Song("assets/music/special/bkg/JUNESU.mp3", "JUNESU"));
@@ -904,7 +906,7 @@ Background.getRandom = function() {
   if (selected.length === 0) {
     selected.forEach(x => x.has_been_shown = false);
   }
-  return randomFromArr(selected);
+  return u.randomFromArr(selected);
 };
 
 function next() {
@@ -913,23 +915,22 @@ function next() {
   // enter new character
   if ((activeTalkers().length < 2 || Math.random() < 0.4) && activeTalkers().length < 4) {
 //    let p = inactiveTalkers().filter(x=>(x.name == "Maximilian" || x.name == "Alicia"));
-//    if (p.length>0) {randomFromArr(p).enter();}
-    randomFromArr(inactiveTalkers()).enter();
+//    if (p.length>0) {u.randomFromArr(p).enter();}
+    u.randomFromArr(inactiveTalkers()).enter();
     Background.can_change = false;
   }
   // someone leave NOW
   else if (activeTalkers().filter(x=>x.talked_once).length > 0 && Math.random() < 0.2) {
-    randomFromArr(activeTalkers().filter(x=>x.talked_once)).leave();
+    u.randomFromArr(activeTalkers().filter(x=>x.talked_once)).leave();
   }
   // go to new scene
   else if (Background.messages_required <= 0 && Background.can_change) {
     changeScene();
     call_next = false;
-    skip_remaining = true;
   }
   else if (activeTalkers().length > 1) {
     Background.messages_required--;
-    randomFromArr(activeTalkers()).talk();
+    u.randomFromArr(activeTalkers()).talk();
     call_next = false;
     Background.can_change = true;
   }
@@ -959,8 +960,8 @@ function changeScene() {
     if (rect.alpha >= 0.99) {
       ticker.destroy();
       Background.changeRandom();
-      playNextTrack();
       activeTalkers().forEach(x=>x.leave());
+      playNextTrack();
       elapsed = 0;
       let count = 0;
       ticker = new PIXI.ticker.Ticker();
@@ -985,7 +986,7 @@ function changeScene() {
   
 }
 
-gamesound = {};
+let gamesound = {};
 gamesound.sounds = {};
 gamesound.selectFromList = function(path, sprite) {
   // creates one if not in gamesound.sounds
@@ -995,7 +996,7 @@ gamesound.selectFromList = function(path, sprite) {
   else {
     return new gamesound.Gamesound(path, sprite);
   }
-}
+};
 gamesound.Gamesound = function(path, sprite) {
   this.path = path;
   this.sprite = sprite || null;
@@ -1120,26 +1121,26 @@ Talker.stopAllVoices = function() {
 };
 Talker.prototype.useEmoji = function(chansu) {
   if (this.emojitypes.length > 0 && Math.random() < chansu*this.emojifreq) {
-    let selected_emojis = emojis.filter(x => isInArr(x.type, this.emojitypes));
+    let selected_emojis = emojis.filter(x => u.isInArr(x.type, this.emojitypes));
     if (selected_emojis.length > 0) {
-      return randomFromArr(selected_emojis).emoji + " ";
+      return u.randomFromArr(selected_emojis).emoji + " ";
     }
   }
   return "";
 };
 Talker.prototype.genMsg = function() {
-  let filtered = DATACHAN.filterByBoard(randomFromArr(this.fav_boards));
+  let filtered = DATACHAN.filterByBoard(u.randomFromArr(this.fav_boards));
   let result = "";
   ParticleSystem.generateQueue();
-  for (let i=0; i < randomInt(2, 4); i++) {
-    let p = randomFromArr(filtered).text;
+  for (let i=0; i < u.randomInt(2, 4); i++) {
+    let p = u.randomFromArr(filtered).text;
     p = p.split("\n").join(" ");
     p = p.split(" ");
-    let grabN = randomInt(1, 4);
+    let grabN = u.randomInt(1, 4);
     if (grabN > p.length) {
       grabN = p.length;
     }
-    let grab_start = randomInt(0, p.length - grabN);
+    let grab_start = u.randomInt(0, p.length - grabN);
     for (let j=0; j<grabN; j++) {
       result += p[grab_start+j] + " ";
     }
@@ -1151,31 +1152,31 @@ Talker.prototype.genMsg = function() {
       let selected_talkers = activeTalkers().filter(x => x.name != this.name);
       if (selected_talkers.length > 0) {
         let randomreact = true;
-        let selected_talker = randomFromArr(selected_talkers);
+        let selected_talker = u.randomFromArr(selected_talkers);
         
         result += selected_talker.name + " ";
         // queue EMOTES and do particles
         for (let i=0; i<5; i++) {
           // love
-          if (isInArr(this.name, selected_talker.likes)) {
+          if (u.isInArr(this.name, selected_talker.likes)) {
             // selected_talker likes talker
             new Emote(selected_talker, 1, true);
             randomreact = false;
             ParticleSystem.addToQueue(selected_talker, this, "love");
           }
-          if (isInArr(selected_talker.name, this.likes)) {
+          if (u.isInArr(selected_talker.name, this.likes)) {
             // talker likes selected talker
             new Emote(this, 1, true);
             ParticleSystem.addToQueue(this, selected_talker, "love");
           }
           // hate
-          if (isInArr(this.name, selected_talker.dislikes)) {
+          if (u.isInArr(this.name, selected_talker.dislikes)) {
             // selected_talker dislikes talker
             new Emote(selected_talker, 14, true, PIXI.BLEND_MODES.MULTIPLY);
             randomreact = false;
             ParticleSystem.addToQueue(selected_talker, this, "hate");
           }
-          if (isInArr(selected_talker.name, this.dislikes)) {
+          if (u.isInArr(selected_talker.name, this.dislikes)) {
             // talker dislikes selected talker
             new Emote(this, 14, true, PIXI.BLEND_MODES.MULTIPLY);
             ParticleSystem.addToQueue(this, selected_talker, "hate");
@@ -1191,7 +1192,7 @@ Talker.prototype.genMsg = function() {
     //  <---- mention someone
   
     if (Math.random() < 0.6 && this.custom_words && this.custom_words.length > 0) {
-      result += randomFromArr(this.custom_words) + " ";
+      result += u.randomFromArr(this.custom_words) + " ";
     }
     if (Math.random() < 0.2) {
       result += "\n";
@@ -1201,7 +1202,7 @@ Talker.prototype.genMsg = function() {
   result = result.replace(/\,\s?$/gi, "");
   result = result.replace(/\and$/gi, "");
   if (this.copulas && this.copulas.length > 0) {
-    result += " " + randomFromArr(this.copulas);
+    result += " " + u.randomFromArr(this.copulas);
   }
 //  emoji at the end of msg
   result += " " + this.useEmoji(0.4);
@@ -1254,16 +1255,16 @@ Talker.prototype.randomPos = function() {
 //    if (this.stage_spot) {
 //      this.stage_spot.guest = null;
 //    }
-    this.stage_spot = randomFromArr(freespots);
+    this.stage_spot = u.randomFromArr(freespots);
     this.stage_spot.guest = this;
-    this.spr.x = this.stage_spot.x + randomInt(-40, 40);
-    this.spr.y = this.stage_spot.y + randomInt(-40, 40);
+    this.spr.x = this.stage_spot.x + u.randomInt(-40, 40);
+    this.spr.y = this.stage_spot.y + u.randomInt(-40, 40);
     this.spr.scale.x = this.stage_spot.facing;
   }
   return freespots.length > 0;
 };
 Talker.prototype.randomFace = function() {
-  this.spr.gotoAndStop(randomInt(0, this.spr.totalFrames));
+  this.spr.gotoAndStop(u.randomInt(0, this.spr.totalFrames));
 };
 Talker.prototype.pauseOtherSongs = function() {
   if (music && !music.sound.paused) {
@@ -1302,7 +1303,7 @@ Talker.prototype.voiceCreate = function() {
 Talker.prototype.voicePlayRandom = function() {
   if (this.voice) {
     Talker.stopAllVoices();
-    this.voice.sound.play(randomFromArr(Object.keys(this.voice_sprite)));
+    this.voice.sound.play(u.randomFromArr(Object.keys(this.voice_sprite)));
   }
 };
 Talker.getByName = function(namae) {
@@ -1385,7 +1386,40 @@ function initTalkers() {
       3,
       4
     ],
-    "emojifreq": 1.2
+    "emojifreq": 1.2,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 17.9},
+      "10": {start: 18.0, end: 19.9},
+      "11": {start: 20.0, end: 21.9},
+      "12": {start: 22.0, end: 23.9},
+      "13": {start: 24.0, end: 25.9},
+      "14": {start: 26.0, end: 27.9},
+      "15": {start: 28.0, end: 29.9},
+      "16": {start: 30.0, end: 31.9},
+      "17": {start: 32.0, end: 33.9},
+      "18": {start: 34.0, end: 35.9},
+      "19": {start: 36.0, end: 39.9},
+      "20": {start: 40.0, end: 43.9},
+      "21": {start: 44.0, end: 47.9},
+      "22": {start: 48.0, end: 51.9},
+      "23": {start: 52.0, end: 55.9},
+      "24": {start: 56.0, end: 59.9},
+      "25": {start: 60.0, end: 63.9},
+      "26": {start: 64.0, end: 67.9},
+      "27": {start: 68.0, end: 71.9},
+      "28": {start: 72.0, end: 75.9},
+      "29": {start: 76.0, end: 79.9},
+      "30": {start: 80.0, end: 83.9},
+      "31": {start: 84.0, end: 87.9}
+    }
   }));
   Talker.talkers.push(new Talker({
     "name": "Amy",
@@ -1502,7 +1536,23 @@ function initTalkers() {
       3,
       5
     ],
-    "emojifreq": 1.2
+    "emojifreq": 1.2,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 17.9},
+      "10": {start: 18.0, end: 19.9},
+      "11": {start: 20.0, end: 21.9},
+      "12": {start: 22.0, end: 23.9},
+      "13": {start: 24.0, end: 27.9},
+      "14": {start: 28.0, end: 31.9}
+    }
   }));
   Talker.talkers.push(new Talker({
     "name": "Edy",
@@ -1528,7 +1578,23 @@ function initTalkers() {
       4,
       5
     ],
-    "emojifreq": 1.6
+    "emojifreq": 1.6,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 15.9},
+      "08": {start: 16.0, end: 19.9},
+      "09": {start: 20.0, end: 23.9},
+      "10": {start: 24.0, end: 27.9},
+      "11": {start: 28.0, end: 31.9},
+      "12": {start: 32.0, end: 35.9},
+      "13": {start: 36.0, end: 39.9},
+      "14": {start: 40.0, end: 47.9}
+    }
   }));
   Talker.talkers.push(new Talker({
     "name": "Gloria",
@@ -1648,7 +1714,9 @@ function initTalkers() {
     "likes": [
       "Welkin",
       "Alicia",
-      "Yuna"
+      "Yuna",
+      "Rosie",
+      "Largo"
     ],
     "dislikes": [
       "Yosuke"
@@ -1657,7 +1725,21 @@ function initTalkers() {
       2,
       4
     ],
-    "emojifreq": 1.4
+    "emojifreq": 1.4,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 15.9},
+      "08": {start: 16.0, end: 19.9},
+      "09": {start: 20.0, end: 23.9},
+      "10": {start: 24.0, end: 27.9},
+      "11": {start: 28.0, end: 31.9},
+      "12": {start: 32.0, end: 35.9}
+    }
   }));
   Talker.talkers.push(new Talker({
     "name": "Kurt",
@@ -1792,7 +1874,30 @@ function initTalkers() {
     ],
     "emojitypes": [],
     "emojifreq": 0,
-    "song_path": "Succeeded Wish (ROJI)"
+    "song_path": "Succeeded Wish (ROJI)",
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 17.9},
+      "10": {start: 18.0, end: 19.9},
+      "11": {start: 20.0, end: 21.9},
+      "12": {start: 22.0, end: 23.9},
+      "13": {start: 24.0, end: 25.9},
+      "14": {start: 26.0, end: 27.9},
+      "15": {start: 28.0, end: 31.9},
+      "16": {start: 32.0, end: 35.9},
+      "17": {start: 36.0, end: 39.9},
+      "18": {start: 40.0, end: 43.9},
+      "19": {start: 44.0, end: 47.9},
+      "20": {start: 48.0, end: 51.9},
+      "21": {start: 52.0, end: 60.0},
+    }
   }));
   Talker.talkers.push(new Talker({
     "name": "Selvaria",
@@ -1800,7 +1905,7 @@ function initTalkers() {
       "k"
     ],
     "sprite_path": "assets/sprites/characters/selvaria.json",
-    "custom_words": [],
+    "custom_words": ["げいか", ""],
     "copulas": [],
     "likes": [
       "Maximilian",
@@ -1811,7 +1916,18 @@ function initTalkers() {
       "Rise"
     ],
     "emojitypes": [],
-    "emojifreq": 0
+    "emojifreq": 0,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 17.9}
+    }
   }));
   Talker.talkers.push(new Talker({
     "name": "Susie",
@@ -1830,7 +1946,19 @@ function initTalkers() {
       2,
       3
     ],
-    "emojifreq": 1
+    "emojifreq": 1,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 17.9},
+      "09": {start: 18.0, end: 21.9},
+      "10": {start: 22.0, end: 25.9}
+    }
   }));
   Talker.talkers.push(new Talker({
     "name": "Valerie",
@@ -1889,7 +2017,17 @@ function initTalkers() {
     "emojitypes": [
       3
     ],
-    "emojifreq": 0.9
+    "emojifreq": 0.9,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 15.9},
+      "08": {start: 16.0, end: 19.9}
+    }
   }));
   Talker.talkers.push(new Talker({
     "name": "Welkin",
@@ -1915,7 +2053,34 @@ function initTalkers() {
     "emojitypes": [
       3
     ],
-    "emojifreq": 1.8
+    "emojifreq": 1.8,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 17.9},
+      "10": {start: 18.0, end: 19.9},
+      "11": {start: 20.0, end: 21.9},
+      "12": {start: 22.0, end: 25.9},
+      "13": {start: 26.0, end: 29.9},
+      "14": {start: 30.0, end: 33.9},
+      "15": {start: 34.0, end: 37.9},
+      "16": {start: 38.0, end: 41.9},
+      "17": {start: 42.0, end: 45.9},
+      "18": {start: 46.0, end: 49.9},
+      "19": {start: 50.0, end: 53.9},
+      "20": {start: 54.0, end: 57.9},
+      "21": {start: 58.0, end: 61.9},
+      "22": {start: 62.0, end: 65.9},
+      "23": {start: 66.0, end: 69.9},
+      "24": {start: 70.0, end: 77.9},
+      "25": {start: 78.0, end: 85.9}
+    }
   }));
   Talker.talkers.push(new Talker({
     "name": "Jann",
@@ -1930,7 +2095,9 @@ function initTalkers() {
     ],
     "copulas": [],
     "likes": [
-      "Largo"
+      "Largo",
+      "Teddie",
+      "Yuna"
     ],
     "dislikes": [],
     "emojitypes": [
@@ -1938,7 +2105,18 @@ function initTalkers() {
       2,
       3
     ],
-    "emojifreq": 4
+    "emojifreq": 4,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 19.9}
+    }
   }));
   Talker.talkers.push(new Talker({
     "name": "Maximilian",
@@ -1948,7 +2126,7 @@ function initTalkers() {
     ],
     "sprite_path": "assets/sprites/characters/maximilian.json",
     "custom_words": [
-      "セルベリア"
+      "セルベリア", "マーモット", "セルベリア", "セルベリア"
     ],
     "copulas": [],
     "likes": [],
@@ -1957,7 +2135,19 @@ function initTalkers() {
       "Alicia"
     ],
     "emojitypes": [],
-    "emojifreq": 0
+    "emojifreq": 0,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 17.9},
+      "10": {start: 18.0, end: 19.9}
+    }
   }));
   Talker.talkers.push(new Talker({
     "name": "Marina",
@@ -1971,7 +2161,23 @@ function initTalkers() {
     "likes": [],
     "dislikes": [],
     "emojitypes": [],
-    "emojifreq": 0
+    "emojifreq": 0,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 17.9},
+      "10": {start: 18.0, end: 19.9},
+      "11": {start: 20.0, end: 23.9},
+      "12": {start: 24.0, end: 27.9},
+      "13": {start: 28.0, end: 31.9},
+      "14": {start: 32.0, end: 35.9},
+    }
   }));
   Talker.talkers.push(new Talker({
     "name": "Largo",
@@ -1990,7 +2196,19 @@ function initTalkers() {
     "emojitypes": [
       1
     ],
-    "emojifreq": 0.9
+    "emojifreq": 0.9,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 17.9},
+      "10": {start: 18.0, end: 19.9}
+    }
   }));
   Talker.talkers.push(new Talker({
     "name": "Carisa",
@@ -2008,10 +2226,28 @@ function initTalkers() {
     "dislikes": [],
     "emojitypes": [
       3,
-      4,
       5
     ],
-    "emojifreq": 1.7
+    "emojifreq": 2,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 17.9},
+      "10": {start: 18.0, end: 19.9},
+      "11": {start: 20.0, end: 21.9},
+      "12": {start: 22.0, end: 23.9},
+      "13": {start: 24.0, end: 27.9},
+      "14": {start: 28.0, end: 31.9},
+      "15": {start: 32.0, end: 35.9},
+      "16": {start: 36.0, end: 39.9},
+      "17": {start: 40.0, end: 43.9}
+    }
   }));
   // PESOA
   Talker.talkers.push(new Talker({
@@ -2020,7 +2256,7 @@ function initTalkers() {
       "u",
       "fit"
     ],
-    "sprite_path": "assets/sprites/characters/persona/chie.json",
+    "sprite_path": "assets/sprites/characters/chie.json",
     "custom_words": [],
     "copulas": [],
     "likes": [
@@ -2080,7 +2316,7 @@ function initTalkers() {
       "mu",
       "fa"
     ],
-    "sprite_path": "assets/sprites/characters/persona/rise.json",
+    "sprite_path": "assets/sprites/characters/rise.json",
     "custom_words": [],
     "copulas": [],
     "likes": [
@@ -2145,27 +2381,27 @@ function initTalkers() {
       "47": {start: 117.5, end: 119.9}
     }
   }));
-  Talker.talkers.push(new Talker({
-    "name": "Adachi",
-    "fav_boards": [
-      "biz",
-      "toy"
-    ],
-    "sprite_path": "assets/sprites/characters/persona/adachi.json",
-    "custom_words": [],
-    "copulas": [],
-    "likes": [
-      "Teddie"
-    ],
-    "dislikes": [
-      "Yuna",
-      "Maximilian"
-    ],
-    "emojitypes": [
-      1
-    ],
-    "emojifreq": 0.6
-  }));
+//  Talker.talkers.push(new Talker({
+//    "name": "Adachi",
+//    "fav_boards": [
+//      "biz",
+//      "toy"
+//    ],
+//    "sprite_path": "assets/sprites/characters/adachi.json",
+//    "custom_words": [],
+//    "copulas": [],
+//    "likes": [
+//      "Teddie"
+//    ],
+//    "dislikes": [
+//      "Yuna",
+//      "Maximilian"
+//    ],
+//    "emojitypes": [
+//      1
+//    ],
+//    "emojifreq": 0.6
+//  }));
   Talker.talkers.push(new Talker({
     "name": "Yosuke",
     "fav_boards": [
@@ -2173,7 +2409,7 @@ function initTalkers() {
       "mu",
       "v"
     ],
-    "sprite_path": "assets/sprites/characters/persona/yosuke.json",
+    "sprite_path": "assets/sprites/characters/yosuke.json",
     "custom_words": [],
     "copulas": [],
     "likes": [
@@ -2251,7 +2487,7 @@ function initTalkers() {
     "fav_boards": [
       "p"
     ],
-    "sprite_path": "assets/sprites/characters/persona/yukiko.json",
+    "sprite_path": "assets/sprites/characters/yukiko.json",
     "custom_words": [],
     "copulas": [],
     "likes": [
@@ -2304,7 +2540,7 @@ function initTalkers() {
       "a",
       "c"
     ],
-    "sprite_path": "assets/sprites/characters/persona/yuna.json",
+    "sprite_path": "assets/sprites/characters/yuna.json",
     "custom_words": [],
     "copulas": [],
     "likes": [
@@ -2397,7 +2633,7 @@ function initTalkers() {
     "fav_boards": [
       "g"
     ],
-    "sprite_path": "assets/sprites/characters/persona/labrys.json",
+    "sprite_path": "assets/sprites/characters/labrys.json",
     "custom_words": [],
     "copulas": [],
     "likes": [
@@ -2466,7 +2702,7 @@ function initTalkers() {
     "fav_boards": [
       "a"
     ],
-    "sprite_path": "assets/sprites/characters/persona/teddie.json",
+    "sprite_path": "assets/sprites/characters/teddie.json",
     "custom_words": [
       "senpai",
       ""
@@ -2664,7 +2900,7 @@ function hideDialogIndicator() {
 
 function Emote(owner, number, strong, blendmode) {
   blendmode = blendmode || PIXI.BLEND_MODES.ADD;
-  this.randomrot = randomInt(0,30);
+  this.randomrot = u.randomInt(0,30);
   this.spr = animatedSpriteFrom("assets/sprites/misc/emotes.json");
   this.spr.anchor.set(0.5, 0.5);
   this.spr.scale.set(1.3);
@@ -2672,11 +2908,11 @@ function Emote(owner, number, strong, blendmode) {
     this.spr.gotoAndStop(number);
   }
   else {
-    this.spr.gotoAndStop(randomInt(0, this.spr.totalFrames));
+    this.spr.gotoAndStop(u.randomInt(0, this.spr.totalFrames));
   }
   this.owner = owner;
   let x_range = 80;
-  this.spr.x = owner.spr.x + randomInt(-x_range, x_range);
+  this.spr.x = owner.spr.x + u.randomInt(-x_range, x_range);
   this.spr.y = owner.spr.y - 30;
   if (strong) {
     this.spr.blendMode = blendmode;
@@ -2691,7 +2927,7 @@ function Emote(owner, number, strong, blendmode) {
 
       this.vx = (Math.random()-Math.random())*0.3;
       this.vx += 0.4*Math.sign(this.vx);
-      this.spr.x = owner.spr.x + (randomInt(40,60))*Math.sign(this.vx);
+      this.spr.x = owner.spr.x + (u.randomInt(40,60))*Math.sign(this.vx);
       this.vy = -0.6 + Math.random()*-0.4;
       this.spr.alpha = 0.85;
       this.ticker = doUntil((count) => {
@@ -2766,41 +3002,42 @@ function playRandomTrack() {
     songs.forEach(x => x.already_played.false);
     selected = songs;
   }
-  playTrack(randomFromArr(selected));
+  playTrack(u.randomFromArr(selected));
 }
-function Song(path, name) {
-  this.path = path;
-  this.name = name;
-  this.already_played = false;
-}
-Song.prototype.songInfoScreen = function() {
-  let style = new PIXI.TextStyle({
-    fontFamily: 'Georgia, serif',
-    fontSize: 28,
-    fontStyle: 'italic',
-    fill: '#e4effd',
-    stroke: '#4e4e4e',
-    letterSpacing: 1,
-    strokeThickness: 4,
-    dropShadow: true,
-    dropShadowColor: '#000000',
-    dropShadowBlur: 0,
-    dropShadowAngle: Math.PI * 0.5,
-    dropShadowDistance: 1,
-  });
-  
-  let music_text = new PIXI.Text("♪ " + this.name, style);
-  music_text.anchor.set(1,0);
+function showMusicText(song) {
+  if (!music_text) {
+    let style = new PIXI.TextStyle({
+      fontFamily: 'Georgia, serif',
+      fontSize: 28,
+      fontStyle: 'italic',
+      fill: '#e4effd',
+      stroke: '#4e4e4e',
+      letterSpacing: 1,
+      strokeThickness: 4,
+      dropShadow: true,
+      dropShadowColor: '#000000',
+      dropShadowBlur: 0,
+      dropShadowAngle: Math.PI * 0.5,
+      dropShadowDistance: 1,
+    });
+    music_text = new PIXI.Text("", style);
+    music_text.anchor.set(1,0);
+    music_text.zIndex = 100;
+    addChildZ(music_text);
+    music_text.alpha = 0;
+  }
+  music_text.text = "♪ " + song.name;
   music_text.x = app.screen.width-130;
   music_text.y = app.screen.height+5;
-  music_text.zIndex = 100;
   music_text.alpha = 0;
   if (music_text.width > music_text.x-20) {
     music_text.width = music_text.x-20;
   }
-  addChildZ(music_text);
   
-  doUntil((count)=> {
+  if (music_text.ticker) {
+    music_text.ticker.stop();
+  }
+  music_text.ticker = doUntil((count)=> {
     if (count < 42) {
       if (music_text.alpha < 0.84) {music_text.alpha += 0.03;}
       music_text.y -= 34/((count+1)*1.5);
@@ -2809,8 +3046,16 @@ Song.prototype.songInfoScreen = function() {
       music_text.alpha -= 0.05;
     }
   }, 400, () => {
-    music_text.destroy();
+    music_text.alpha = 0;
   });
+}
+function Song(path, name) {
+  this.path = path;
+  this.name = name;
+  this.already_played = false;
+}
+Song.prototype.songInfoScreen = function() {
+  showMusicText(this);
 };
 function initSongs() {
   for (let i=0; i<music_paths.length; i++) {
@@ -2856,7 +3101,7 @@ function ParticleSystem(opts) {
     if (count % this.interval === 0) {
       for (let i=0; i<this.rate; i++) {
         let p = opts.pos_variation(count);
-        this.addParticle(this.x+randomFloat(-p, p), this.y+randomFloat(-p, p));
+        this.addParticle(this.x+u.randomFloat(-p, p), this.y+u.randomFloat(-p, p));
       }
     }
   }, -1);
@@ -2865,17 +3110,17 @@ ParticleSystem.prototype.addParticle = function(x, y) {
   return new ParticleSystem.Particle(this, x, y);
 };
 ParticleSystem.Particle = function(owner, x, y) {
-  this.x_to = owner.x_to + randomFloat(-owner.opts.part_destination_variation, owner.opts.part_destination_variation);
-  this.y_to = owner.y_to + randomFloat(-owner.opts.part_destination_variation, owner.opts.part_destination_variation);
+  this.x_to = owner.x_to + u.randomFloat(-owner.opts.part_destination_variation, owner.opts.part_destination_variation);
+  this.y_to = owner.y_to + u.randomFloat(-owner.opts.part_destination_variation, owner.opts.part_destination_variation);
   let x_dif = this.x_to - x;
   let y_dif = this.y_to - y;
   this.angle = Math.tan(y_dif / x_dif);
-  this.speed = owner.speed * randomFloat(1, 1.5);
+  this.speed = owner.speed * u.randomFloat(1, 1.5);
   this.alpha_max = owner.opts.alpha_max;
   this.owner = owner;
   if (this.owner.opts.particle_animate) {    
     this.spr = animatedSpriteFrom(owner.particle_path);
-    this.spr.gotoAndPlay(randomInt(0, this.spr.totalFrames));
+    this.spr.gotoAndPlay(u.randomInt(0, this.spr.totalFrames));
   }
   else {
     this.spr = PIXI.Sprite.fromImage(owner.opts.particle_path);
@@ -2883,7 +3128,7 @@ ParticleSystem.Particle = function(owner, x, y) {
   this.spr.blendMode = owner.opts.blendMode;
   this.spr.animationSpeed = this.owner.part_animspeed;
   this.spr.position.set(x,y);
-  this.spr.scale.set(randomFloat(this.owner.opts.part_minsize, this.owner.opts.part_maxsize));
+  this.spr.scale.set(u.randomFloat(this.owner.opts.part_minsize, this.owner.opts.part_maxsize));
   this.spr.anchor.set(0.5, 0.5);
   this.spr.alpha = 0;
   this.owner.container.addChild(this.spr);
@@ -2995,7 +3240,7 @@ ParticleSystem.generateQueue = function() {
   }
 };
 ParticleSystem.addToQueue = function(a, b, key) {
-  pushIfNotIn(b.name, ParticleSystem.queue[key].emitters[a.name]);
+  u.pushIfNotIn(b.name, ParticleSystem.queue[key].emitters[a.name]);
 };
 function ButtonToggle(x, y, path, action) {
   this.spr = animatedSpriteFrom(path);
@@ -3064,13 +3309,13 @@ function takeScreenshot() {
 }
 
 function addUpdate(obj, func) {
-  if (!isInArr(obj, objectsToUpdate)) {
+  if (!u.isInArr(obj, objectsToUpdate)) {
     objectsToUpdate.push(obj);
   }
   if (!obj.update) {
     obj.update = [];
   }
-  if (!isInArr(func, obj.update)) {
+  if (!u.isInArr(func, obj.update)) {
     obj.update.push(func);
   }
 }
