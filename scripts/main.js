@@ -18,15 +18,15 @@ let music_normal_volume = 0.17;
 let sound_is_on = true;
 let next_ticker;
 let emotes_queue = [];
-let music_paths = ['A Moment of Relief.mp3', 'Chronicles of the Gallian War.mp3', 'Daily Life of the 7th Platoon.mp3', 'Defensive Fight.mp3', 'Everyday Training.mp3', 'Fierce Combat.mp3', 'Final Decisive Battle.mp3', 'Gallant Fight.mp3', 'Hard Fight.mp3', 'No Matter The Distance (Game Opening).mp3', 'No Matter The Distance.mp3', 'Offensive and Defensive Battle.mp3', 'Quiet Chat.mp3', "Randgriz Archduke's Family.mp3", 'Randgriz City.mp3', 'Resistance.mp3', 'Succeeded Wish (Piano).mp3', 'Those Who Succeeded.mp3', 'Title Main Theme.mp3', 'Urgent Instructions.mp3', 'Varukyuria Intro.mp3', "Zaka's Theme.mp3", "K-ON! - Pinch Daisuki.mp3", "Akino - Sousei no Aquarion.mp3"];
+let music_paths = ['A Moment of Relief.mp3', 'Chronicles of the Gallian War.mp3', 'Daily Life of the 7th Platoon.mp3', 'Defensive Fight.mp3', 'Everyday Training.mp3', 'Fierce Combat.mp3', 'Final Decisive Battle.mp3', 'Gallant Fight.mp3', 'Hard Fight.mp3', 'No Matter The Distance (Game Opening).mp3', 'No Matter The Distance.mp3', 'Offensive and Defensive Battle.mp3', 'Quiet Chat.mp3', "Randgriz Archduke's Family.mp3", 'Randgriz City.mp3', 'Resistance.mp3', 'Succeeded Wish (Piano).mp3', 'Those Who Succeeded.mp3', 'Title Main Theme.mp3', 'Urgent Instructions.mp3', 'Varukyuria Intro.mp3', "Zaka's Theme.mp3", "K-ON! - Pinch Daisuki.mp3", "Akino - Sousei no Aquarion.mp3", "Succeeded Wish (ROJI).mp3"];
+//music_paths = ['A Moment of Relief.mp3'];
 let songs = [];
 let stage_spots = [
   {x: 140, y: 126, facing: 1, guest: null, zIndex: 0},
-  {x: 140, y: 363, facing: 1,  guest: null, zIndex: 1},
+  {x: 140, y: app.screen.height-117, facing: 1,  guest: null, zIndex: 1},
   {x: app.screen.width-140, y: 126, facing: -1,  guest: null, zIndex: 2},
   {x: app.screen.width-190, y: app.screen.height-117, facing: -1,  guest: null, zIndex: 3}
 ];
-let gameplay = {};
 let currentMsg;
 let music_text;
 
@@ -560,6 +560,7 @@ function loadGame() {
   showLoader();
   loader.on("progress", (loader, res) => {
     loader.text_spr.text = Math.round(loader.progress*100)/100 + "%";
+    loader.text_spr.text = res.name;
     for (let i=0; i<LoadingSphere.spheres.length; i++) {
       LoadingSphere.spheres[i].update(loader.progress);
     }
@@ -575,7 +576,7 @@ function loadGame() {
 .add("assets/backgrounds/bkg006.jpg")
 .add("assets/backgrounds/bkg007.jpg")
 .add("assets/backgrounds/bkg008.jpg")
-// assets/backgrounds/rare/ (1.98 MB)
+// assets/backgrounds/rare/ (1.73 MB)
 .add("assets/backgrounds/rare/bkg000.jpg")
 .add("assets/backgrounds/rare/bkg001.jpg")
 .add("assets/backgrounds/rare/bkg002.jpg")
@@ -648,11 +649,15 @@ function loadGame() {
 .add("assets/backgrounds/rare/bkg069.jpg")
 .add("assets/backgrounds/rare/bkg070.jpg")
 .add("assets/backgrounds/rare/bkg071.jpg")
-.add("assets/backgrounds/rare/bkg072.jpg")
-.add("assets/backgrounds/rare/bkg073.jpg")
-// assets/backgrounds/special/ (2.03 MB)
+// assets/backgrounds/special/ (0.10 MB)
+.add("assets/backgrounds/special/janaino1.jpg")
+.add("assets/backgrounds/special/janaino2.jpg")
 .add("assets/backgrounds/special/junes.jpg")
-// assets/music/ (11.37 MB)
+// assets/backgrounds/ozpin/ (0.04 MB)
+.add("assets/backgrounds/ozpin/ozpin01.jpg")
+.add("assets/backgrounds/ozpin/ozpin02.jpg")
+.add("assets/backgrounds/ozpin/ozpin03.jpg")
+// assets/music/ (9.72 MB)
 .add("assets/music/A Moment of Relief.mp3")
 .add("assets/music/Akino - Sousei no Aquarion.mp3")
 .add("assets/music/Chronicles of the Gallian War.mp3")
@@ -672,92 +677,68 @@ function loadGame() {
 .add("assets/music/Randgriz City.mp3")
 .add("assets/music/Resistance.mp3")
 .add("assets/music/Succeeded Wish (Piano).mp3")
+.add("assets/music/Succeeded Wish (ROJI).mp3")
 .add("assets/music/Those Who Succeeded.mp3")
 .add("assets/music/Title Main Theme.mp3")
 .add("assets/music/Urgent Instructions.mp3")
 .add("assets/music/Varukyuria Intro.mp3")
 .add("assets/music/Zaka's Theme.mp3")
-// assets/music/special/bkg/ (11.78 MB)
+// assets/music/special/bkg/ (1.04 MB)
 .add("assets/music/special/bkg/JUNESU.mp3")
-// assets/music/special/characters/ (13.98 MB)
+.add("assets/music/special/bkg/ゲスの極み乙女。 - 私以外私じゃないの [MAIN メロディー].mp3")
+.add("assets/music/special/bkg/ゲスの極み乙女。 - 私以外私じゃないの [OOOOH].mp3")
+// assets/music/special/characters/ (2.34 MB)
+.add("assets/music/special/characters/RWBY - Opening 1.mp3")
 .add("assets/music/special/characters/Spirited Girl (Labrys).mp3")
-.add("assets/music/special/characters/Succeeded Wish (ROJI).mp3")
 .add("assets/music/special/characters/Your Affection (Yosuke).mp3")
-// assets/sprites/characters/ (17.04 MB)
+.add("assets/music/special/characters/Brained Child (Gloria).mp3")
+// assets/sprites/characters/ (4.06 MB)
 .add("assets/sprites/characters/alfons.json")
 .add("assets/sprites/characters/alicia.json")
 .add("assets/sprites/characters/amy.json")
 .add("assets/sprites/characters/annika.json")
+.add("assets/sprites/characters/blake.json")
 .add("assets/sprites/characters/carisa.json")
 .add("assets/sprites/characters/chie.json")
 .add("assets/sprites/characters/clarissa.json")
-.add("assets/sprites/characters/cossette.json")
+.add("assets/sprites/characters/cosette.json")
 .add("assets/sprites/characters/edy.json")
 .add("assets/sprites/characters/gloria.json")
 .add("assets/sprites/characters/gusurg.json")
 .add("assets/sprites/characters/imca.json")
 .add("assets/sprites/characters/isara.json")
 .add("assets/sprites/characters/jann.json")
+.add("assets/sprites/characters/jaune.json")
 .add("assets/sprites/characters/kurt.json")
 .add("assets/sprites/characters/labrys.json")
 .add("assets/sprites/characters/largo.json")
 .add("assets/sprites/characters/leila.json")
 .add("assets/sprites/characters/marina.json")
 .add("assets/sprites/characters/maximilian.json")
+.add("assets/sprites/characters/penny.json")
 .add("assets/sprites/characters/riela.json")
 .add("assets/sprites/characters/rise.json")
 .add("assets/sprites/characters/rosie.json")
+.add("assets/sprites/characters/ruby.json")
 .add("assets/sprites/characters/selvaria.json")
 .add("assets/sprites/characters/susie.json")
 .add("assets/sprites/characters/teddie.json")
 .add("assets/sprites/characters/valerie.json")
 .add("assets/sprites/characters/varrot.json")
+.add("assets/sprites/characters/weiss.json")
 .add("assets/sprites/characters/welkin.json")
 .add("assets/sprites/characters/yosuke.json")
 .add("assets/sprites/characters/yukiko.json")
 .add("assets/sprites/characters/yuna.json")
-// assets/sprites/misc/ (17.10 MB)
+// assets/sprites/misc/ (0.06 MB)
 .add("assets/sprites/misc/catdance.json")
 .add("assets/sprites/misc/dialog_indicator.png")
 .add("assets/sprites/misc/emotes.json")
 .add("assets/sprites/misc/heart_particle.png")
 .add("assets/sprites/misc/msgbubble.png")
 .add("assets/sprites/misc/sound_button.json")
-// assets/voice/ (22.98 MB)
-.add("assets/voice/alfons.mp3")
-.add("assets/voice/alicia.mp3")
-.add("assets/voice/amy.mp3")
-.add("assets/voice/annika.mp3")
-.add("assets/voice/carisa.mp3")
-.add("assets/voice/chie.mp3")
-.add("assets/voice/clarissa.mp3")
-.add("assets/voice/cossette.mp3")
-.add("assets/voice/edy.mp3")
-.add("assets/voice/gloria.mp3")
-.add("assets/voice/gusurg.mp3")
-.add("assets/voice/imca.mp3")
-.add("assets/voice/isara.mp3")
-.add("assets/voice/jann.mp3")
-.add("assets/voice/kurt.mp3")
-.add("assets/voice/labrys.mp3")
-.add("assets/voice/largo.mp3")
-.add("assets/voice/leila.mp3")
-.add("assets/voice/marina.mp3")
-.add("assets/voice/maximilian.mp3")
-.add("assets/voice/riela.mp3")
-.add("assets/voice/rise.mp3")
-.add("assets/voice/rosie.mp3")
-.add("assets/voice/selvaria.mp3")
-.add("assets/voice/susie.mp3")
-.add("assets/voice/teddie.mp3")
-.add("assets/voice/valerie.mp3")
-.add("assets/voice/varrot.mp3")
-.add("assets/voice/welkin.mp3")
-.add("assets/voice/yosuke.mp3")
-.add("assets/voice/yukiko.mp3")
-.add("assets/voice/yuna.mp3")
 // ------------------
-// Total size: 22.98 MB
+// Total size: 19.33 MB
   .load(setup);
 }
 
@@ -843,23 +824,24 @@ function setup() {
   dialog_indicator.zIndex = 89;
   
   initTalkers();
+  Talker.ozpin.init();
   
   next_ticker = doUntil(null, 50, next);
-
 }
 
-function Background(name, path, is_rare, song) {
+function Background(name, path, is_rare, song, ozpin) {
   this.name = name;
   this.path = path;
   this.is_rare = is_rare || false;
   this.song = song || null;
+  this.ozpin = ozpin || false;
   this.has_been_shown = false;
   Background.backgrounds.push(this);
 }
 Background.can_change = true;
 Background.messages_required = 0;
-Background.msgs_before_changing_min = 8;
-Background.msgs_before_changing_max = 18;
+Background.msgs_before_changing_min = 11;
+Background.msgs_before_changing_max = 19;
 Background.init = function() {
   Background.messagesRequiredUpdate();
   Background.genBackgrounds();
@@ -877,7 +859,7 @@ Background.messagesRequiredUpdate = function() {
   return Background.messages_required;
 };
 Background.change = function(bkg) {
-//  bkg = Background.backgrounds[97]; // test junesu
+//  bkg = Background.backgrounds[86]; // test ozpin
   Background.current = bkg;
   Background.sprite.texture = PIXI.Texture.fromImage(bkg.path);
   bkg.has_been_shown = true;
@@ -887,7 +869,7 @@ Background.changeRandom = function() {
 };
 Background.backgrounds = [];
 Background.normal_number = 8;  // i.e. bkg008.jpg exists
-Background.rare_number = 73;  // i.e. bkg073.jpg exists
+Background.rare_number = 71;  // i.e. bkg071.jpg exists
 Background.genBackgrounds = function() {
   // normal backgrounds
   for (let i=0; i<=Background.normal_number; i++) {
@@ -899,12 +881,19 @@ Background.genBackgrounds = function() {
   }
   // special backgrounds
   new Background("junes", "assets/backgrounds/special/junes.jpg", true, new Song("assets/music/special/bkg/JUNESU.mp3", "JUNESU"));
+  new Background("JANAINO1", "assets/backgrounds/special/janaino1.jpg", true, new Song("assets/music/special/bkg/ゲスの極み乙女。 - 私以外私じゃないの [MAIN メロディー].mp3", "ゲスの極み乙女。 - 私以外私じゃないの [MAIN メロディー]"));
+  new Background("JANAINO2", "assets/backgrounds/special/janaino2.jpg", true, new Song("assets/music/special/bkg/ゲスの極み乙女。 - 私以外私じゃないの [OOOOH].mp3", "ゲスの極み乙女。 - 私以外私じゃないの [OOOOH]"));
+  // ozpin backgrounds
+  new Background("ozpin1", "assets/backgrounds/ozpin/ozpin01.jpg", true, null, true);
+  new Background("ozpin2", "assets/backgrounds/ozpin/ozpin02.jpg", true, null, true);
+  new Background("ozpin3", "assets/backgrounds/ozpin/ozpin03.jpg", true, null, true);
 };
 Background.getRandom = function() {
   let include_rare = Math.random() < 0.4;
   let selected = Background.backgrounds.filter(x => !x.has_been_shown && (include_rare && x.is_rare) || !include_rare);
   if (selected.length === 0) {
-    selected.forEach(x => x.has_been_shown = false);
+    Background.backgrounds.forEach(x => x.has_been_shown = false);
+    selected = Background.backgrounds;
   }
   return u.randomFromArr(selected);
 };
@@ -920,8 +909,8 @@ function next() {
     Background.can_change = false;
   }
   // someone leave NOW
-  else if (activeTalkers().filter(x=>x.talked_once).length > 0 && Math.random() < 0.2) {
-    u.randomFromArr(activeTalkers().filter(x=>x.talked_once)).leave();
+  else if (activeTalkers().filter(x=>x.talked_times >= Talker.msgs_before_leaving).length > 0 && Math.random() < 0.4) {
+    u.randomFromArr(activeTalkers().filter(x=>x.talked_times >= Talker.msgs_before_leaving)).leave();
   }
   // go to new scene
   else if (Background.messages_required <= 0 && Background.can_change) {
@@ -930,7 +919,12 @@ function next() {
   }
   else if (activeTalkers().length > 1) {
     Background.messages_required--;
-    u.randomFromArr(activeTalkers()).talk();
+    if (testing_who) {
+      testing_who.talk();
+    }
+    else {
+      u.randomFromArr(activeTalkers()).talk();
+    }
     call_next = false;
     Background.can_change = true;
   }
@@ -1004,22 +998,19 @@ gamesound.Gamesound = function(path, sprite) {
     this.sound = loader.resources[path].sound;
   }
   else {
-    this.sound = PIXI.sound.Sound.from(path);
+    this.sound = PIXI.sound.Sound.from({
+      url: path,
+      preload: true
+    });
   }
   if (sprite) {
     this.sound.addSprites(sprite);
   }
   gamesound.sounds[this.path] = this;
+  if (!sound_is_on) {
+    this.mute();
+  }
 };
-//gamesound.Gamesound.fromSprite = function(path, sprite) {
-//  let ret = new gamesound.Gamesound();
-//  this.sprite = sprite;
-//  ret.sound = PIXI.sound.Sound.from({
-//    url: path,
-//    sprites: sprite
-//  });
-//  return ret;
-//};
 gamesound.Gamesound.prototype.setVolume = function(new_volume) {
   if (this.sound.paused === true) {
     this.sound.resume();
@@ -1030,7 +1021,11 @@ gamesound.Gamesound.prototype.setVolume = function(new_volume) {
    this.sound.volume = new_volume; 
   }
 };
-
+gamesound.Gamesound.prototype.kill = function() {
+  this.sound.stop();
+  this.sound.destroy();
+  delete gamesound.sounds[this.path];
+};
 gamesound.Gamesound.prototype.mute = function() {
   if (this.prev_volume === undefined || this.prev_volume !== 0 && this.sound.volume !== 0) {
     this.prev_volume = this.sound.volume;
@@ -1062,18 +1057,19 @@ function Talker(options) {
   this.dislikes = options.dislikes;
   this.emojitypes = options.emojitypes || [1,2];
   this.emojifreq = options.emojifreq || 1;
+  this.customTextProc = options.customTextProc || null;
   if (options.song_path) {
     this.song = new Song("assets/music/special/characters/" + options.song_path + ".mp3", options.song_path);
     this.song_sound = gamesound.selectFromList(this.song.path);
+    this.song_sound.sound.preload = true;
     this.song_sound.sound.loop = true;
     this.song_sound.setVolume(music_normal_volume);
   }
-
   if (options.voice_sprite) {
     this.voice_sprite = options.voice_sprite;
-    this.voiceCreate();
+//    this.voiceCreate();
   }
-  this.talked_once = false;
+  this.talked_times = 0;
   this.spr = animatedSpriteFrom(options.sprite_path);
   this.spr.anchor.set(0.5, 0.5);
   this.alpha_min = 0.7;
@@ -1111,6 +1107,7 @@ function Talker(options) {
   });
   this.randomFace();
 }
+Talker.msgs_before_leaving = 3;
 Talker.talkers = [];
 Talker.stopAllVoices = function() {
   Talker.talkers.forEach(x => {
@@ -1206,14 +1203,60 @@ Talker.prototype.genMsg = function() {
   }
 //  emoji at the end of msg
   result += " " + this.useEmoji(0.4);
+  // custom text replacement/processing function (e.g. MAXIMILIAN)
+  if (this.customTextProc) {
+    result = this.customTextProc(result);
+  }
   // uppercase
   if (Math.random() < 0.25) {
     result = result.toUpperCase();
   }
+  
   return result;
 };
+Talker.getReplaceFunc = function(replace_combo, words_only) {
+  if (words_only === undefined) {
+    words_only = true;
+  }
+  return function(text) {
+    let ret = text;
+    if (words_only) {
+      ret = text.split(" ");
+      for (let i=0; i<ret.length; i++) {
+        for (let j=0; j<replace_combo.length; j++) {
+          if (ret[i] === replace_combo[j][0]) {
+            if (replace_combo[j][1] instanceof Array) {
+              ret[i] = u.randomFromArr(replace_combo[j][1]);
+            }
+            else {
+              ret[i] = replace_combo[j][1];
+            }
+            continue;
+          }
+          if (ret[i].toUpperCase() === replace_combo[j][0].toUpperCase()) {
+            if (replace_combo[j][1] instanceof Array) {
+              ret[i] = u.randomFromArr(replace_combo[j][1]).toUpperCase();
+            }
+            else {
+              ret[i] = replace_combo[j][1].toUpperCase();
+            }
+            continue;
+          }
+        }
+      }
+      ret = ret.join(" ");
+    }
+    else {
+      for (let i=0; i<replace_combo.length; i++) {
+        ret = ret.split(replace_combo[i][0]).join(replace_combo[i][1]);
+        ret = ret.split(replace_combo[i][0].toUpperCase()).join(replace_combo[i][1].toUpperCase());
+      }
+    }
+    return ret;
+  };
+};
 Talker.prototype.talk = function() {
-  this.talked_once = true;
+  this.talked_times += 1;
   this.randomFace();
   shutEveryone();
   this.talking = true;
@@ -1223,9 +1266,10 @@ Talker.prototype.talk = function() {
 Talker.prototype.enter = function() {
   if (!this.randomPos()) {return;}
   this.playSong();
+  this.voiceCreate();
   this.randomFace();
   this.active = true;
-  this.talked_once = false;
+  this.talked_times = 0;
   this.spr.alpha = 0.1;
   this.spr.x -= this.stage_spot.facing*30;
   this.spr.zIndex = this.stage_spot.zIndex;
@@ -1238,6 +1282,7 @@ Talker.prototype.enter = function() {
 };
 Talker.prototype.leave = function() {
   this.pauseSong();
+  this.voice.kill();
   this.active = false;
   this.talking = false;
   this.stage_spot.guest = null;
@@ -1298,10 +1343,16 @@ Talker.prototype.pauseSong = function () {
   }
 };
 Talker.prototype.voiceCreate = function() {
-  this.voice = gamesound.selectFromList("assets/voice/" + this.name.toLowerCase() + ".mp3", this.voice_sprite);
+  if (this.voice_sprite) {
+    this.voice = gamesound.selectFromList("assets/voice/" + this.name.toLowerCase() + ".opus", this.voice_sprite);
+  }
 };
 Talker.prototype.voicePlayRandom = function() {
-  if (this.voice) {
+  if (Background.current.ozpin) {
+    Talker.ozpin.voice.sound.stop();
+    Talker.ozpin.voice.sound.play(u.randomFromArr(Object.keys(Talker.ozpin.voice_sprite)));
+  }
+  else if (this.voice) {
     Talker.stopAllVoices();
     this.voice.sound.play(u.randomFromArr(Object.keys(this.voice_sprite)));
   }
@@ -1310,6 +1361,34 @@ Talker.getByName = function(namae) {
   let s = Talker.talkers.filter(x => x.name == namae);
   if (s.length > 0) {
     return s[0];
+  }
+};
+Talker.ozpin = {
+  voice_sprite: {
+    "01": {start: 0.0, end: 1.9},
+    "02": {start: 2.0, end: 3.9},
+    "03": {start: 4.0, end: 5.9},
+    "04": {start: 6.0, end: 7.9},
+    "05": {start: 8.0, end: 9.9},
+    "06": {start: 10.0, end: 11.9},
+    "07": {start: 12.0, end: 13.9},
+    "08": {start: 14.0, end: 15.9},
+    "09": {start: 16.0, end: 17.9},
+    "10": {start: 18.0, end: 19.9},
+    "11": {start: 20.0, end: 23.9},
+    "12": {start: 24.0, end: 27.9},
+    "13": {start: 28.0, end: 31.9},
+    "14": {start: 32.0, end: 35.9},
+    "15": {start: 36.0, end: 39.9},
+    "16": {start: 40.0, end: 43.9},
+    "17": {start: 44.0, end: 47.9},
+    "18": {start: 48.0, end: 55.9},
+    "19": {start: 56.0, end: 63.9},
+    "20": {start: 64.0, end: 71.9},
+    "21": {start: 72.0, end: 79.9}
+  },
+  init: function() {
+    this.voice = gamesound.selectFromList("assets/voice/ozpin.opus", this.voice_sprite);
   }
 };
 function initTalkers() {
@@ -1323,7 +1402,16 @@ function initTalkers() {
       "s4s"
     ],
     "sprite_path": "assets/sprites/characters/alfons.json",
-    "custom_words": [],
+    "custom_words": [
+      "I LIKE PAIN",
+      "bdsm",
+      "BDSM",
+      "hit me",
+      "hit me with",
+      "more effective than enemy bullets",
+      "whip",
+      "HIT ME"
+    ],
     "copulas": [],
     "likes": [
       "Leila",
@@ -1339,6 +1427,9 @@ function initTalkers() {
       3
     ],
     "emojifreq": 1.4,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Leila", "Leila❤️"]
+    ]),
     "voice_sprite": {
       "00": {start: 0.0, end: 3.8},
       "01": {start: 4.0, end: 7.8},
@@ -1363,20 +1454,29 @@ function initTalkers() {
     "custom_words": [
       "ん！",
       "こうどうかいしします",
-      "NE WERUKIN",
-      "ね。。ウェルキン",
       "そこ！！！",
       "あたって！！！",
       "SOKOO",
       "ATATTEE",
       "行動かいします",
-      "わたしのばんね"
+      "わたしのばんね",
+      "bake",
+      "MAKERU MONKAAAAAA",
+      "まけるもんか！！！！！！！！！",
+      "あのね",
+      "マーモット",
+      "undodgeable shot",
+      "resist cross-fire",
+      "mysterious body",
+      "Valkyria",
+      "maternal"
     ],
     "copulas": [],
     "likes": [
       "Welkin",
       "Isara",
-      "Selvaria"
+      "Selvaria",
+      "Riela"
     ],
     "dislikes": [
       "Gloria",
@@ -1387,6 +1487,9 @@ function initTalkers() {
       4
     ],
     "emojifreq": 1.2,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Welkin", ["ウェルキン", "NE WERUKIN", "ね。。ウェルキン", "ch-chotto Weeerrrukin!!??", "WEEERRRUUKIINN"]]
+    ]),
     "voice_sprite": {
       "01": {start: 0.0, end: 1.9},
       "02": {start: 2.0, end: 3.9},
@@ -1424,10 +1527,19 @@ function initTalkers() {
   Talker.talkers.push(new Talker({
     "name": "Amy",
     "fav_boards": [
-      ""
+      "c"
     ],
     "sprite_path": "assets/sprites/characters/amy.json",
-    "custom_words": [],
+    "custom_words": [
+      "teki hakken, teki ha- uuhhahahaha",
+      "uuhhahahaha",
+      "teki hakken!",
+      "てきはっけん、てきはーｗｗｗｗｗｗ",
+      "てきはっけん",
+      "OTOOUUSAN",
+      "おとうさん",
+      "おとうさんにあいたいな"
+    ],
     "copulas": [],
     "likes": [
       "Leila",
@@ -1458,13 +1570,23 @@ function initTalkers() {
       "fit"
     ],
     "sprite_path": "assets/sprites/characters/annika.json",
-    "custom_words": [],
+    "custom_words": [
+      "NINJIN PAAAAAAAN",
+      "ninjin pan",
+      "ninjin",
+      "PAAN",
+      "ninjin paaaaaaaaaaaaan",
+      "true strength",
+      "NINJIN",
+      "にんじんパン"
+    ],
     "copulas": [],
     "likes": [
       "Leila",
       "Alfons",
       "Amy",
-      "Imca"
+      "Imca",
+      "Gloria"
     ],
     "dislikes": [],
     "emojitypes": [
@@ -1492,11 +1614,19 @@ function initTalkers() {
       "mu"
     ],
     "sprite_path": "assets/sprites/characters/clarissa.json",
-    "custom_words": [],
+    "custom_words": [
+      "*heavy sigh*",
+      "*sighs heavily*",
+      "[SIGHING]",
+      "gomen-nasahh",
+      "Pure Heart"
+    ],
     "copulas": [],
     "likes": [
       "Valerie",
-      "Teddie"
+      "Teddie",
+      "Penny",
+      "Ruby"
     ],
     "dislikes": [],
     "emojitypes": [
@@ -1518,17 +1648,31 @@ function initTalkers() {
     }
   }));
   Talker.talkers.push(new Talker({
-    "name": "Cossette",
+    "name": "Cosette",
     "fav_boards": [
       "gd",
       "ic",
-      "i"
+      "i",
+      "c"
     ],
-    "sprite_path": "assets/sprites/characters/cossette.json",
-    "custom_words": [],
+    "sprite_path": "assets/sprites/characters/cosette.json",
+    "custom_words": [
+      "だいじょうぶだよ",
+      "DRRPPRORTR90R3232",
+      "ATATTE",
+      "てきげきは",
+      "yaah!",
+      "s-sorry",
+      "thank you SO much"
+    ],
     "copulas": [],
     "likes": [
-      "Teddie"
+      "Teddie",
+      "Penny",
+      "Labrys",
+      "Alicia",
+      "Isara",
+      "Riela"
     ],
     "dislikes": [],
     "emojitypes": [
@@ -1562,7 +1706,14 @@ function initTalkers() {
     "sprite_path": "assets/sprites/characters/edy.json",
     "custom_words": [
       "やりましたわ",
-      "はっけんしたわ"
+      "はっけんしましたわ",
+      "りょうかいですわ",
+      "ですわ",
+      "いきますわよ！",
+      "わたくし",
+      "わたくしにおまかせなさい",
+      "[GUNSHOTS]",
+      "*rapid fire*"
     ],
     "copulas": [
       "wa",
@@ -1602,8 +1753,14 @@ function initTalkers() {
       "biz"
     ],
     "sprite_path": "assets/sprites/characters/gloria.json",
-    "custom_words": [],
-    "copulas": [],
+    "custom_words": [
+      "my basketball",
+      "my brainchild",
+      "my good or bad",
+      "my breath is nice",
+      "これでどうだい"
+    ],
+    "copulas": ["あい"],
     "likes": [
       "Riela",
       "Leila"
@@ -1620,6 +1777,7 @@ function initTalkers() {
       5
     ],
     "emojifreq": 0.6,
+    "song_path": "Brained Child (Gloria)",
     "voice_sprite": {
       "00": {start: 0.0, end: 3.8},
       "01": {start: 4.0, end: 7.8},
@@ -1642,12 +1800,16 @@ function initTalkers() {
     "sprite_path": "assets/sprites/characters/gusurg.json",
     "custom_words": [
       "xD",
-      "",
+      "KOUDOUKAISHITA",
+      "こうどうかいした",
+      "xD",
       ""
     ],
     "copulas": [],
     "likes": [
-      "Kurt"
+      "Kurt",
+      "Imca",
+      "Isara"
     ],
     "dislikes": [],
     "emojitypes": [
@@ -1709,14 +1871,24 @@ function initTalkers() {
       "sci"
     ],
     "sprite_path": "assets/sprites/characters/isara.json",
-    "custom_words": [],
+    "custom_words": [
+      "ありがとうございます",
+      "ちょっといいですか",
+      "エーデルワイス",
+      "ラルゴさんとロージーさん",
+      "ラルゴさんとロージーさんにおわたししたくて",
+      "ダルクス",
+      "ダルクスじ"
+    ],
     "copulas": [],
     "likes": [
       "Welkin",
       "Alicia",
       "Yuna",
       "Rosie",
-      "Largo"
+      "Largo",
+      "Penny",
+      "Labrys"
     ],
     "dislikes": [
       "Yosuke"
@@ -1726,6 +1898,11 @@ function initTalkers() {
       4
     ],
     "emojifreq": 1.4,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Largo", ["ラルゴさん", "Mr. Largo"]],
+      ["Rosie", "ロージーさん"],
+      ["Welkin", "にいさん"]
+    ]),
     "voice_sprite": {
       "01": {start: 0.0, end: 1.9},
       "02": {start: 2.0, end: 3.9},
@@ -1749,9 +1926,9 @@ function initTalkers() {
     ],
     "sprite_path": "assets/sprites/characters/kurt.json",
     "custom_words": [
-      "リエラ。。いま助ける！",
       "しゅつげきする",
-      "こうどうかいしする"
+      "こうどうかいしする",
+      ""
     ],
     "copulas": [],
     "likes": [
@@ -1762,6 +1939,10 @@ function initTalkers() {
     "dislikes": [],
     "emojitypes": [],
     "emojifreq": 0,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Riela", ["リエラ", "RIERA", "リエラ、グスルグ！", "リエラ、えんごする！", "リエラ。。いまたすける！"]],
+      ["Gusurg", ["グスルグ", "GUSURUGU"]]
+    ]),
     "voice_sprite": {
       "00": {start: 0.0, end: 1.8},
       "01": {start: 2.0, end: 3.8},
@@ -1774,7 +1955,8 @@ function initTalkers() {
       "08": {start: 16.0, end: 17.8},
       "death": {start: 18.0, end: 19.8},
       "Gusurg": {start: 20.0, end: 21.8},
-      "Riela": {start: 22.0, end: 23.8}
+      "Riela": {start: 22.0, end: 23.8},
+      "09": {start: 24.0, end: 25.8}
     }
   }));
   Talker.talkers.push(new Talker({
@@ -1785,12 +1967,23 @@ function initTalkers() {
       "fa"
     ],
     "sprite_path": "assets/sprites/characters/leila.json",
-    "custom_words": [],
+    "custom_words": [
+      "そこね",
+      "UHUHUH",
+      "anyeru",
+      "でばんだよね",
+      "はなしにならないわ",
+      "ダメなおとこはどこかしら",
+      "bad guy",
+      "educate"
+    ],
     "copulas": [],
     "likes": [
       "Alfons",
       "Amy",
-      "Annika"
+      "Annika",
+      "Maximilian",
+      "Kurt"
     ],
     "dislikes": [],
     "emojitypes": [],
@@ -1820,12 +2013,13 @@ function initTalkers() {
     "custom_words": [
       "はっけんしたわ",
       "そこね",
-      "クルト、わたしも！",
       "こうどうかいし",
       "わたしのつがいね",
       "そこね",
       "あたって！",
-      "やった！"
+      "やった！",
+      "みんあのやくにたちたいの",
+      "ぜんめつはいや",
     ],
     "copulas": [],
     "likes": [
@@ -1841,6 +2035,9 @@ function initTalkers() {
       5
     ],
     "emojifreq": 2,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Kurt", ["クルト", "クルト、わたしも！"]]
+    ]),
     "voice_sprite": {
       "00": {start: 0.0, end: 1.8},
       "01": {start: 2.0, end: 3.8},
@@ -1863,8 +2060,23 @@ function initTalkers() {
       "mu"
     ],
     "sprite_path": "assets/sprites/characters/rosie.json",
-    "custom_words": [],
-    "copulas": [],
+    "custom_words": [
+      "ゆらい？？？？",
+      "プレゼント",
+      "ダルクスじからのプレゼントだって\nほしくないだよ",
+      "ダルクス",
+      "ダルクスじ",
+      "ダルクスじからのプレゼント",
+      "とめられないよ",
+      "なんでもいいけどさ",
+      "うるさいな！",
+      "あかってるよけどさ",
+      "あかってるよ！",
+      "*muah*",
+      "*smack*",
+      "xxx"
+    ],
+    "copulas": ["x"],
     "likes": [
       "Isara",
       "Largo"
@@ -1874,7 +2086,18 @@ function initTalkers() {
     ],
     "emojitypes": [],
     "emojifreq": 0,
-    "song_path": "Succeeded Wish (ROJI)",
+    "customTextProc": Talker.getReplaceFunc([
+      ["i", "あたい"],
+      ["i'm", "あたいは"],
+      ["im", "あたいは"],
+      ["i'll", "あたい　will"],
+      ["ill", "あたい　will"],
+      ["am", "は"],
+      ["my", "あたいの"],
+      ["me", "あたいは"],
+      ["Largo", "ラルゴ"],
+      ["Isara", ["イサラ。。。", "イサラ"]]
+    ]),
     "voice_sprite": {
       "01": {start: 0.0, end: 1.9},
       "02": {start: 2.0, end: 3.9},
@@ -1917,6 +2140,9 @@ function initTalkers() {
     ],
     "emojitypes": [],
     "emojifreq": 0,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Maximilian", "げいか"]
+    ]),
     "voice_sprite": {
       "01": {start: 0.0, end: 1.9},
       "02": {start: 2.0, end: 3.9},
@@ -1936,10 +2162,15 @@ function initTalkers() {
       "a"
     ],
     "sprite_path": "assets/sprites/characters/susie.json",
-    "custom_words": [],
+    "custom_words": [
+      "えいせいへいさん！",
+      "やあああああああ！！！！",
+      "だからせんそうなんで？？",
+    ],
     "copulas": [],
     "likes": [
-      "Teddie"
+      "Teddie",
+      "Jaune"
     ],
     "dislikes": [],
     "emojitypes": [
@@ -1968,7 +2199,17 @@ function initTalkers() {
     ],
     "sprite_path": "assets/sprites/characters/valerie.json",
     "custom_words": [
-      "行くわよ！"
+      "行くわよ！",
+      "しゅつげきします",
+      "だいじょうぶ",
+      "だいじょうぶやああああああああああああ",
+      "あたって！",
+      "いたい",
+      "gates of history",
+      "history",
+      "darcsen",
+      "darcsen calamity",
+      "valkyria"
     ],
     "copulas": [],
     "likes": [
@@ -2005,7 +2246,10 @@ function initTalkers() {
     "sprite_path": "assets/sprites/characters/varrot.json",
     "custom_words": [
       "あら！",
-      "では"
+      "では",
+      "さくせん",
+      "ここにきなさい",
+      "それではさくせんをかいしする"
     ],
     "copulas": [],
     "likes": [
@@ -2018,6 +2262,9 @@ function initTalkers() {
       3
     ],
     "emojifreq": 0.9,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Welkin", ["ウェルキン", "あら！ウェルキン！"]]
+    ]),
     "voice_sprite": {
       "01": {start: 0.0, end: 1.9},
       "02": {start: 2.0, end: 3.9},
@@ -2039,7 +2286,14 @@ function initTalkers() {
     "custom_words": [
       "よし行くそう！",
       "しゅつげきする！",
-      "はっけんした"
+      "オーダー",
+      "もちろん",
+      "はっけんした",
+      "Squad 7",
+      "だいななしょうたい",
+      "7's",
+      "the 7th platoon",
+      "ｈｍｍｍやっぱりしせはいいね"
     ],
     "copulas": [],
     "likes": [
@@ -2054,6 +2308,10 @@ function initTalkers() {
       3
     ],
     "emojifreq": 1.8,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Alicia", ["アリシア。。あいしてる", "アリシアのきもちがうれしいよ", "@Alicia ぼくはきみをあいしてる", "もちろんだよ！ありがとう、アリシア！"]],
+      ["Isara", "イサラ"]
+    ]),
     "voice_sprite": {
       "01": {start: 0.0, end: 1.9},
       "02": {start: 2.0, end: 3.9},
@@ -2097,7 +2355,8 @@ function initTalkers() {
     "likes": [
       "Largo",
       "Teddie",
-      "Yuna"
+      "Yuna",
+      "Jaune"
     ],
     "dislikes": [],
     "emojitypes": [
@@ -2147,7 +2406,15 @@ function initTalkers() {
       "08": {start: 14.0, end: 15.9},
       "09": {start: 16.0, end: 17.9},
       "10": {start: 18.0, end: 19.9}
-    }
+    },
+    "customTextProc": Talker.getReplaceFunc([
+      ["i", "we"],
+      ["am", "are"],
+      ["me", "us"],
+      ["mine", "ours"],
+      ["my", "our"],
+      ["Selvaria", "セルベリア"]
+    ], false)
   }));
   Talker.talkers.push(new Talker({
     "name": "Marina",
@@ -2156,7 +2423,14 @@ function initTalkers() {
       "k"
     ],
     "sprite_path": "assets/sprites/characters/marina.json",
-    "custom_words": [],
+    "custom_words": [
+      "こうどうかいする",
+      "よし",
+      "わかった",
+      "はっけんした",
+      "えいせいへいはやく！",
+      "[zooming-in sound]"
+    ],
     "copulas": [],
     "likes": [],
     "dislikes": [],
@@ -2185,7 +2459,11 @@ function initTalkers() {
       "tv"
     ],
     "sprite_path": "assets/sprites/characters/largo.json",
-    "custom_words": [],
+    "custom_words": [
+      "こうどうかいしする",
+      "たまれ！",
+      "クソ"
+    ],
     "copulas": [],
     "likes": [
       "Rosie",
@@ -2197,6 +2475,9 @@ function initTalkers() {
       1
     ],
     "emojifreq": 0.9,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Varrot", "Ellie"]
+    ]),
     "voice_sprite": {
       "01": {start: 0.0, end: 1.9},
       "02": {start: 2.0, end: 3.9},
@@ -2217,7 +2498,18 @@ function initTalkers() {
       "jp"
     ],
     "sprite_path": "assets/sprites/characters/carisa.json",
-    "custom_words": [],
+    "custom_words": [
+      "ようこそ！",
+      "はい！",
+      "できました！",
+      "サービス",
+      "ほらHa-hHA[INHALE]",
+      "いいできでしょう",
+      "おかねがたりませんね",
+      "かみさまは",
+      "ですよね",
+      "おかねがたりませんよ"
+    ],
     "copulas": [],
     "likes": [
       "Kurt",
@@ -2228,7 +2520,7 @@ function initTalkers() {
       3,
       5
     ],
-    "emojifreq": 2,
+    "emojifreq": 2.4,
     "voice_sprite": {
       "01": {start: 0.0, end: 1.9},
       "02": {start: 2.0, end: 3.9},
@@ -2257,7 +2549,26 @@ function initTalkers() {
       "fit"
     ],
     "sprite_path": "assets/sprites/characters/chie.json",
-    "custom_words": [],
+    "custom_words": [
+      "mmhm!",
+      "sheesh",
+      "now i'm angry!",
+      "WATTAAAA",
+      "finishing strike!",
+      "get off me!",
+      "aren't you gonna fight?",
+      "Tomoe",
+      "Tomoe!!!!!!!!!!",
+      "protect me Tomoe!",
+      "yikes",
+      "uh-oh",
+      "I AM A DRAGON",
+      "DRAGON KICK",
+      "time to get fired up",
+      "this is my ultimate attack",
+      "I SMELL A FELLOW MEAT-LOVERRR",
+      "you gotta eat more steak"
+    ],
     "copulas": [],
     "likes": [
       "Yukiko"
@@ -2268,6 +2579,10 @@ function initTalkers() {
       4
     ],
     "emojifreq": 1,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Rise", "BRAVO Rise-chan!"],
+      ["Teddie", "why worry? it's just Teddie!"]
+    ]),
     "voice_sprite": {
       "00": {start: 0.0, end: 2.4},
       "01": {start: 2.5, end: 4.9},
@@ -2317,7 +2632,29 @@ function initTalkers() {
       "fa"
     ],
     "sprite_path": "assets/sprites/characters/rise.json",
-    "custom_words": [],
+    "custom_words": [
+      "AH-LUS",
+      "mic check 1, 2",
+      "WOW!!",
+      "time for a song from yours truly!!",
+      "dance time",
+      "can do a little fanservice",
+      "you're so cute!!",
+      "tenacity of an idol",
+      "meanie!!",
+      "gosh",
+      "no touching allowed!",
+      "weirdo!",
+      "full idol power!",
+      "i'm so mad!",
+      "go easy on me",
+      "your heart is mine",
+      "i'm gonna charm you",
+      "WHAT AN IDOL CAN DO",
+      "idol kick!!",
+      "everyone's risette!!!",
+      "don't touch me!"
+    ],
     "copulas": [],
     "likes": [
       "Yuna",
@@ -2330,6 +2667,9 @@ function initTalkers() {
       5
     ],
     "emojifreq": 2,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Yuna", "Senpai, let's dance!"]
+    ]),
     "voice_sprite": {
       "00": {start: 0.0, end: 2.4},
       "01": {start: 2.5, end: 4.9},
@@ -2381,27 +2721,6 @@ function initTalkers() {
       "47": {start: 117.5, end: 119.9}
     }
   }));
-//  Talker.talkers.push(new Talker({
-//    "name": "Adachi",
-//    "fav_boards": [
-//      "biz",
-//      "toy"
-//    ],
-//    "sprite_path": "assets/sprites/characters/adachi.json",
-//    "custom_words": [],
-//    "copulas": [],
-//    "likes": [
-//      "Teddie"
-//    ],
-//    "dislikes": [
-//      "Yuna",
-//      "Maximilian"
-//    ],
-//    "emojitypes": [
-//      1
-//    ],
-//    "emojifreq": 0.6
-//  }));
   Talker.talkers.push(new Talker({
     "name": "Yosuke",
     "fav_boards": [
@@ -2410,12 +2729,40 @@ function initTalkers() {
       "v"
     ],
     "sprite_path": "assets/sprites/characters/yosuke.json",
-    "custom_words": [],
+    "custom_words": [
+      "uhhhhhhh",
+      "just kidding!",
+      "heheheh",
+      "wellll i guess that's that",
+      "hah! very nice!",
+      "moron",
+      "sheesh",
+      "damn it!!!",
+      "yikes!",
+      "it isn't funny you jerk!",
+      "oh crap!!",
+      "getting dizzy",
+      "too slow!",
+      "mwhhahhaah",
+      "Jiraiya!",
+      "go Jiraiya!",
+      "JIRAIYAA",
+      "IT'S SHOWTIME",
+      "v-slash",
+      "ooooo i'm gonna steal that pose",
+      "the charms of a mature woman",
+      "won't you do a show at junes for us sometime?",
+      "turning into a sausage fest but.. it's not so bad",
+      "at Junes we always welcome challenges from customers",
+      "i'm not jealous!",
+      "Junes"
+    ],
     "copulas": [],
     "likes": [
       "Yuna",
       "Riela",
-      "Teddie"
+      "Teddie",
+      "Jaune"
     ],
     "dislikes": [],
     "emojitypes": [
@@ -2423,6 +2770,11 @@ function initTalkers() {
       4
     ],
     "emojifreq": 1,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Rise", "show us how an idol does it, Rise!"],
+      ["Yukiko", ["light a fire with your dance, Yukiko!", "Yukiko! show us that elegant dance you learnt at the inn!"]],
+      ["Chie", ["you're on fire Chie! show off those kicks!!", "impressive Chie! looks like your training paid off!"]]
+    ]),
     "song_path": "Your Affection (Yosuke)",
     "voice_sprite": {
       "00": {start: 0.0, end: 1.9},
@@ -2488,7 +2840,34 @@ function initTalkers() {
       "p"
     ],
     "sprite_path": "assets/sprites/characters/yukiko.json",
-    "custom_words": [],
+    "custom_words": [
+      "this is sort of exciting",
+      "here i go!",
+      "burnin'!!",
+      "[giggle]",
+      "back off!",
+      "stay away!!",
+      "dance!",
+      "hahahaha I DID IT",
+      "i can still fight",
+      "the hell with you!",
+      "i'll show you my dance!",
+      "hanahanasuckyea!",
+      "Konohana Sakuya!!!",
+      "you missed!",
+      "let this hit",
+      "okay focus",
+      "okay here goes",
+      "SPIN",
+      "I AM THOUGH",
+      "I AM THOU",
+      "I AM VOW",
+      "IRON VOW",
+      "FLAME DAANCE",
+      "turn up the heat!",
+      "oh my gosh",
+      "could fighting be my thing after all?"
+    ],
     "copulas": [],
     "likes": [
       "Yuna"
@@ -2541,22 +2920,78 @@ function initTalkers() {
       "c"
     ],
     "sprite_path": "assets/sprites/characters/yuna.json",
-    "custom_words": [],
+    "custom_words": [
+      "too soon to quit",
+      "wow what cute moves!",
+      "cute moves",
+      "adorableness",
+      "your adorableness is really showing through",
+      "hah, that's some very high-level dancing",
+      "got me fired up",
+      "1, 2, 3, 4",
+      "WOW",
+      "C'MON",
+      "ahaha",
+      "very fashionable",
+      "smooth movements",
+      "let's have some fun",
+      "Ah-ha-ha-ha",
+      "pulled off a cute turn",
+      "that was unexpected, but amazing nonetheless",
+      "PERRSOOONAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "nice footwork",
+      "y-you're overwhelmingly cute",
+      "don't forget to have fun",
+      "hah not bad at all",
+      "[vexed] thanks anyway for the performance",
+      "don't hold anything back",
+      "sure, i'll show off my moves",
+      "put all your feelings into this dance!",
+      "you gotta feel for the music",
+      "you're doing fine, stay calm and keep going",
+      "don't try and force it, just take it easy and dance",
+      "[patronising] are you nervous? don't worry, we're here with you",
+      "don't be afraid of mistakes, stay bold",
+      "keep your own pace",
+      "just concentrate on what's before you",
+      "don't give up till the very end!",
+      "try and turn the tables",
+      "stay calm and let's steadily turn this around",
+      "she's tryinna confuse you, hang in there",
+      "IZANAGI, BLAST 'EM",
+      "BEHOLD, THE TRUTH",
+      "you can't panic, just take this like a normal dance",
+      "if i win, you'll stop dressing as a man",
+      "if i win, you'll start dressing as a man",
+      "if i win, you'll start dressing as a girl",
+      "if i win, you'll stop dressing as a girl",
+      "if i win, you'll stop dressing as a mature woman",
+      "if i win, you'll start dressing as a mature woman"
+    ],
     "copulas": [],
     "likes": [
       "Yukiko",
       "Chie",
       "Riela",
       "Edy",
+      "Weiss",
+      "Blake",
+      "Valerie",
+      "Leila",
+      "Clarissa",
+      "Carisa",
       "Rise"
     ],
-    "dislikes": [
-      "Adachi"
-    ],
-    "emojitypes": [
-      5
-    ],
-    "emojifreq": 0.5,
+    "dislikes": [],
+    "emojitypes": [],
+    "emojifreq": 1,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Yosuke", ["thanks for the help, Yosuke!", "you can do this, Yosuke!"]],
+      ["Rise", ["you make me feel like an idol too, Rise", "you're winning us over, Rise"]],
+      ["Teddie", ["that was stylish, Teddie!", "not bad, Teddie!", "this is your time to shine! right, Teddie? it's too soon to quit!"]],
+      ["Yukiko", ["you got me fired up. thanks, Yukiko!", "lookin' great Yukiko", "I'm eager to see your elegant dance, Yukiko", "look out Yukiko! stay focused!", "you've become even more refined, Yukiko", "there's the elegance I was expecting, Yukiko!"]],
+      ["Chie", ["your training really showed through, Chie!", "you're on fire Chie!", "you can easily turn it around Chie, don't give up!", "that dance was fierce, just like you Chie"]]
+    ]),
     "voice_sprite": {
       "00": {start: 0.0, end: 1.9},
       "01": {start: 2.0, end: 3.9},
@@ -2634,12 +3069,40 @@ function initTalkers() {
       "g"
     ],
     "sprite_path": "assets/sprites/characters/labrys.json",
-    "custom_words": [],
+    "custom_words": [
+      "pleased to meet ya",
+      "all systems green",
+      "na-nat guud",
+      "what was that fooh",
+      "w=what da?!",
+      "my puhsona",
+      "i call foul",
+      "come'ere",
+      "see ya!",
+      "ovah heah",
+      "watchu feet",
+      "ye yeaa",
+      "comin' atchaa",
+      "Ariadne",
+      "ARIADNE",
+      "ARIIAADNEEE",
+      "BLASTAAHH",
+      "i'm gonna smack youuu",
+      "all yours Ariadne♪",
+      "that's stoopid",
+      "see you leila",
+      "i still have to fight some moaa???",
+      "i wanna be excepted too!",
+      "i feel like a new lady thanks to this maintenance i got done",
+      "PUHSONA FOH UHREENA ULTIMAX"
+    ],
     "copulas": [],
     "likes": [
       "Yosuke",
       "Alfons",
-      "Imca"
+      "Imca",
+      "Isara",
+      "Penny"
     ],
     "dislikes": [
       "Edy"
@@ -2705,7 +3168,36 @@ function initTalkers() {
     "sprite_path": "assets/sprites/characters/teddie.json",
     "custom_words": [
       "senpai",
-      ""
+      "WOOHOO",
+      "uhuhuhuhuhuh",
+      "woohooHOOO",
+      "NOOOOOOOOOOOOOOOOOOOOO",
+      "TEDDIE BLOCK",
+      "fur bearrier",
+      "beary tired",
+      "gently caress!",
+      "AHAHAA!!",
+      "i can't stand you anymoe",
+      "[very disgusting gibberish]",
+      "please don't fight over me bb",
+      "you're so obvious",
+      "BEAR I COME",
+      "he.he.heee",
+      "BEARSONA",
+      "GO, KINTOKI DOUJI",
+      "[bzzt timbre] ah ah ahhH",
+      "WIIIII",
+      "WEEEEEEEE",
+      "LET'S GO TEDDIE🎵🎹🎼🎶",
+      "sneaking in again",
+      "spinning more than usual",
+      "let's do our beary best",
+      "dancing together is getting fun",
+      "give it some more OOMPH next time",
+      "red, yellow, killa fella",
+      "BADA BING",
+      "someone's a smooth dancer",
+      "a 1, and a 2, and a 3, and a FOURR"
     ],
     "copulas": [],
     "likes": [
@@ -2720,6 +3212,13 @@ function initTalkers() {
       4
     ],
     "emojifreq": 6,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Yuna", ["Sensei!", "Senpai", "I LOVE YOU SENSEI", "sensei tell me i'm good!"]],
+      ["Yosuke", ["Yosukay!!"]],
+      ["Chie", ["Chiey-chan!"]],
+      ["Rise", ["Reesay-chan!"]],
+      ["Yukiko", ["Yuki-chan!"]]
+    ]),
     "voice_sprite": {
       "00": {start: 0.0, end: 1.9},
       "01": {start: 2.0, end: 3.9},
@@ -2772,6 +3271,390 @@ function initTalkers() {
       "48": {start: 102.5, end: 106.4},
       "49": {start: 106.5, end: 110.4},
       "50": {start: 110.5, end: 114.4}
+    }
+  }));
+  // RWBY
+  Talker.talkers.push(new Talker({
+    "name": "Ruby",
+    "fav_boards": [
+      "c"
+    ],
+    "sprite_path": "assets/sprites/characters/ruby.json",
+    "custom_words": [
+      "UGH",
+      "ugh",
+      "ughhh",
+      "UUGHHHHH",
+      "hggg",
+      "[G#]nope",
+      "[A#]nope",
+      "HGGG I WISH",
+      "kinda weirding me out",
+      "BANZAI",
+      "[proud] i drink MILK",
+      "gotta find Yang",
+      "gotta find",
+      "gotta find gotta fiiind 🎵",
+      "BLOODY EVOLUTION",
+      "prepaaaaare",
+      "ya a bad one",
+      "let my sweetheart do the talking thhhthhthhh",
+      "UUUUGGGHHHHHHHHHHH YOU SOUND LIKE DAAAAAAAAAAAD"
+    ],
+    "copulas": [],
+    "likes": [
+      "Weiss",
+      "Penny",
+      "Teddie",
+      "Yosuke"
+    ],
+    "dislikes": [
+      "Maximilian"
+    ],
+    song_path: "RWBY - Opening 1",
+    "emojitypes": [
+      3
+    ],
+    "emojifreq": 1,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Weiss", ["@Weiss why are you so bossy?", "HGGG WEISSSS", "@Weiss i said i was sorry, princess", "@Weiss why can't you just admit that we have no idea where we're going?", "@Weiss wh-- at least i'm not pretending like i know everyTHING?", "@Weiss thit- means you're a big stupid jerk! and i hate you!!", "@Weiss YEA! REPRESENT TEEEAAAM RWBY!", "look Weiss - it's not what you think - she explained the whole thing you see? she doesn't actually wear a bow - she has kitty ears and they're actually kinda cute-"]],
+      ["Blake", ["Blake", "@Blake (she does like tuna a lot)"]],
+      ["Penny", ["Penny", "AAAA PENNY, WHERE DID YOU COME FROM?!", "@Penny take care friend!"]]
+    ]),
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 17.9},
+      "10": {start: 18.0, end: 19.9},
+      "11": {start: 20.0, end: 21.9},
+      "12": {start: 22.0, end: 23.9},
+      "13": {start: 24.0, end: 25.9},
+      "14": {start: 26.0, end: 27.9},
+      "15": {start: 28.0, end: 29.9},
+      "16": {start: 30.0, end: 31.9},
+      "17": {start: 32.0, end: 33.9},
+      "18": {start: 34.0, end: 35.9},
+      "19": {start: 36.0, end: 37.9},
+      "20": {start: 38.0, end: 39.9},
+      "21": {start: 40.0, end: 43.9},
+      "22": {start: 44.0, end: 47.9},
+      "23": {start: 48.0, end: 51.9},
+      "24": {start: 52.0, end: 55.9},
+      "25": {start: 56.0, end: 59.9},
+      "26": {start: 60.0, end: 63.9},
+      "27": {start: 64.0, end: 67.9},
+      "28": {start: 68.0, end: 71.9},
+      "29": {start: 72.0, end: 75.9},
+      "30": {start: 76.0, end: 79.9},
+      "31": {start: 80.0, end: 83.9},
+      "32": {start: 84.0, end: 91.9},
+      "33": {start: 92.0, end: 99.9}
+    }
+  }));
+  Talker.talkers.push(new Talker({
+    "name": "Blake",
+    "fav_boards": [
+      "an"
+    ],
+    "sprite_path": "assets/sprites/characters/blake.json",
+    "custom_words": [
+      "faunus",
+      "the white fang",
+      "are you familiar with the white fang",
+      "member of the white fang",
+      "i was a member for most of my life, actually",
+      "humaniti",
+      "treated like equals",
+      "[high-level sarcasm] yes, it's lovely",
+      "[sarcastic] almost as lovely as",
+      "faunus laborrr",
+      "little black bow",
+      "WHAT",
+      "stupid dance",
+      "you don't carrrr?",
+      "as soon as you leave",
+      "[lightly amused] *mild chuckle* why is that?",
+      "das rite",
+      "surrrrrrrrrrr",
+      "WELL MAYBE WE WERE JUST TIRED OF BEING PUSHED-AROOOUND",
+      "outta fear [reversed cymbal]"
+    ],
+    "copulas": [],
+    "likes": [],
+    "dislikes": [
+      "Yuna",
+      "Cosette"
+    ],
+    "emojitypes": [],
+    "emojifreq": 1,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Weiss", ["@Weiss says the girl wearing a dress", "@Weiss YOU'RE DISCRIMINATORY", "@Weiss so then they're VERY misguided", "@Weiss NHGG YOU IGNORANT LITTLE BRAT!", "@Weiss YOU ARE A JUDGEMENTAL LITTLE GURL", "@Weiss the white fang is hardly a bunch of psychopaths, they're a collection of misguided faunus"]]
+    ]),
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 17.9},
+      "10": {start: 18.0, end: 19.9},
+      "11": {start: 20.0, end: 23.9},
+      "12": {start: 24.0, end: 27.9},
+      "13": {start: 28.0, end: 31.9},
+      "14": {start: 32.0, end: 35.9},
+      "15": {start: 36.0, end: 39.9},
+      "16": {start: 40.0, end: 43.9},
+      "17": {start: 44.0, end: 47.9},
+      "18": {start: 48.0, end: 51.9},
+      "19": {start: 52.0, end: 55.9},
+      "20": {start: 56.0, end: 59.9},
+      "21": {start: 60.0, end: 63.9},
+      "22": {start: 64.0, end: 67.9},
+      "23": {start: 68.0, end: 71.9},
+      "24": {start: 72.0, end: 75.9},
+      "25": {start: 76.0, end: 83.9},
+      "26": {start: 84.0, end: 91.9},
+      "27": {start: 92.0, end: 99.9}
+    }
+  }));
+  Talker.talkers.push(new Talker({
+    "name": "Jaune",
+    "fav_boards": [
+      "c",
+      "a"
+    ],
+    "sprite_path": "assets/sprites/characters/jaune.json",
+    "custom_words": [
+      "hehehehe...",
+      "heh",
+      "hehheh",
+      "ya know?",
+      "PFFFTTT",
+      "PFFFTTT of course i do",
+      "do YOU know",
+      "WAAAAAAAAAAAAGGHHHHH",
+      "[nervous laughter]",
+      "where am i supposed to find another nice quirky girl to talk to?",
+      "run and live, that is an idea i can get behind",
+      "my dad said all women look for is confidence"
+    ],
+    "copulas": [],
+    "likes": [
+      "Weiss",
+      "Yukiko",
+      "Selvaria",
+      "Yosuke"
+    ],
+    "dislikes": [
+      "Kurt",
+      "Maximilian"
+    ],
+    "emojitypes": [1, 3],
+    "emojifreq": 1.3,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Ruby", ["[dysphonic-autotune-like] hey ruby"]],
+      ["Weiss", ["@Weiss i'm a natural blonde ya know?", "Snow Angel", "WEEEIIIIIISSSSSS🎵", "@Weiss do you know what else is great? me, Jaune Arc. nice to meet you"]]
+    ]),
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 19.9},
+      "10": {start: 20.0, end: 23.9},
+      "11": {start: 24.0, end: 27.9},
+      "12": {start: 28.0, end: 31.9},
+      "13": {start: 32.0, end: 35.9},
+      "14": {start: 36.0, end: 43.9},
+      "15": {start: 44.0, end: 51.9},
+      "16": {start: 52.0, end: 59.9}
+    }
+  }));
+  Talker.talkers.push(new Talker({
+    "name": "Weiss",
+    "fav_boards": [
+      "sci",
+      "a"
+    ],
+    "sprite_path": "assets/sprites/characters/weiss.json",
+    "custom_words": [
+      "you dunce",
+      "dunce",
+      "diffiCULT",
+      "Schnee Dust Company",
+      "not THAT",
+      "not THAT forwrrrd",
+      "8:55",
+      "eight fifty five",
+      "rapscallion",
+      "that's wrong, by the way",
+      "it was just an idea",
+      "it's a combat skirrt",
+      "oh, you know who might be able to help? THE POLICE"
+    ],
+    "copulas": [],
+    "likes": [
+      "Maximilian",
+      "Welkin",
+      "Blake",
+      "Ruby"
+    ],
+    "dislikes": [
+      "Blake",
+      "Ruby",
+      "Jaune"
+    ],
+    "emojitypes": [],
+    "customTextProc": Talker.getReplaceFunc([
+      ["Ruby", ["RUBY, I'm trying to focus!", "@Ruby YOU ARE SO CHILDISH", "@Ruby I'll be... nicer", "@Ruby by no means does this make us friends", "@Ruby you may be fast but you still excel at wasting time?", "@Ruby excuse me? you attacked out of turn. i could've killed you!", "@Ruby you dunce!", "@Ruby just know.. that I.. am going to be the BEST TEAMMATE you'll ever have", "@Ruby [very VERY subtle sarcasm] yeah and we can paint our nails and try on clothes and talk about cute boys like tall, blonde and.. scraggly over there!"]],
+      ["Blake", ["@Blake ahpapapapapap I don't wanna hear it", "@Blake TWELVE HOURRRS", "@Blake I don't carrrre", "@Blake STOP. Do you have any idea how long we've been searching for you?"]],
+      ["Penny", ["@Penny you ALREADY said that", "@Penny forgive me but you hardly look the part"]],
+      ["Jaune", ["NO JAUNE", "*ignores Jaune*", "*rolls eyes @Jaune*"]]
+    ]),
+    "emojifreq": 1,
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 17.9},
+      "10": {start: 18.0, end: 19.9},
+      "11": {start: 20.0, end: 21.9},
+      "12": {start: 22.0, end: 23.9},
+      "13": {start: 24.0, end: 25.9},
+      "14": {start: 26.0, end: 27.9},
+      "15": {start: 28.0, end: 31.9},
+      "16": {start: 32.0, end: 35.9},
+      "17": {start: 36.0, end: 39.9},
+      "18": {start: 40.0, end: 43.9},
+      "19": {start: 44.0, end: 47.9},
+      "20": {start: 48.0, end: 51.9},
+      "21": {start: 52.0, end: 55.9},
+      "22": {start: 56.0, end: 59.9},
+      "23": {start: 60.0, end: 63.9},
+      "24": {start: 64.0, end: 67.9},
+      "25": {start: 68.0, end: 71.9},
+      "26": {start: 72.0, end: 75.9},
+      "27": {start: 76.0, end: 79.9},
+      "28": {start: 80.0, end: 87.9},
+      "29": {start: 88.0, end: 95.9},
+      "30": {start: 96.0, end: 103.9},
+      "31": {start: 104.0, end: 111.9},
+      "32": {start: 112.0, end: 119.9}
+    }
+  }));
+  Talker.talkers.push(new Talker({
+    "name": "Penny",
+    "fav_boards": [
+      "sci",
+      "k",
+      "s4s",
+      "g",
+      "c"
+    ],
+    "sprite_path": "assets/sprites/characters/penny.json",
+    "custom_words": [
+      "hey guys",
+      "sure is windy",
+      "is SHE A MAYN???",
+      "i don't have a lotta friends",
+      "friend",
+      "friends",
+      "FRIEND?",
+      "my friend",
+      "sa-lu-ta-tions",
+      "pleasure to meet",
+      "so i did!!!",
+      "YOU",
+      "I'M COMBAT READY",
+      "I'M COMBAT *SWOOSH* READY",
+      "your friend",
+      "da WHO?",
+      "hey gu-",
+      "the faunus girl",
+      "uhh the cat ears",
+      "cat ears",
+      "friends with Blake",
+      "i'm wonderful!",
+      "my name is Penny!",
+      "it's a pleasure to meet",
+      "meet you",
+      "I'm combat ready!",
+      "Ah-Ha-ha-ha",
+      "SEN-SA-TIONAL",
+      "i won't rest until",
+      "whatta you up to?"
+    ],
+    "copulas": [],
+    "likes": [
+      "Ruby",
+      "Weiss",
+      "Blake",
+      "Teddie",
+      "Yukiko",
+      "Yosuke",
+      "Jann",
+      "Cosette",
+      "Riela",
+      "Alicia",
+      "Clarissa",
+      "Amy",
+      "Carisa",
+      "Imca",
+      "Isara",
+      "Labrys",
+      "Rise",
+      "Selvaria",
+      "Valerie"
+    ],
+    "dislikes": [],
+    "emojitypes": [4, 5],
+    "emojifreq": 1.5,
+    "customTextProc": Talker.getReplaceFunc([
+      ["Ruby", ["are you REALLY MY FRIEND?", "well, don't you worry Ruby my friend! i won't rest until we find your teammate"]],
+      ["Weiss", ["and i think Weiss' hair looks wonderful today!"]]
+    ]),
+    "voice_sprite": {
+      "01": {start: 0.0, end: 1.9},
+      "02": {start: 2.0, end: 3.9},
+      "03": {start: 4.0, end: 5.9},
+      "04": {start: 6.0, end: 7.9},
+      "05": {start: 8.0, end: 9.9},
+      "06": {start: 10.0, end: 11.9},
+      "07": {start: 12.0, end: 13.9},
+      "08": {start: 14.0, end: 15.9},
+      "09": {start: 16.0, end: 17.9},
+      "10": {start: 18.0, end: 19.9},
+      "11": {start: 20.0, end: 21.9},
+      "12": {start: 22.0, end: 23.9},
+      "13": {start: 24.0, end: 25.9},
+      "14": {start: 26.0, end: 27.9},
+      "15": {start: 28.0, end: 31.9},
+      "16": {start: 32.0, end: 35.9},
+      "17": {start: 36.0, end: 39.9},
+      "18": {start: 40.0, end: 43.9},
+      "19": {start: 44.0, end: 47.9},
+      "20": {start: 48.0, end: 51.9},
+      "21": {start: 52.0, end: 55.9},
+      "22": {start: 56.0, end: 59.9},
+      "23": {start: 60.0, end: 67.9}
     }
   }));
 }
@@ -2984,7 +3867,7 @@ function playNextTrack() {
   }
 }
 function playTrack(song) {
-  if (music) {music.sound.stop();}
+  if (music) {music.kill();}
   music_song = song;
   music_song.already_played = true;
   music_song.songInfoScreen();
@@ -3005,27 +3888,31 @@ function playRandomTrack() {
   playTrack(u.randomFromArr(selected));
 }
 function showMusicText(song) {
-  if (!music_text) {
-    let style = new PIXI.TextStyle({
-      fontFamily: 'Georgia, serif',
-      fontSize: 28,
-      fontStyle: 'italic',
-      fill: '#e4effd',
-      stroke: '#4e4e4e',
-      letterSpacing: 1,
-      strokeThickness: 4,
-      dropShadow: true,
-      dropShadowColor: '#000000',
-      dropShadowBlur: 0,
-      dropShadowAngle: Math.PI * 0.5,
-      dropShadowDistance: 1,
-    });
-    music_text = new PIXI.Text("", style);
-    music_text.anchor.set(1,0);
-    music_text.zIndex = 100;
-    addChildZ(music_text);
-    music_text.alpha = 0;
+  if (music_text) {
+    if (music_text.ticker) {
+      music_text.ticker.stop();
+    }
+    app.stage.removeChild(music_text);
   }
+  let style = new PIXI.TextStyle({
+    fontFamily: 'Georgia, serif',
+    fontSize: 28,
+    fontStyle: 'italic',
+    fill: '#e4effd',
+    stroke: '#4e4e4e',
+    letterSpacing: 1,
+    strokeThickness: 4,
+    dropShadow: true,
+    dropShadowColor: '#000000',
+    dropShadowBlur: 0,
+    dropShadowAngle: Math.PI * 0.5,
+    dropShadowDistance: 1,
+  });
+  music_text = new PIXI.Text("", style);
+  music_text.anchor.set(1,0);
+  music_text.zIndex = 100;
+  addChildZ(music_text);
+  music_text.alpha = 0;
   music_text.text = "♪ " + song.name;
   music_text.x = app.screen.width-130;
   music_text.y = app.screen.height+5;
@@ -3034,9 +3921,7 @@ function showMusicText(song) {
     music_text.width = music_text.x-20;
   }
   
-  if (music_text.ticker) {
-    music_text.ticker.stop();
-  }
+
   music_text.ticker = doUntil((count)=> {
     if (count < 42) {
       if (music_text.alpha < 0.84) {music_text.alpha += 0.03;}
@@ -3244,8 +4129,9 @@ ParticleSystem.addToQueue = function(a, b, key) {
 };
 function ButtonToggle(x, y, path, action) {
   this.spr = animatedSpriteFrom(path);
-  this.spr.zIndex = 90;
   this.spr.position.set(x, y);
+  this.spr.alpha = 0.85;
+  this.spr.zIndex = 90;
   addChildZ(this.spr);
   this.pressed = false;
   this.spr.interactive = true;
@@ -3353,7 +4239,7 @@ function playing(delta) {
 app.ticker.add(playing);
 
 function updateCanvasSize() {
-  let padding = 35;
+  let padding = 30;
   let a = window.innerWidth;
   let b = window.innerHeight;
   let h_factor = 1;
@@ -3372,3 +4258,27 @@ function updateCanvasSize() {
 }
 window.addEventListener("resize", updateCanvasSize, false);
 updateCanvasSize();
+
+
+let try_timer;
+let testing_who; 
+function tryNewPeep() {
+  testing_who = Talker.getByName(prompt("Name", Talker.talkers[Talker.talkers.length-1].name));
+  testing_who.enter();
+  if (!sound_is_on) {
+    sound_button.press();
+  }
+  Background.messages_required = 9999999;
+  if (try_timer) {
+    window.clearInterval(try_timer);
+  }
+  setInterval(function() {
+    testing_who.talked_times = 0;
+  }, 30);
+}
+function talktalk(who) {
+  if (!who) {
+    who = testing_who.name;
+  }
+  Talker.getByName(who).voicePlayRandom();
+}
